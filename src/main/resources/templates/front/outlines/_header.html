@@ -57,17 +57,19 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a th:href="@{/member/login}">
                     <i class="icon login"></i>
                     <th:block th:text="#{로그인}"></th:block>
                 </a>
             </li>
             <li>
-                <i class="icon search"></i>
-                <th:block th:text="${통합검색}"></th:block>
+                <a href="#">
+                    <i class="icon search"></i>
+                    <th:block th:text="#{통합검색}"></th:block>
+                </a>
             </li>
         </ul>
-        <a herf="#" class="move-to-store"></a>
+        <a href="#" class="move-to-store"></a>
     </div>
 </header>
 </html>

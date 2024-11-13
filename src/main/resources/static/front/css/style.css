@@ -2,7 +2,7 @@
 * { font-family: "Noto Sans KR", sans-serif; box-sizing: border-box; outline: none; color: #000;}
 
 /* 기본 스타일 초기화 S */
-html { font-size: 13px } /*1rem - 13px*/
+html { font-size: 13px; } /*1rem - 13px*/
 body { margin: 120px 0 0; }
 a { text-decoration: none; }
 ul, ol { list-style: none; }
@@ -31,9 +31,23 @@ header {
     left: 0;
 }
 
-header .main-menu { max-width: 835px; min-width: 450px; width: 100%; display: flex; }
-header .main-menu > li { width: 0; flex-grow: 1; border-right: 1px solid #ebebeb; display: flex; }
-header .main-menu > li:first-of-type { border-left: 1px solid #ebebeb; }
+header .main-menu {
+    max-width: 835px;
+    min-width: 450px;
+    width: 100%;
+    display: flex;
+}
+
+header .main-menu > li {
+    width: 0;
+    flex-grow: 1;
+    border-right: 1px;
+    solid #ebebeb;
+    display: flex;
+}
+header .main-menu > li:first-of-type {
+    border-left: 1px solid #ebebeb;
+}
 
 header .main-menu > li a {
     display: flex;
@@ -94,7 +108,6 @@ header > .left { display: flex; flex-grow: 1; }
 header > .left .logo { max-width: 350px; min-width: 250px; display: flex; align-items: center;
  justify-content: center; }
 
-header > .right { width: 400px}
 
 header .main-menu .icon{
     display: block;
@@ -106,8 +119,8 @@ header .main-menu .icon{
 header > .right .icon {
     display: block;
     width: 38px;
-    heigth: 38px;
-    margin: 0 auto
+    height: 38px;
+    margin: 0 auto;
 }
 
 header .icon.news{
@@ -140,6 +153,53 @@ header .icon.login{
 
 header .icon.search {
     background:url("../images/icon_search.png") no-repeat center center;
+}
+
+
+header > .right {
+    display: flex;
+    width: 500px;
+    justify-content: flex-end;
+}
+
+header > .right > ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+header > .right li {
+    margin: 0 15px;
+}
+
+header > .right li a {
+    font-size: 1.077rem;
+    color: #222;
+}
+
+header .right .move-to-store {
+    position: relative;
+    display: block;
+    width: 190px;
+    height: 120px;
+    background: #FFDE00 url("../images/a-store.png") no-repeat center center;
+    background-size: 100%;
+    padding: 0 15px 0 7px;
+    margin-left: 45px;
+}
+
+header .move-to-store::after{
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: #fff;
+    position: absolute;
+    top: -4px;
+    left: -15px;
+    transform: skew(-45deg);
+
 }
 /* 사이트 상단 헤더 E */
 
