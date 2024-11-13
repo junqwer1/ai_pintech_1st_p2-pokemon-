@@ -6,6 +6,6 @@ import org.springframework.stereotype.Component;
 public class Utils {
 
     public boolean isMobile() {
-        return false
+        return false;
     }
 }
