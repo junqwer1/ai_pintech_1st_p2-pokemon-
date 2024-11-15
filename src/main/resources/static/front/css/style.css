@@ -205,5 +205,50 @@ header .move-to-store::after{
 
 
 /* 사이트 하단 푸터 S */
+footer{
+    display: block;
+    color: #fff;
+    background: #000;
+}
 
+.container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+    max-width: 1400px;
+    padding: 30px 0;
+}
+
+footer .top_right_ul{
+    display: flex;
+    font-size: 20px;
+
+}
+
+footer .top_right_ul > li > a{
+    color: #fff;
+}
+
+footer .mid_left {
+    font-size: 15px;
+}
+
+footer .mid_left_ul {
+    display: flex;
+}
+
+footer .mid_right_ul{
+    display: flex;
+    font-size: 15px;
+    align-items: center;
+}
+
+footer .mid_right_ul > li > a{
+    margin: 0 0 0 20px;
+}
+
+footer .mid_right_ul > li > a > img{
+    width: 50px;
+}
 /* 사이트 하단 푸터 E */

@@ -1,18 +1,109 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <footer th:fragment="common">
-    <div>
-        <div class="">
-
+    <div class="top_footer">
+        <div class="container">
+            <div class="top_left">
+                <a th:href="@{/}" class="ft_logo">
+                    <img th:src="@{front/images/ft_logo.png}">
+                </a>
+            </div>
+            <div class="top_right">
+                <ul class="top_right_ul">
+                    <li>
+                        <a href="#">
+                            <th:block th:text="#{회사소개}"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <th:block th:text="#{사업내용}"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <th:block th:text="#{제휴안내}"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <th:block th:text="#{이용약관}"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <th:block th:text="#{개인정보처리방침}"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <th:block th:text="#{이메일무단수집거부}"/>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <th:block th:text="#{고객센터}"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div>
-
+    </div>
+    <div class="mid_footer">
+        <div class="container">
+            <div class="mid_left">
+                <p class="building">(주)포켓몬코리아   경기도 용인시 수지구 신수로 801, 4층</p>
+                <ul class="mid_left_ul">
+                    <li>
+                        대표이사:임재범
+                    </li>
+                    <li>
+                        개인정보관리책임자:임재범
+                    </li>
+                    <li>
+                        사업자등록번호:113-86-07676
+                    </li>
+                </ul>
+            </div>
+            <div class="mid_right">
+                <ul class="mid_right_ul">
+                    <li>
+                        <a th:href="@{/}" class="insta">
+                            <img th:src="@{front/images/icon_insta.png}">
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/}" class="youtube">
+                            <img th:src="@{front/images/icon_youtube.png}">
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/}" class="twitter">
+                            <img th:src="@{front/images/icon_twitter.png}">
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/}" class="tiktok">
+                            <img th:src="@{front/images/icon_tiktok.png}">
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/}" class="pika">
+                            <img th:src="@{front/images/icon_pokemon.png}">
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div>
+    </div>
+    <div class="btm_footer">
+        <div class="container">
+            <div class="btm_left">
 
-        </div>
-        <div>
+            </div>
+            <div class="btm_right">
 
+            </div>
         </div>
     </div>
 </footer>
