@@ -44,4 +44,44 @@ public class MemberController {
 
         return "redirect: " + redirectUrl;
     }
+
+    /*
+    * 회원가입 약관 동의
+    *
+    * */
+    @GetMapping("/agree")
+    public String joinAgree(@ModelAttribute RequestLogin form) {
+
+        return utils.tpl("member/agree");
+    }
+
+    /*
+    * 회원가입 양식 페이지
+    * - 필수 약관 동의 여부 검증
+    *
+    * */
+    @PostMapping("/join")
+    public String join(@Valid RequestJoin form, Errors errors){
+
+        if (errors.hasErrors()) { // 약관 동의를 하지 않았다면 약관 동의 화면을 출력
+            return utils.tpl("member/agree");
+        }
+
+        return utils.tpl("member/join");
+    }
+
+    /*
+    * 회원가입 처리
+    *
+    * */
+    @PostMapping("/join_ps")
+    public String joinPs(@Valid RequestJoin form, Errors errors) {
+
+        if (errors.hasErrors()) {
+            return utils.tpl("member/join");
+        }
+
+//        회원가입 처리 완료 후 - 로그인 페이지로 이동
+        return "redirect:/member/login";
+    }
 }
