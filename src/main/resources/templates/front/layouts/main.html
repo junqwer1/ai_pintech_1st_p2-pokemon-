@@ -16,7 +16,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/front/css/style.css}">
 
     <th:block th:if="${addCss != null}">
-        <link rel="stylesheet" type="text/css" th:each="CssPath:${addCss}"
+        <link rel="stylesheet" type="text/css" th:each="cssPath:${addCss}"
             th:href="@{/front/css/{path}.css(path=${cssPath})}">
     </th:block>
 
