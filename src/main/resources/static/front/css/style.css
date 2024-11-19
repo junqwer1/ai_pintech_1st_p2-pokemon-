@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-* { font-family: "Noto Sans KR", sans-serif; box-sizing: border-box; outline: none; color: #000;}
+* { font-family: "Noto Sans KR", sans-serif; box-sizing: border-box; outline: none;}
 
 /* 기본 스타일 초기화 S */
 html { font-size: 13px; } /*1rem - 13px*/
@@ -223,7 +223,10 @@ footer{
 footer .top_right_ul{
     display: flex;
     font-size: 20px;
+}
 
+footer .top_right_ul > .blank{
+    margin-left: 20px;
 }
 
 footer .top_right_ul > li > a{

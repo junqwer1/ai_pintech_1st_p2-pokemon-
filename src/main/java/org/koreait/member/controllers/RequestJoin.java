@@ -11,11 +11,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class RequestJoin {
-    @NotNull
-    private boolean[] requiredTerms; // 필수 약관 동의 여부 / 필수는 반드시 모두 선택 - 갯수 체크만
+public class RequestJoin extends RequestAgree{
 
-    private List<String> optionalTerms; // 선택 약관 동의 여부 - 선택약관은 어떤 약관인지를 구분할 수 있어야 함
 
     @Email
     @NotBlank
