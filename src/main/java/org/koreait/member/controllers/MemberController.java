@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.Request;
 import org.koreait.global.libs.Utils;
+import org.koreait.member.services.MemberUpdateService;
+import org.koreait.member.validators.JoinValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -22,6 +24,8 @@ import java.util.List;
 @SessionAttributes("requestAgree")
 public class MemberController {
     private final Utils utils;
+    private final JoinValidator joinValidator; // 회원 가입 검증
+    private final MemberUpdateService updateService; // 회원 가입 처리
 
     @ModelAttribute("requestAgree")
     public RequestAgree requestAgree() {
@@ -72,6 +76,7 @@ public class MemberController {
 
         commonProcess("agree", model);
 
+
         return utils.tpl("member/agree");
     }
 
@@ -81,10 +86,11 @@ public class MemberController {
     *
     * */
     @PostMapping("/join")
-    public String join(@Valid RequestAgree agree, Errors errors, @ModelAttribute RequestJoin form, Model model){
+    public String join(RequestAgree agree, Errors errors, @ModelAttribute RequestJoin form, Model model){
 
         commonProcess("join", model); // 회원 가입 공통 처리
 
+        joinValidator.validate(agree, errors);
 
         if (errors.hasErrors()) { // 약관 동의를 하지 않았다면 약관 동의 화면을 출력
             return utils.tpl("member/agree");
@@ -102,9 +108,20 @@ public class MemberController {
 
         commonProcess("join", model);
 
+        joinValidator.validate(agree, errors); // 약과 동의 여부 체크
+        joinValidator.validate(form, errors); // 회원 가입 양식 검증
+
         if (errors.hasErrors()) {
             return utils.tpl("member/join");
         }
+
+//        회원 가입 처리
+        form.setRequiredTerms1(agree.isRequiredTerms1());
+        form.setRequiredTerms2(agree.isRequiredTerms2());
+        form.setRequiredTerms3(agree.isRequiredTerms3());
+        form.setOptionalTerms(agree.getOptionalTerms());
+
+        updateService.process(form);
 
         status.setComplete();
 
@@ -129,6 +146,7 @@ public class MemberController {
             addCommonScript.add("address");
             addScript.add("member/join");
         } else if (mode.equals("agree")) {
+            pageTitle = utils.getMessage("약관동의");
 //            약관 동의 페이지에 최초 접근시 약관 선택을 초기화
             model.addAttribute("requestAgree", requestAgree());
 
