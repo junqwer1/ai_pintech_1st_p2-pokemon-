@@ -13,6 +13,8 @@
             th:each="cssPath : ${addCommonCss}" th:href="@{/common/css/{path}.css(path=${cssPath}}">
     </th:block>
 
+    <th:block layout:fragment="addCommonCss"></th:block>
+
     <link rel="stylesheet" type="text/css" th:href="@{/front/css/style.css}">
 
     <th:block th:if="${addCss != null}">
@@ -20,12 +22,16 @@
             th:href="@{/front/css/{path}.css(path=${cssPath})}">
     </th:block>
 
+    <th:block layout:fragment="addCss"></th:block>
+
     <script th:src="@{/common/js/common.js}"></script>
 
     <th:block th:if="${addCommonScript != null}">
         <script th:each="jsPath : ${addCommonScript}"
                 th:src="@{/common/js/{path}.js(path=${jsPath})}"></script>
     </th:block>
+
+    <th:block layout:fragment="addCommonScript"></th:block>
 
     <script th:src="@{/front/js/common.js}"></script>
 
