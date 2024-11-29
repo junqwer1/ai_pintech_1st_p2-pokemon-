@@ -58,6 +58,7 @@ header .main-menu > li a {
     height: 120px;
     width: 100%;
     transition: all 0.5s;
+    color: #000
 }
 
 header .main-menu > li a:hover, header .main-menu > li a:hover * {
