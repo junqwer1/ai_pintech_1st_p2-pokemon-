@@ -19,7 +19,6 @@ public class MainController {
     @GetMapping
     public String index(Model model) {
 
-
         return utils.tpl("main/index");
     }
 }

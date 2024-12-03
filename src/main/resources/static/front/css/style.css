@@ -44,6 +44,7 @@ header .main-menu > li {
     border-right: 1px;
     solid #ebebeb;
     display: flex;
+
 }
 header .main-menu > li:first-of-type {
     border-left: 1px solid #ebebeb;
@@ -58,7 +59,7 @@ header .main-menu > li a {
     height: 120px;
     width: 100%;
     transition: all 0.5s;
-    color: #000
+    color: #000;
 }
 
 header .main-menu > li a:hover, header .main-menu > li a:hover * {

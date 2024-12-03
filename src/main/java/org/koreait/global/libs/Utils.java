@@ -16,24 +16,32 @@ public class Utils {
 
     public boolean isMobile() {
 
-        // 요청 헤더 - User-Agent / 브라우저정보
+        // 요청 헤더 - User-Agent / 브라우저 정보
         String ua = request.getHeader("User-Agent");
         String pattern = ".*(iPhone|iPod|iPad|BlackBerry|Android|Windows CE|LG|MOT|SAMSUNG|SonyEricsson).*";
 
+
         return ua.matches(pattern);
     }
+
     /**
-     * mobile, front 템플릿분리 함수
-     * */
+     * mobile, front 템플릿 분리 함수
+     *
+     * @param path
+     * @return
+     */
     public String tpl(String path) {
         String prefix = isMobile() ? "mobile" : "front";
 
         return String.format("%s/%s", prefix, path);
     }
 
-    /*
-    *  메세지 코드로 조회된 문구
-    * */
+    /**
+     * 메서지 코드로 조회된 문구
+     *
+     * @param code
+     * @return
+     */
     public String getMessage(String code) {
         Locale lo = request.getLocale(); // 사용자 요청 헤더(Accept-Language)
 

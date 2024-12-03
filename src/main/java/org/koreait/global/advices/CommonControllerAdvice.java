@@ -25,7 +25,7 @@ public class CommonControllerAdvice {
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
         Map<String, Object> data = new HashMap<>();
 
-        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 기본 응답 코드는 500
+        HttpStatus status = HttpStatus.INTERNAL_SERVER_ERROR; // 기본 응답 코드 500
         String tpl = "error/error"; // 기본 출력 템플릿
         String message = e.getMessage();
 
