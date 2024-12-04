@@ -1,5 +1,6 @@
 package org.koreait.global.advices;
 
+import org.koreait.global.annotations.RestExceptionHandler;
 import org.koreait.global.exceptions.CommonException;
 import org.koreait.global.rests.JSONData;
 import org.springframework.http.HttpStatus;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.Map;
 
-@RestControllerAdvice(annotations = RestController.class)
+@RestControllerAdvice(annotations = RestExceptionHandler.class)
 public class CommonRestControllerAdvice {
 
     @ExceptionHandler(Exception.class)
