@@ -77,7 +77,7 @@ public class Utils {
             //        필드별 에러코드 - getFieldErrors() 커맨드 객체 검증 실패, rejectValue()
             Map<String, List<String>> messages = errors.getFieldErrors()
                     .stream()
-                    .collect(Collectors.toMap(FieldError::getField, f -> getMessages(f.getCodes()), (v1, v2) -> v2));
+                    .collect(Collectors.toMap(FieldError::getField, f -> getMessages(f.getCodes()), (v1/*기존*/, v2/*현재*/) -> v2));
 //        글로벌 에러코드 - getGlobalErrors() reject
             List<String> gMessages = errors.getGlobalErrors()
                     .stream()
