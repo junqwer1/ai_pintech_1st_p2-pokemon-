@@ -56,11 +56,12 @@ public class Utils {
     }
 
     public List<String> getMessages(String[] codes) {
-
+//        return Arrays.stream(codes).map(this::getMessage).toList();
+//        "No message found under code 'NotBlank.requestLogin.password' for locale 'ko_KR'.",
         return Arrays.stream(codes).map(c -> {
             try {
                 return getMessage(c);
-        } catch (Exception e) {
+            } catch (Exception e) {
                 return "";
             }
         }).filter(s -> !s.isBlank()).toList();
