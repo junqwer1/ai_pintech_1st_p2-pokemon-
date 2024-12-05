@@ -3,6 +3,8 @@ package org.koreait.member.controllers;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.koreait.global.annotations.ApplyErrorPage;
+import org.koreait.global.exceptions.BadRequestException;
 import org.koreait.global.libs.Utils;
 import org.koreait.member.MemberInfo;
 import org.koreait.member.services.MemberUpdateService;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @Slf4j
 @Controller
+@ApplyErrorPage
 @RequestMapping("/member")
 @RequiredArgsConstructor
 @SessionAttributes({"requestAgree","requestLogin"})
@@ -182,4 +185,5 @@ public class MemberController {
         // front 스크립트
         model.addAttribute("addScript", addScript);
     }
+
 }
