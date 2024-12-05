@@ -6,6 +6,8 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.koreait.file.entities.FileInfo;
 import org.koreait.file.services.FileUploadService;
@@ -13,6 +15,7 @@ import org.koreait.global.exceptions.BadRequestException;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.rests.JSONData;
 import org.koreait.member.controllers.RequestLogin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -24,11 +27,16 @@ import java.util.List;
 @Tag(name = "파일 API", description = "파일 업로드, 조회, 다운로드, 삭제 기능 제공합니다.")
 @RestController
 @RequestMapping("/api/file")
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
+@NoArgsConstructor
 public class ApiFileController {
 
-    private final Utils utils;
-    private final FileUploadService uploadService;
+    @Autowired
+    private Utils utils;
+
+    @Autowired
+    private FileUploadService uploadService;
+
 
     /*
      * 파일 업로드
