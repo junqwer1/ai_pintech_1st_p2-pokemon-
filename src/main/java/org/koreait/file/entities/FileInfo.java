@@ -29,7 +29,7 @@ public class FileInfo extends BaseMemberEntity {
     @Column(length = 65)
     private String contentType; // 파일 형식 image/png application/..
 
-    @Transient
+    @Transient // 필드로 추가X
     private String fileUrl; // URL로 파일 접근할 수 있는 주소 - 2차 가공
 
     @Transient
