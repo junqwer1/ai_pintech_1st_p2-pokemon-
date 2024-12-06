@@ -6,20 +6,14 @@ import org.koreait.file.entities.FileInfo;
 import org.koreait.file.repositories.FileInfoRepository;
 import org.koreait.file.services.FileDeleteService;
 import org.koreait.file.services.FileInfoService;
-import org.koreait.member.constants.Gender;
-import org.koreait.member.controllers.RequestJoin;
 import org.koreait.member.services.MemberUpdateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.test.context.support.TestExecutionEvent;
-import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -27,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
-@ActiveProfiles({"default", "test"})
+//@ActiveProfiles({"default", "test"})
 @AutoConfigureMockMvc
 public class ApiFileControllerTest {
 
@@ -49,7 +43,7 @@ public class ApiFileControllerTest {
     @BeforeEach
     void setup() {
 //        mockMvc = MockMvcBuilders.standaloneSetup(ApiFileController.class).build();
-        RequestJoin form = new RequestJoin();
+/*        RequestJoin form = new RequestJoin();
         form.setEmail("user01@test.org");
         form.setPassword("_aA123456");
         form.setGender(Gender.MALE);
@@ -59,12 +53,12 @@ public class ApiFileControllerTest {
         form.setZipCode("00000");
         form.setAddress("주소!");
 
-        updateService.process(form);
+        updateService.process(form);*/
     }
 
     @Test
 //    @WithMockUser(username = "user01@test.org", authorities = "USER") // 가상?
-    @WithUserDetails(value = "user01@test.org", userDetailsServiceBeanName = "memberInfoService", setupBefore = TestExecutionEvent.TEST_EXECUTION) // 진짜 회원정보로 불러와서 쓰고싶다?
+//    @WithUserDetails(value = "user01@test.org", userDetailsServiceBeanName = "memberInfoService", setupBefore = TestExecutionEvent.TEST_EXECUTION) // 진짜 회원정보로 불러와서 쓰고싶다?
     void test1() throws Exception {
         /*
         * MockMultipartFile

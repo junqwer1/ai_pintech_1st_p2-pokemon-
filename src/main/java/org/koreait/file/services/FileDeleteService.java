@@ -25,6 +25,7 @@ public class FileDeleteService {
     public FileInfo delete(Long seq) {
         FileInfo item = infoService.get(seq);
         String filePath = item.getFilePath();
+        System.out.println(filePath);
 //        0. 파일 소유자만 삭제 가능하게 통제 - 다만 관리자는 가능
         String createdBy = item.getCreateBy();
         if (!memberUtil.isAdmin() && StringUtils.hasText(createdBy)
