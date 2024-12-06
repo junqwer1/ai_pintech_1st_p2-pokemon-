@@ -24,6 +24,7 @@ import java.util.UUID;
 public class FileUploadService {
     private final FileProperties properties;
     private final FileInfoRepository fileInfoRepository;
+    private final FileInfoService infoService;
 
     public List<FileInfo> upload(RequestUpload form) {
         String gid = form.getGid();
@@ -48,6 +49,7 @@ public class FileUploadService {
             item.setFileName(fileName);
             item.setExtension(extension);
             item.setContentType(file.getContentType());
+
             fileInfoRepository.saveAndFlush(item);
 //            1. 파일 업로드 정보 - DB에 기록 E
 
@@ -64,6 +66,9 @@ public class FileUploadService {
             File _file = new File(dir, uploadFileName);
             try {
                 file.transferTo(_file);
+
+//                추가 정보 처리
+                infoService.addInfo(item);
 
                 uploadedItems.add(item);
 
