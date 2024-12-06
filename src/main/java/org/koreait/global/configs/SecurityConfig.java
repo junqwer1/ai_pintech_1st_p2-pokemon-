@@ -56,7 +56,6 @@ public class SecurityConfig {
         * hasRole("명칭")
         * hasAnyRole(...)
         * */
-        System.out.println("테스트");
         http.authorizeHttpRequests(c -> {
             c.requestMatchers("/mypage/**").authenticated() // 인증한 회원
                     .requestMatchers("/member/login", "/member/join", "member/agree").anonymous() // 미인증한 회원
