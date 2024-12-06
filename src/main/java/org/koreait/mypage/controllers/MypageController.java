@@ -75,7 +75,7 @@ public class MypageController {
         List<String> addScript = new ArrayList<>(); // 마이페이지 스크립트
 
         if (mode.equals("profile")) { // 회원정보 수정
-            addCommonScript.add("filManager");
+            addCommonScript.add("fileManager");
             addScript.add("mypage/profile");
             pageTitle = utils.getMessage("회원정보_수정");
         }
