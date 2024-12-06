@@ -13,7 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public abstract class BaseMemberEntity extends BaseEntity{
 
-    @CreatedBy
+    @CreatedBy //로그인한 사용자의 이메일 정보
     @Column(length = 65, updatable = false)
     private String createBy;
 
