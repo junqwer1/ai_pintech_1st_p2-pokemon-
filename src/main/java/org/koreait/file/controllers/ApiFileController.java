@@ -6,19 +6,17 @@ import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.koreait.file.constants.FileStatus;
 import org.koreait.file.entities.FileInfo;
+import org.koreait.file.services.FileDownloadService;
+import org.koreait.file.services.FileInfoService;
 import org.koreait.file.services.FileUploadService;
 import org.koreait.global.exceptions.BadRequestException;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.rests.JSONData;
-import org.koreait.member.controllers.RequestLogin;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.Errors;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,15 +26,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/file")
 //@RequiredArgsConstructor
-@NoArgsConstructor
+//@NoArgsConstructor
+@RequiredArgsConstructor
 public class ApiFileController {
+    private final Utils utils;
 
-    @Autowired
-    private Utils utils;
+    private final FileUploadService uploadService;
 
-    @Autowired
-    private FileUploadService uploadService;
+    private final FileDownloadService downloadService;
 
+    private final FileInfoService infoService;
 
     /*
      * 파일 업로드
@@ -68,7 +67,7 @@ public class ApiFileController {
      * */
     @GetMapping("/download/{seq}")
     public void download(@PathVariable("seq") Long seq) {
-
+        downloadService.process(seq);
     }
 
     /*
@@ -76,8 +75,9 @@ public class ApiFileController {
      * */
     @GetMapping("/info/{seq}")
     public JSONData info(@PathVariable("seq") Long seq) {
+        FileInfo item = infoService.get(seq);
 
-        return null;
+        return new JSONData(item);
     }
 
     /*
@@ -85,9 +85,10 @@ public class ApiFileController {
      * gid, location
      * */
     @GetMapping(path = {"/list/{gid}", "/list/{gid}/{location}"})
-    public JSONData list(@PathVariable("gid") String gid, @PathVariable(name = "location", required = false) String location) {
+    public JSONData list(@PathVariable("gid") String gid, @PathVariable(name = "location", required = false) String location, @RequestParam(name = "status", defaultValue = "DONE")/*완료된 것만 보기*/ FileStatus status) {
+        List<FileInfo> items = infoService.getList(gid, location, status);
 
-        return null;
+        return new JSONData(items);
     }
 
     /*
