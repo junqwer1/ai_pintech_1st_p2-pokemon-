@@ -33,8 +33,8 @@ public class ThumbnailService {
 
         Long seq  =form.getSeq();
         String url = form.getUrl();
-        int width = Math.max(form.getWidth(), 50);
-        int height = Math.max(form.getHeight(), 50);
+        int width = Math.max(form.getWidth(), 300);
+        int height = Math.max(form.getHeight(), 300);
 
         String thumbPath = getThumbPath(seq, url, width, height);
         File file = new File(thumbPath);
@@ -76,13 +76,13 @@ public class ThumbnailService {
         if (seq != null && seq > 0L) { // 직접 서버에 올린 파일
             FileInfo item = infoService.get(seq);
 
-            thumbPath =  thumbPath + String.format("%d/%d_%d_%d%s", seq % 10L, seq, width, height, item.getExtension());
+            thumbPath = thumbPath + String.format("%d/%d_%d_%d%s", seq % 10L, seq, width, height, item.getExtension());
         } else if (StringUtils.hasText(url)) { // 원격 URL 이미지인 경우
             String extension = url.lastIndexOf(".") == -1 ? "" : url.substring(url.lastIndexOf("."));
             if (StringUtils.hasText(extension)) {
                 extension = extension.split("[?#]")[0];
             }
-            thumbPath = thumbPath + String.format("url/%d_%d_%d%s", Objects.hash(url), width, height, extension);
+            thumbPath = thumbPath + String.format("urls/%d_%d_%d%s", Objects.hash(url), width, height, extension);
         }
 
         File file = new File(thumbPath);

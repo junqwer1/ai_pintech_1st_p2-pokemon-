@@ -8,7 +8,7 @@ import org.koreait.global.entities.BaseMemberEntity;
 @Entity
 @Table(indexes = {
         @Index(name="idx_gid", columnList = "gid, createdAt"),
-        @Index(name="idx_gid_location", columnList = "gid location, createdAt")
+        @Index(name="idx_gid_location", columnList = "gid, location, createdAt")
 })
 public class FileInfo extends BaseMemberEntity {
     @Id/*기본키*/ @GeneratedValue //증감번호

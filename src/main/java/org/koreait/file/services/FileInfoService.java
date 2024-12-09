@@ -82,7 +82,7 @@ public class FileInfoService {
 
 //        thumbUrl - 이미지 형식인 경우
         if (item.getContentType().contains("image/")) {
-            item.setThumbUrl(String.format("%sapi/file/thumb?seq=%d", request.getContextPath(), item.getSeq()));
+            item.setThumbUrl(String.format("%s/api/file/thumb?seq=%d", request.getContextPath(), item.getSeq()));
 
         }
     }
@@ -110,6 +110,6 @@ public class FileInfoService {
     }
 
     private long getFolder(long seq) {
-        return seq & 10L;
+        return seq % 10L;
     }
 }
