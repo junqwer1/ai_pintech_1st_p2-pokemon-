@@ -1,4 +1,4 @@
-package org.koreait.controllers;
+package org.koreait.file.controllers;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
