@@ -6,7 +6,7 @@ commonLib.fileManager = {
     upload(files, gid, location, single, imageOnly) {
         try{
             /* 유효성 검사 S */
-            if(!files || files.length == 0) {
+            if(!files || files.length === 0) {
                 throw new Error("파일을 선택하세요.");
             }
 
@@ -18,7 +18,7 @@ commonLib.fileManager = {
                 }
             }
 
-            if (!gid || ('' + gid).trim()) {
+            if (!gid || !('' + gid).trim()) {
                 throw new Error("잘못된 접근입니다.");
             }
 
@@ -40,19 +40,13 @@ commonLib.fileManager = {
             /* 전송 양식 만들기 E*/
 
             /* 양식 전송 처리 S */
-            const { getMeta } = commonLib;
-
-            const csrfHeader = getMeta("_csrf_header");
-            const csrfToken = getMeta("_csrf");
-            const url = getMeta("rootUrl") + "api/file/upload";
-
-            fetch(url, {
-                method: "POST",
-                headers: {[csrfHeader]: csrfToken},
-                body: formData
-            })
-            .then(res => res.json())
-            .then(json => console.log(json));
+            const { ajaxLoad } = commonLib;
+            ajaxLoad("api/file/upload", function(items) {
+                if (typeof callbackFileUpload === 'function'){
+                callbackFileUpload(items);
+                }
+                ('POST'. formData);
+            });
 
             /* 양식 전송 처리 E */
 
