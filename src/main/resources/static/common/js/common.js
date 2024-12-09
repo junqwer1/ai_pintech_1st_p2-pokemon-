@@ -11,6 +11,18 @@ commonLib.getMeta = function(mode) {
 
     return el?.content; // 옵셔널 체이닝(optional chaining?)
 };
+/*
+Ajax 요청 처리
+
+@params url : 요청 주소
+@params method : 요청방식 - GET, POST, DELETE, PETCH ...
+@params callback 응답 완료 후 후속 처리 콜백 함수
+@params data : 요청 데이터
+@params headers : 추가 요청 헤더
+*/
+commonLib.ajaxLoad = function(url, callback, method, data, headers) {
+
+}
 
 window.addEventListener("DOMContentLoaded", function() {
     // 체크박스 전체 토글 기능 S
