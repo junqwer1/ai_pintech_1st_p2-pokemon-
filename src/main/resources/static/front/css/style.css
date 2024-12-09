@@ -206,7 +206,7 @@ header .move-to-store::after{
 /* 사이트 상단 헤더 E */
 
 
-/* 사이트 하단 푸터 S */
+/* 사이트 하단 TOP S*/
 footer{
     display: block;
     color: #fff;
@@ -227,12 +227,28 @@ footer .top_right_ul{
     font-size: 20px;
 }
 
-footer .top_right_ul > .blank{
-    margin-left: 20px;
+.top_right_ul>li+li:before {
+    content: '';
+    display: inline-block;
+    width: 1px;
+    height: .8em;
+    margin: 0 10px;
+    border-left: 1px solid #9b9fa8;
+    opacity: .5;
+}
+
+footer .top_footer .top_right_ul>li:before {
+    margin: 0 20px;
 }
 
 footer .top_right_ul > li > a{
     color: #fff;
+}
+/* 사이트 하단 TOP E*/
+
+/* 사이트 하단 MID S */
+footer .mid_footer {
+    background: #1a1a1a;
 }
 
 footer .mid_left {
@@ -256,4 +272,17 @@ footer .mid_right_ul > li > a{
 footer .mid_right_ul > li > a > img{
     width: 50px;
 }
+/* 사이트 하단 MID E */
+
+/* 사이트 하단 BOTTOM S */
+footer .btm_left{
+    display: flex;
+    flex-direction: column;
+}
+
+footer .btm_left_up{
+    display: flex;
+    flex-direction: row;
+}
+/* 사이트 하단 BOTTOM E */
 /* 사이트 하단 푸터 E */
