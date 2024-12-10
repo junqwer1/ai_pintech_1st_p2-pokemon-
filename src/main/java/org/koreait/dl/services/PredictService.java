@@ -7,10 +7,8 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Lazy
 @Service
@@ -29,7 +27,7 @@ public class PredictService {
         try {
             String data = om.writeValueAsString(items);
 
-            ProcessBuilder builder = new ProcessBuilder(runPath, scriptPath + "predict.py", data;
+            ProcessBuilder builder = new ProcessBuilder(runPath, scriptPath + "predict.py", data);
             Process process = builder.start();
             InputStream in = process.getInputStream();
 
