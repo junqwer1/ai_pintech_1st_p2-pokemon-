@@ -19,7 +19,7 @@ public class PythonRunTest {
 
     @Test
     void test1() throws Exception {
-        ProcessBuilder builder = new ProcessBuilder("C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python39\\python.exe", "D:/recommend/train.py", "http://localhost3000/api/dl/data");
+        ProcessBuilder builder = new ProcessBuilder("C:\\Users\\admin\\AppData\\Local\\Programs\\Python\\Python39\\python.exe", "D:/recommend/train.py", "http://localhost:3000/api/dl/data");
         Process process = builder.start();
         BufferedReader reader = process.inputReader();
         reader.lines().forEach(System.out::println);
