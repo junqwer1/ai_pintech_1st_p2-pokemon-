@@ -33,8 +33,8 @@ public class ThumbnailService {
 
         Long seq  =form.getSeq();
         String url = form.getUrl();
-        int width = Math.max(form.getWidth(), 300);
-        int height = Math.max(form.getHeight(), 300);
+        int width = Math.max(form.getWidth(), 50);
+        int height = Math.max(form.getHeight(), 50);
 
         String thumbPath = getThumbPath(seq, url, width, height);
         File file = new File(thumbPath);
