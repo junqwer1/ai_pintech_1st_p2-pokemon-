@@ -224,7 +224,7 @@ footer{
 
 footer .top_right_ul{
     display: flex;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 .top_right_ul>li+li:before {
