@@ -88,6 +88,7 @@ public class MemberUpdateService {
         if (StringUtils.hasText(password)) {
             String hash = passwordEncoder.encode(password);
             member.setPassword(hash);
+            member.setCredentialChangedAt(LocalDateTime.now()); // 비번 변경 날짜
         }
 
         /*

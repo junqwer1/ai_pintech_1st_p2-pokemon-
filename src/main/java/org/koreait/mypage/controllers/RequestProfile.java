@@ -17,6 +17,8 @@ public class RequestProfile {
 
     @NotBlank
     private String nickName;
+
+//    @Size(min = 8)
     private String password; // 비밀번호
     private String confirmPassword;
 

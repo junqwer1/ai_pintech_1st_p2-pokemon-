@@ -42,6 +42,6 @@ public class ApiDlController {
     public JSONData predict(@RequestParam("items") List<int[]> items) {
         int[] predictions = predictService.predict(items);
 
-        return new JSONData(items);
+        return new JSONData(predictions);
     }
 }
