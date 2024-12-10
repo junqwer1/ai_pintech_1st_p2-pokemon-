@@ -76,7 +76,7 @@ public class ThumbnailService {
         if (seq != null && seq > 0L) { // 직접 서버에 올린 파일
             FileInfo item = infoService.get(seq);
 
-            thumbPath =  thumbPath + String.format("%d/%d_%d_%d%s", seq % 10L, seq, width, height, item.getExtension());
+            thumbPath = thumbPath + String.format("%d/%d_%d_%d%s", seq % 10L, seq, width, height, item.getExtension());
         } else if (StringUtils.hasText(url)) { // 원격 URL 이미지인 경우
             String extension = url.lastIndexOf(".") == -1 ? "" : url.substring(url.lastIndexOf("."));
             if (StringUtils.hasText(extension)) {
