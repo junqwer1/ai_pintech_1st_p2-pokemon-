@@ -6,18 +6,19 @@ import org.koreait.member.controllers.RequestJoin;
 import org.koreait.member.entities.Authorities;
 import org.koreait.member.entities.Member;
 import org.koreait.member.entities.QAuthorities;
+import org.koreait.member.libs.MemberUtil;
 import org.koreait.member.repositories.AuthoritiesRepository;
 import org.koreait.member.repositories.MemberRepository;
+import org.koreait.mypage.controllers.RequestProfile;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Lazy // 지연로딩 - 최초로 빈을 사용할때 생성
 @Service
@@ -29,6 +30,7 @@ public class MemberUpdateService {
     private final AuthoritiesRepository authoritiesRepository;
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
+    private final MemberUtil memberUtil;
 
     /**
      * 커맨드 객체의 타입에 따라서 RequestJoin이면 회원 가입 처리
@@ -42,8 +44,7 @@ public class MemberUpdateService {
 //        선택 약관 -> 항목1||약관 항목2||...
         List<String> optionalTerms = form.getOptionalTerms();
         if (optionalTerms != null) {
-            String _optionalTerms = optionalTerms.stream().collect(Collectors.joining("||"));
-            member.setOptionalTerms(_optionalTerms);
+            member.setOptionalTerms(String.join("||", optionalTerms));
 
         }
 
@@ -58,6 +59,32 @@ public class MemberUpdateService {
         auth.setAuthority(Authority.USER); // 회원 가입시, 기본 권한 USER
 
         save(member, List.of(auth)); // 회원 저장 처리
+    }
+
+    /**
+     * 회원정보 수정
+     * */
+    public void process(RequestProfile form) {
+        Member member = memberUtil.getMember(); // 로그인한 사용자의 정보
+        member.setName(form.getName());
+        member.setNickName(form.getNickName());
+        member.setBirthDt(form.getBirthDt());
+        member.setGender(form.getGender());
+        member.setZipCode(form.getZipCode());
+        member.setAddress(form.getAddress());
+        member.setAddressSub(form.getAddressSub());
+
+        List<String> optionalTerms = form.getOptionalTerms();
+        if (optionalTerms != null) {
+            member.setOptionalTerms(String.join("||", optionalTerms));
+        }
+
+//        회원정보 수정일때는 비밀번호가 입력 된 경우만 저장
+        String password = form.getPassword();
+        if (StringUtils.hasText(password)) {
+            String hash = passwordEncoder.encode(password);
+            member.setPassword(hash);
+        }
     }
 
     /**
