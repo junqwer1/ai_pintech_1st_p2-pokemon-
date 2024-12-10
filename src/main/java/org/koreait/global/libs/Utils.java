@@ -144,7 +144,7 @@ public class Utils {
             className = Objects.requireNonNullElse(className, "imageUrl");
             if (mode.equals("background")) { // 배경 이미지
 
-                return String.format("<div style='width: %dpx; height: %dpx; background:url(\"%s\") no-repeat center center; background-size:cover;' class='%s'></div>", width, height, imageUrl);
+                return String.format("<div style='width: %dpx; height: %dpx; background:url(\"%s\") no-repeat center center; background-size:cover;' class='%s'></div>", width, height, imageUrl, className);
             } else { // 이미지 태그
                 return String.format("<img src='%s' class='%s'>", imageUrl, className);
             }
