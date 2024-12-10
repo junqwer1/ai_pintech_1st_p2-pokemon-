@@ -30,7 +30,7 @@ public class FileUploadService {
         String gid = form.getGid();
         gid = StringUtils.hasText(gid) ? gid : UUID.randomUUID().toString();
 
-        String location = form. getLocation();
+        String location = form.getLocation();
         MultipartFile[] files = form.getFiles();
 
         String rootPath = properties.getPath();

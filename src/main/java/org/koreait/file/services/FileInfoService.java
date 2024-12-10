@@ -110,6 +110,6 @@ public class FileInfoService {
     }
 
     private long getFolder(long seq) {
-        return seq & 10L;
+        return seq % 10L;
     }
 }

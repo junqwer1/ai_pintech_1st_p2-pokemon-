@@ -122,11 +122,12 @@ public class ApiFileController {
 
         FileInfo item = deleteService.delete(seq);
 
-        return new JSONData();
+        return new JSONData(item);
     }
 
     @DeleteMapping({"/deletes/{gid}", "deletes/gid/{location}"})
-    public JSONData deletes(@PathVariable("gid") String gid, @PathVariable(value = "location", required = false) String location) {
+    public JSONData deletes(@PathVariable("gid") String gid,
+                            @PathVariable(value = "location", required = false) String location) {
         List<FileInfo> items = deleteService.deletes(gid, location);
 
         return new JSONData(items);

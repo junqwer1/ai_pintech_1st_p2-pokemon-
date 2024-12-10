@@ -33,8 +33,8 @@ public class ThumbnailService {
 
         Long seq  =form.getSeq();
         String url = form.getUrl();
-        int width = Math.max(form.getWidth(), 50);
-        int height = Math.max(form.getHeight(), 50);
+        int width = Math.max(form.getWidth(), 300);
+        int height = Math.max(form.getHeight(), 300);
 
         String thumbPath = getThumbPath(seq, url, width, height);
         File file = new File(thumbPath);
@@ -82,7 +82,7 @@ public class ThumbnailService {
             if (StringUtils.hasText(extension)) {
                 extension = extension.split("[?#]")[0];
             }
-            thumbPath = thumbPath + String.format("url/%d_%d_%d%s", Objects.hash(url), width, height, extension);
+            thumbPath = thumbPath + String.format("urls/%d_%d_%d%s", Objects.hash(url), width, height, extension);
         }
 
         File file = new File(thumbPath);
