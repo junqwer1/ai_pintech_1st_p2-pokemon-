@@ -2,10 +2,8 @@ package org.koreait.global.libs;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.koreait.file.controllers.RequestThumb;
 import org.koreait.file.entities.FileInfo;
 import org.koreait.file.services.FileInfoService;
-import org.koreait.file.services.ThumbnailService;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
@@ -23,7 +21,6 @@ public class Utils {
     private final HttpServletRequest request;
     private final MessageSource messageSource;
     private final FileInfoService fileInfoService;
-    e;
 
     public boolean isMobile() {
 
@@ -100,20 +97,57 @@ public class Utils {
 
     /**
      * 이미지 출력
+     *
      * @param mode - image : 이미지 태그로 출력, background : 배경 이미지 형태 출력
-     * */
-    public String showImage(Long seq, String url, int width, int height, String mode) {
+     */
+    public String showImage(Long seq, int width, int height, String mode, String className) {
+        return showImage(seq, null, width, height, mode, className);
+    }
+
+    public String showImage(Long seq, int width, int height, String className) {
+        return showImage(seq, null, width, height, "image", className);
+    }
+
+    public String showBackground(Long seq, int width, int height, String className) {
+        return showImage(seq, null, width, height, "background", className);
+    }
+
+    public String showImage(String url, int width, int height, String mode, String className) {
+        return showImage(null, url, width, height, mode, className);
+    }
+
+    public String showImage(String url, int width, int height, String className) {
+        return showImage(null, url, width, height, "image", className);
+    }
+
+    public String showBackground(String url, int width, int height, String className) {
+        return showImage(null, url, width, height, "background", className);
+    }
+
+    public String showImage(Long seq, String url, int width, int height, String mode, String className) {
         try {
+            String imageUrl = null;
             if (seq != null && seq > 0L){
                 FileInfo item = fileInfoService.get(seq);
-                if (!item.getContentType().contains("image/")) {
-
+                if (!item.isImage()) {
+                    return "";
                 }
-            } else if (StringUtils.hasText(url)) {
 
+                imageUrl = String.format("%s&width=%d&height=%d", item.getThumbUrl());
+
+            } else if (StringUtils.hasText(url)) {
+                imageUrl = String.format("%s/api/file/thumb?url=%s&width=%d&height=%d", request.getContextPath(), url, width, height); // 이미지 경로
             }
+            if (!StringUtils.hasText(imageUrl)) return "";
 
             mode = Objects.requireNonNullElse(mode, "image");
+            className = Objects.requireNonNullElse(className, "imageUrl");
+            if (mode.equals("background")) { // 배경 이미지
+
+                return String.format("<div style='width: %dpx; height: %dpx; background:url(\"%s\") no-repeat center center; background-size:cover;' class='%s'></div>", width, height, imageUrl);
+            } else { // 이미지 태그
+                return String.format("<img src='%s' class='%s'>", imageUrl, className);
+            }
         } catch (Exception e) {}
 
         return "";

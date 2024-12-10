@@ -4,13 +4,14 @@ import org.junit.jupiter.api.Test;
 import org.koreait.dl.services.PredictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.io.BufferedReader;
 import java.util.Arrays;
 import java.util.List;
 
 @SpringBootTest
-//@ActiveProfiles({"default", "test", "dl"})
+@ActiveProfiles({"default", "test", "dl"})
 public class PythonRunTest {
 
     @Autowired
