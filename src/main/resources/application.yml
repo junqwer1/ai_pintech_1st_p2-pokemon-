@@ -5,11 +5,13 @@ server:
       cookie.name: bfb4c74f0
 
 spring:
+  session:
+    store-type: redis
   # 레디스 설정
   data:
     redis:
       host: ${redis.host}
-      port: ${redis, port}
+      port: ${redis.port}
 
   # 데이터 베이스 설정
   datasource:
