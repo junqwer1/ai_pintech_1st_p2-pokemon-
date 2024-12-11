@@ -23,7 +23,7 @@ public class TrainService {
     @Scheduled(cron = "0 0 1 * * *") // 새벽 1시 마다 훈련
     public void process() {
         try {
-            ProcessBuilder builder = new ProcessBuilder(runPath, scriptPath + "train.py", dataUrl);
+            ProcessBuilder builder = new ProcessBuilder(runPath, scriptPath + "train.py", dataUrl + "?mode=ALL"/*전체 데이터*/, dataUrl/*학습? 데이터*/);
             Process process = builder.start();
             int exitCode = process.waitFor();
 
