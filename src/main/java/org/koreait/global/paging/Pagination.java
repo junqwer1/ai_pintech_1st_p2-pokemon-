@@ -36,7 +36,7 @@ public class Pagination {
      * @param limit : 한 페이지당 출력될 레코드 갯수
      */
     public Pagination(int page, int total, int ranges, int limit) {
-        
+        this(page, total, ranges, limit, null);
     }
 
     public Pagination(int page, int total, int ranges, int limit, HttpServletRequest request) {

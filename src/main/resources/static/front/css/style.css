@@ -2,7 +2,7 @@
 * { font-family: "Noto Sans KR", sans-serif; box-sizing: border-box; outline: none;}
 
 /* 기본 스타일 초기화 S */
-html { font-size: 13px; } /*1rem - 13px*/
+html { font-size: 13px; } /* 1rem - 13px */
 body { margin: 120px 0 0; }
 a { text-decoration: none; }
 ul, ol { list-style: none; }
@@ -286,3 +286,29 @@ footer .btm_left_up{
 }
 /* 사이트 하단 BOTTOM E */
 /* 사이트 하단 푸터 E */
+
+/* 페이지네이션 S*/
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    display: inline-block;
+    min-width: 45px;
+    height: 45px;
+    border: 1px solid #000;
+    line-height: 43px;
+    font-size: 1.56rem;
+    border-radius: 3px;
+}
+
+.pagination a + a {
+    margin-left: 3px;
+}
+
+.pagination a.on {
+    background: #000
+    color: #FFF
+}
+/* 페이지네이션 E*/
