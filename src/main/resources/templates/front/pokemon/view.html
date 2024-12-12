@@ -3,6 +3,7 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{front/layouts/main}">
 <main layout:fragment="content">
+    [[${item}]]
     <section class="details" th:object="${item}">
         <div class="left"
              th:utext="*{@utils.showImage(frontImage, 390, 390, 'image')}"></div>
@@ -15,7 +16,7 @@
                     <li>
                         <div class="tit" th:text="#{타입}"></div>
                         <div class="text">
-                            <th:block th:each="type : *{_types}" th:text="${#messages.msg(type)}"></th:block>
+                            <span th:each="type : *{_types}" th:text="${#messages.msg(type)}"></span>
                         </div>
                     </li>
                     <li>
@@ -23,8 +24,33 @@
                         <div class="text" th:text="*{#strings.concat(height / 10.0, 'm')}">
                         </div>
                     </li>
+                    <li>
+                        <div class="tit" th:text="#{분류}"></div>
+                        <div class="text" th:text="*{genus}"></div>
+                    </li>
                 </ul>
-            </div>
+                <ul>
+                    <li>
+                        <div class="tit" th:text="#{성별}"></div>
+                        <div class="text"></div>
+                    </li>
+                    <li>
+                        <div class="tit" th:text="#{몸무게}"></div>
+                        <div class="text" th:text="*{#strings.concat(weight / 10.0, 'kg')}"></div>
+                    </li>
+                    <li>
+                        <div class="tit" th:text="#{특성}"></div>
+                        <div class="text">
+                            <span th:each="ability : *{_abilities}" th:text="${ability}"></span>
+                        </div>
+                    </li>
+                </ul>
+            </div> <!--spec-info-->
+            <a href="#" target="_blank" class="go-link">
+                <th:block th:text="*{name}"></th:block>
+                <th:block th:text="#{상품 보러가기}"></th:block>
+                <i class="xi-angle-right"></i>
+            </a>
         </div> <!--right-->
     </section>
 </main>
