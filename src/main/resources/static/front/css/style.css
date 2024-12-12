@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-* { font-family: "Noto Sans KR", sans-serif; box-sizing: border-box; outline: none;}
+* { font-family: "Noto Sans KR", sans-serif; box-sizing: border-box; outline: none; color: #000}
 
 /* 기본 스타일 초기화 S */
 html { font-size: 13px; } /* 1rem - 13px */
@@ -160,7 +160,7 @@ header .icon.search {
 
 header > .right {
     display: flex;
-    width: 500px;
+    width: 520px;
     justify-content: flex-end;
 }
 
@@ -310,5 +310,9 @@ footer .btm_left_up{
 .pagination a.on {
     background: #000
     color: #FFF
+}
+
+.page {
+    color: #000
 }
 /* 페이지네이션 E*/

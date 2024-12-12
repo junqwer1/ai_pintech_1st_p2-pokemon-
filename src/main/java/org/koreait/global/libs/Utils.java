@@ -133,7 +133,7 @@ public class Utils {
                     return "";
                 }
 
-                imageUrl = String.format("%s&width=%d&height=%d", item.getThumbUrl());
+                imageUrl = String.format("%s&width=%d&height=%d", item.getThumbUrl(), width, height);
 
             } else if (StringUtils.hasText(url)) {
                 imageUrl = String.format("%s/api/file/thumb?url=%s&width=%d&height=%d", request.getContextPath(), url, width, height); // 이미지 경로

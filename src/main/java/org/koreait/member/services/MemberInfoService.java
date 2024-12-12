@@ -55,7 +55,7 @@ public class MemberInfoService implements UserDetailsService {
     /*
     * 추가 정보 처리
     * */
-    private void addInfo(Member member) {
+    public void addInfo(Member member) {
         List<FileInfo> files = fileInfoService.getList(member.getEmail(), "profile");
         if (files != null && !files.isEmpty()) {
             member.setProfileImage(files.get(0));

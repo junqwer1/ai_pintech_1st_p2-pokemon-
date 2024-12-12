@@ -1,6 +1,7 @@
 package org.koreait.member.services;
 
 import lombok.RequiredArgsConstructor;
+import org.koreait.member.MemberInfo;
 import org.koreait.member.constants.Authority;
 import org.koreait.member.controllers.RequestJoin;
 import org.koreait.member.entities.Authorities;
@@ -31,6 +32,7 @@ public class MemberUpdateService {
     private final PasswordEncoder passwordEncoder;
     private final ModelMapper modelMapper;
     private final MemberUtil memberUtil;
+    private final MemberInfoService infoService;
 
     /**
      * 커맨드 객체의 타입에 따라서 RequestJoin이면 회원 가입 처리
@@ -133,6 +135,10 @@ public class MemberUpdateService {
         }
 
 //        회원 권한 업데이트 처리 E
+
+//        로그인 회원 정보 업데이트
+        infoService.addInfo(member);
+        memberUtil.setMember(member);
     }
 
 }
