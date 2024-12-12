@@ -47,7 +47,7 @@ public class PokemonInfoService {
 
         int page = Math.max(search.getPage(), 1); // 페이지 번호
         int limit = search.getLimit(); // 한페이지 당 레코드 갯수
-        limit = limit < 1 ? 18 : limit; // limit -1경우 18
+        limit = limit < 1 ? 20 : limit; // limit -1경우 20
 
         QPokemon pokemon = QPokemon.pokemon;
 
