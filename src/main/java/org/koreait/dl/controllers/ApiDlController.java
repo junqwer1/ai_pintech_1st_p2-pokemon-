@@ -1,5 +1,6 @@
 package org.koreait.dl.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.koreait.dl.entities.TrainItem;
 import org.koreait.dl.services.PredictService;
 import org.koreait.dl.services.TrainService;
@@ -12,10 +13,11 @@ import java.util.List;
 @Profile("dl")
 @RestController
 @RequestMapping("/api/dl")
+@RequiredArgsConstructor
 public class ApiDlController {
 
-    private PredictService predictService;
-    private TrainService trainService;
+    private final PredictService predictService;
+    private final TrainService trainService;
 
     @GetMapping("/data")
     public List<TrainItem> sendData(@RequestParam(name = "mode", required = false) String mode) {
