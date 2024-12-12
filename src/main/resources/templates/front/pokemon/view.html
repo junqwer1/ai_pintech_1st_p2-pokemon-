@@ -18,6 +18,11 @@
                             <th:block th:each="type : *{_types}" th:text="${#messages.msg(type)}"></th:block>
                         </div>
                     </li>
+                    <li>
+                        <div class="tit" th:text="#{키}"></div>
+                        <div class="text" th:text="*{#strings.concat(height / 10.0, 'm')}">
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div> <!--right-->
