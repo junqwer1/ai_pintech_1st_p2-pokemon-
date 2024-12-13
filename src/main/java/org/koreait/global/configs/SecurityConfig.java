@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 * 스프링 시큐리티 설정
 */
 @Configuration
-@EnableMethodSecurity /*특정 메서드 통제*/
+@EnableMethodSecurity /*특정 메서드 권한 통제*/
 public class SecurityConfig {
 
     @Bean //필터 체인

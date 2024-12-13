@@ -33,10 +33,10 @@ public class Pokemon extends BaseEntity {
     private String genus; // 분류
 
     @Transient // DB반영X
-    private List<String> _types; //가공
+    private List<String> _types; //2차 가공
 
     @Transient
-    private List<String> _abilities; //가공
+    private List<String> _abilities; //2차 가공
 
     @Transient
     private Map<String, Object> prevItem;

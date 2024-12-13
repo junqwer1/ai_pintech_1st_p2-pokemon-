@@ -112,7 +112,7 @@ public class MemberController {
     public String join(RequestAgree agree, Errors errors, @ModelAttribute RequestJoin form, Model model) {
         commonProcess("join", model); // 회원 가입 공통 처리
 
-        joinValidator.validate(agree, errors);
+        joinValidator.validate(agree, errors); // 약관 동의 검증
 
 
         if (errors.hasErrors()) { // 약관 동의를 하지 않았다면 약관 동의 화면을 출력
@@ -146,19 +146,19 @@ public class MemberController {
 
         updateService.process(form);
 
-        status.setComplete();
+        status.setComplete(); // 세션값을 출력하지 않겠다
 
         // 회원가입 처리 완료 후 - 로그인 페이지로 이동
         return "redirect:/member/login";
     }
 
-    /*@ResponseBody
+    @ResponseBody
     @GetMapping("/refresh")
     @PreAuthorize("isAuthenticated()")
     public void refresh(Principal principal) {
         MemberInfo memberInfo = (MemberInfo) infoService.loadUserByUsername(principal.getName());
         memberUtil.setMember(memberInfo.getMember());
-    }*/
+    }
 
     /**
      * 공통 처리 부분
