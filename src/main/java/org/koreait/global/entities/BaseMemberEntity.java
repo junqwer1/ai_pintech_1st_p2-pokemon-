@@ -9,8 +9,8 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Data
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
+@MappedSuperclass /*공통 상위 클래스*/
+@EntityListeners(AuditingEntityListener.class) /*변화 감지*/
 public abstract class BaseMemberEntity extends BaseEntity{
 
     @CreatedBy //로그인한 사용자의 이메일 정보

@@ -19,7 +19,6 @@ public class Pagination {
     private int total;
     private int ranges;
     private int limit;
-
     private int totalPages; // 전체 페이지
     private int firstRangePage; // 현재 구간에서 시작 Page 번호
     private int lastRangePage; // 현재 구간에서 종료 Page 번호
@@ -55,6 +54,7 @@ public class Pagination {
 
 //        구간 번호 - 0, 1 ,2
         int rangeCnt = (page - 1) / ranges;
+
         // 현재 구간의 시작 Page 번호
         int firstRangePage = rangeCnt * ranges + 1;
 
@@ -64,8 +64,8 @@ public class Pagination {
         // 마지막 구간의 마지막 Page 번호 처리, 둘 중 작은 것으로 대입
         lastRangePage = Math.min(lastRangePage, totalPages);
 
-        // 이전 구간 마지막 Page 번호, 다음 구간 시작 Page 번호
         // 값이 0이 아닐 경우 버튼 노출
+        // 이전 구간 마지막 Page 번호, 다음 구간 시작 Page 번호
         int prevRangeLastPage = 0, nextRangeFirstPage = 0;
 
         // 2번째 구간 이상 마지막 구간 미만일 경우에만 이전구간버튼 노출

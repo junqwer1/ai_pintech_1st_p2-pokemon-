@@ -16,7 +16,7 @@ public class RedisConfig {
     @Value("${spring.data.redis.port}")
     private int port;
 
-    @Bean
+    @Bean /*이 빈을 만들어야 활성화*/
     public RedisConnectionFactory redisConnectionFactory(){
         return new LettuceConnectionFactory(host, port);
     }

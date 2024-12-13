@@ -13,15 +13,15 @@ import java.io.IOException;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication/*인증 객체*/) throws IOException, ServletException {
         HttpSession session = request.getSession();
 
 //        requestLogin 세션값 비우기
         session.removeAttribute("requestLogin");
 
 //        UserDetails 구현체
-        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
-        System.out.println(memberInfo);
+//        MemberInfo memberInfo = (MemberInfo) authentication.getPrincipal();
+//        System.out.println(memberInfo);
 
         /*
         * 로그인 성공시 페이지 이동

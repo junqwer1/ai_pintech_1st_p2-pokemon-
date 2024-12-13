@@ -57,7 +57,7 @@ public class ApiFileController {
     })
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/upload")
-    public JSONData upload(@RequestPart("file") MultipartFile[] files, @Valid RequestUpload form, Errors errors) {
+    public JSONData upload(@RequestPart("file") MultipartFile[] files/*요청 데이터와 파일 데이터 분리*/, @Valid RequestUpload form, Errors errors) {
         if (errors.hasErrors()) {
             throw new BadRequestException(utils.getErrorMessages(errors));
         }
@@ -72,7 +72,7 @@ public class ApiFileController {
             deleteService.deletes(form.getGid(), form.getLocation());
         }
 
-        List<FileInfo> uploadedFiles = uploadService.upload(form);
+        List<FileInfo> uploadedFiles = uploadService.upload(form); //업로드 처리
 
 //        업로드 완료 하자마자 완료 처리
         if (form.isDone()) {
@@ -91,7 +91,7 @@ public class ApiFileController {
     @GetMapping("/download/{seq}")
     public void download(@PathVariable("seq") Long seq) {
         downloadService.process(seq);
-    }
+    } /*응답 헤더의 통제*/
 
     /*
      * 파일 단일 조회

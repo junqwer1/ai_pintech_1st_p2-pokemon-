@@ -47,8 +47,9 @@ public class FileUploadService {
             }
 //            1. 파일 업로드 정보 - DB에 기록 S
 //            파일명.확장자 // model.weights.h5
-            String fileName = file.getOriginalFilename();
-            String extension = fileName.substring(fileName.lastIndexOf("."));
+            String fileName = file.getOriginalFilename(); //파일명
+            String extension = fileName.substring(fileName.lastIndexOf(".")); // 확장자
+
             FileInfo item = new FileInfo();
             item.setGid(gid);
             item.setLocation(location);
@@ -65,13 +66,13 @@ public class FileUploadService {
             long folder = seq % 10L; // 0 ~ 9
             File dir = new File(rootPath + folder);
 //            디렉토리가 존재하지 않거나 파일로만 있는 경우 (디렉토리?) 생성한다
-            if (!dir.exists() || !dir.isDirectory()) {
+            if (!dir.exists() || !dir.isDirectory()) { // 파일이 없으면 만들어준다
                 dir.mkdirs();
             }
 
             File _file = new File(dir, uploadFileName);
             try {
-                file.transferTo(_file);
+                file.transferTo(_file); // 파일 이전
 
 //                추가 정보 처리
                 infoService.addInfo(item);

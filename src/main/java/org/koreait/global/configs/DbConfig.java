@@ -15,7 +15,7 @@ public class DbConfig {
 
     @Lazy
     @Bean
-    public JPAQueryFactory jpaQueryFactory() {
+    public JPAQueryFactory jpaQueryFactory() { // 복잡한 쿼리문을 쓸 때 사용
         return new JPAQueryFactory(em);
     }
 }

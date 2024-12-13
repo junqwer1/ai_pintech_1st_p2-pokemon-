@@ -57,7 +57,7 @@ public class Member extends BaseEntity implements Serializable {
     private String optionalTerms; // 선택 약관
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "member"/*, cascade = CascadeType.REMOVE*/)
     private List<Authorities> authorities;
 
 //    비밀번호 변경 일시

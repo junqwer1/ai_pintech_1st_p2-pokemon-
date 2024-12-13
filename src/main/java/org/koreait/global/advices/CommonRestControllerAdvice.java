@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.List;
 import java.util.Map;
 
-@RestControllerAdvice(annotations = RestController.class)
+@RestControllerAdvice(annotations = RestController.class) /* 컨트롤러 어드바이스와 비슷, 데이터형식*/
 @RequiredArgsConstructor
 public class CommonRestControllerAdvice {
 

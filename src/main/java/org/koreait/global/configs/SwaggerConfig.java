@@ -14,7 +14,7 @@ public class SwaggerConfig {
 
         return GroupedOpenApi.builder()
                 .group("포켓몬 도감 API")
-                .pathsToMatch("/api/**")
+                .pathsToMatch("/api/**") /*문서화의 범위*/
                 .build();
     }
 }

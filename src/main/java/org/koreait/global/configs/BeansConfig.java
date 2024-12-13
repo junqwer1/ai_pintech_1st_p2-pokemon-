@@ -12,11 +12,14 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class BeansConfig {
 
+    /* 수동 등록 빈 */
+
     @Lazy
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();
     }
+
 
     @Lazy
     @Bean

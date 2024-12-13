@@ -39,7 +39,7 @@ public class Utils {
      * @return
      */
     public String tpl(String path) {
-        String prefix = isMobile() ? "mobile" : "front";
+        String prefix = isMobile() ? "mobile" : "front"; /* 모바일*/
 
         return String.format("%s/%s", prefix, path);
     }
@@ -73,9 +73,9 @@ public class Utils {
     * */
     public Map<String, List<String>> getErrorMessages(Errors errors) {
         ResourceBundleMessageSource ms = (ResourceBundleMessageSource) messageSource;
-        ms.setUseCodeAsDefaultMessage(false);
+        ms.setUseCodeAsDefaultMessage(false); //메세지코드로 등록한 메세지가 나올수 있게
         try {
-            //        필드별 에러코드 - getFieldErrors() 커맨드 객체 검증 실패, rejectValue()
+//        필드별 에러코드 - getFieldErrors() 커맨드 객체 검증 실패, rejectValue()
             Map<String, List<String>> messages = errors.getFieldErrors()
                     .stream()
                     .collect(Collectors.toMap(FieldError::getField, f -> getMessages(f.getCodes()), (v1/*기존*/, v2/*현재*/) -> v2));
@@ -91,6 +91,7 @@ public class Utils {
 
             return messages;
         } finally {
+//            싱글톤 형태라 다른데에서 사용할 때 영향을 미치게 때문에 다시 되돌린다.
             ms.setUseCodeAsDefaultMessage(true);
         }
     }

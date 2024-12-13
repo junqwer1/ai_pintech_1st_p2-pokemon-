@@ -1,6 +1,6 @@
 package org.koreait.global.validators;
 
-public interface PasswordValidator {
+public interface PasswordValidator {/*공통적으로 검증하기 위한*/
     /**
      * 알파벳 복잡성 체크
      *  - 1) 대소문자 각각 1개 이상 있는 경우

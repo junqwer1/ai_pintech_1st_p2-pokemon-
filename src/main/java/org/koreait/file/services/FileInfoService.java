@@ -41,6 +41,7 @@ public class FileInfoService {
 
     public List<FileInfo> getList(String gid, String location, FileStatus status) {
         status = Objects.requireNonNullElse(status, FileStatus.ALL);
+
         QFileInfo fileInfo = QFileInfo.fileInfo;
         BooleanBuilder andBuilder = new BooleanBuilder();
         andBuilder.and(fileInfo.gid.eq(gid)); // 필수

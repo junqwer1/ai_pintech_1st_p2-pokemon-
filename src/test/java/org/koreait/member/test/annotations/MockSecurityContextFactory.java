@@ -1,7 +1,6 @@
 package org.koreait.member.test.annotations;
 
 import org.koreait.member.MemberInfo;
-import org.koreait.member.constants.Authority;
 import org.koreait.member.entities.Authorities;
 import org.koreait.member.entities.Member;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,6 +11,7 @@ import org.springframework.security.test.context.support.WithSecurityContextFact
 
 import java.lang.reflect.Array;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,6 +25,10 @@ public class MockSecurityContextFactory implements WithSecurityContextFactory<Mo
         member.setName(annotation.name());
         member.setNickName(annotation.nickName());
         member.setBirthDt(LocalDate.now().minusYears(20L));
+        member.setRequiredTerms1(true);
+        member.setRequiredTerms2(true);
+        member.setRequiredTerms3(true);
+        member.setCredentialChangedAt(LocalDateTime.now());
 
         List<SimpleGrantedAuthority> authorities = Arrays.stream(annotation.authority())
                 .map(a -> new SimpleGrantedAuthority(a.name()))
@@ -52,6 +56,6 @@ public class MockSecurityContextFactory implements WithSecurityContextFactory<Mo
         SecurityContext context = SecurityContextHolder.createEmptyContext(); // test는 context객체가 없기 때문에 생성
         context.setAuthentication(token); // 로그인 처리
 
-        return null;
+        return context;
     }
 }

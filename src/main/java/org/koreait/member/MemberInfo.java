@@ -49,8 +49,8 @@ public class MemberInfo implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         LocalDateTime credentialChangedAt = member.getCredentialChangedAt();
-        return credentialChangedAt != null &&
-                credentialChangedAt.isAfter(LocalDateTime.now().minusMonths(1L));
+        return credentialChangedAt != null /*널이 아니거나*/&&
+                credentialChangedAt.isAfter(LocalDateTime.now().minusMonths(1L));/*만든지 1달이 지나지 않았거나*/
     }
 
     @Override

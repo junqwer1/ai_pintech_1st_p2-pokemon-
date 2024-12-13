@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class LoginFailureHandler implements AuthenticationFailureHandler {
+public class LoginFailureHandler implements AuthenticationFailureHandler /*설정 인터페이스*/ {
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
@@ -45,6 +45,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
                 errorCodes.add("NotBlank_password");
             }
 
+//            아이디, 비번 틀릴 경우
             if (errorCodes.isEmpty()){
                 errorCodes.add("Failure.validate.login");
             }
@@ -55,7 +56,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         } else if (exception instanceof DisabledException) { // 탈퇴한 회원
             form.setErrorCodes(List.of("Failure.disabled.login"));
         }
-        System.out.println(exception);
+
 
         session.setAttribute("requestLogin", form);
 

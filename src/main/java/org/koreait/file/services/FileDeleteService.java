@@ -46,14 +46,14 @@ public class FileDeleteService {
         return item;
     }
 
-    public List<FileInfo> deletes(String gid, String location) {
+    public List<FileInfo> deletes(String gid, String location) { //gid, location이 있을 경우
         List<FileInfo> items = infoService.getList(gid, location, FileStatus.ALL);
         items.forEach(i -> delete(i.getSeq()));
 
         return items;
     }
 
-    public List<FileInfo> deletes(String gid) {
+    public List<FileInfo> deletes(String gid) { // gid만 있을 경우
         return deletes(gid, null);
     }
 }

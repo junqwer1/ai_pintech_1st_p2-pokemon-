@@ -23,11 +23,11 @@ public class FileDownloadService {
 
     public void process(Long seq) {
 
-        FileInfo item = infoService.get(seq);
+        FileInfo item = infoService.get(seq); // 기초 데이터
 
-        String filePath = item.getFilePath();
+
         String fileName = item.getFileName();
-//        윈도우에서 한글 깨짐 방지
+//        윈도우에서 한글 깨짐 방지  3~4비트를 1~2비트로 변환
         fileName = new String(fileName.getBytes(), StandardCharsets.ISO_8859_1);
 
         String contentType = item.getContentType();
@@ -40,7 +40,7 @@ public class FileDownloadService {
         try (FileInputStream fis = new FileInputStream(file);
              BufferedInputStream bis = new BufferedInputStream(fis)) {
     //        바디의 출력을 filename에 지정된 파일로 변경
-//            Content-Disposition : 웹브라우저는, 화면 표출인지, 로컬 저장인지를 알려주는 헤더
+//            Content-Disposition : 웹브라우저는 화면 표출인지, 로컬 저장인지를 알려주는 헤더
             response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
             response.setContentType(contentType);
             response.setHeader("Cache-Control", "no-cache"); // 헤더의 출력들

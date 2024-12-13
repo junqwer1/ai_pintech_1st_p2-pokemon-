@@ -9,7 +9,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @RequiredArgsConstructor
 @EnableConfigurationProperties(FileProperties.class)
-public class FileConfig implements WebMvcConfigurer {
+public class FileConfig implements WebMvcConfigurer/*스프링 기본 설정*/ {
+
     private final FileProperties properties;
 
     @Override

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.HashMap;
 import java.util.Map;
 
-@ControllerAdvice(annotations = ApplyErrorPage.class)
+@ControllerAdvice(annotations = ApplyErrorPage.class) /*컨트롤러가 실행되기 전에 처리할 공통적인 것들 뷰형식*/
 @RequiredArgsConstructor
 public class CommonControllerAdvice {
     private final Utils utils;
@@ -65,9 +65,9 @@ public class CommonControllerAdvice {
         data.put("_status", status);
         data.put("message", message);
         ModelAndView mv = new ModelAndView();
-        mv.setStatus(status);
-        mv.addAllObjects(data);
-        mv.setViewName(tpl);
+        mv.setStatus(status); // 에러코드
+        mv.addAllObjects(data); // 값
+        mv.setViewName(tpl); // 템플릿이름
         return mv;
     }
 }

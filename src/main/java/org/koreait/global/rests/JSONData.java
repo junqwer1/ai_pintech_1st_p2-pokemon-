@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 @Data
 @NoArgsConstructor
-public class JSONData {
+public class JSONData { /*예측 가능한 형태로 하기 위해*/
     private HttpStatus status = HttpStatus.OK;
     private boolean success = true;
     private Object message; // 실패시 에러 메세지
