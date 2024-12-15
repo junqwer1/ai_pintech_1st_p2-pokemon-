@@ -25,7 +25,7 @@ public class FileDownloadService {
 
         FileInfo item = infoService.get(seq);
 
-        String filePath = item.getFilePath();
+//        String filePath = item.getFilePath();
         String fileName = item.getFileName();
 //        윈도우에서 한글 깨짐 방지
         fileName = new String(fileName.getBytes(), StandardCharsets.ISO_8859_1);

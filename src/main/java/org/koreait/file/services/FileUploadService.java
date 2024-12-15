@@ -61,10 +61,10 @@ public class FileUploadService {
 
 //            2. 파일 업로드 처리 S
             long seq = item.getSeq();
-            String uploadFileName = seq + extension;
-            long folder = seq % 10L; // 0 ~ 9
+            String uploadFileName = seq + extension; // ex) 1.jpg
+            long folder = seq % 10L; // 0 ~ 9 균등배분
             File dir = new File(rootPath + folder);
-//            디렉토리가 존재하지 않거나 파일로만 있는 경우 (디렉토리?) 생성한다
+//            디렉토리가 존재하지 않거나 파일로 없는 경우 (디렉토리?) 생성한다
             if (!dir.exists() || !dir.isDirectory()) {
                 dir.mkdirs();
             }
