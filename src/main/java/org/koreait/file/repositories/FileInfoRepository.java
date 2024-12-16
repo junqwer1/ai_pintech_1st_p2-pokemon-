@@ -14,7 +14,7 @@ import java.util.Objects;
 
 import static org.springframework.data.domain.Sort.Order.asc;
 
-public interface FileInfoRepository extends JpaRepository<FileInfo, Long>, QuerydslPredicateExecutor<FileInfo> {
+public interface FileInfoRepository extends JpaRepository<FileInfo, Long>, QuerydslPredicateExecutor<FileInfo>/*2개 이상의 판별식*/ {
 
 
 }

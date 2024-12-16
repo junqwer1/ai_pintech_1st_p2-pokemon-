@@ -25,11 +25,13 @@ public class FileDeleteService {
     public FileInfo delete(Long seq) {
         FileInfo item = infoService.get(seq);
         String filePath = item.getFilePath();
-        System.out.println(filePath);
+//        System.out.println(filePath);
 //        0. 파일 소유자만 삭제 가능하게 통제 - 다만 관리자는 가능
         String createdBy = item.getCreateBy();
+//        관리자 아니고 && 비로그인이 아닌 로그인회원이 작성한 File 이고
+//&& (비로그인 상태이거나 || 해당 File의 작성자(createdBy)가 아닐때)
         if (!memberUtil.isAdmin() && StringUtils.hasText(createdBy)
-                && (!memberUtil.isLogin() || !memberUtil.getMember().getEmail().equals(createdBy)))
+                && (!memberUtil.isLogin() || !memberUtil.getMember().getEmail().equals(createdBy))) //작성자 일치
             throw new UnAuthorizedException();
 
 //        1. DB에서 정보를 제거
