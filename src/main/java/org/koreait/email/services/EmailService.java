@@ -4,6 +4,7 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.koreait.email.controllers.RequestEmail;
+import org.springframework.context.annotation.Profile;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -16,8 +17,10 @@ import java.util.Map;
 import java.util.Objects;
 
 @Service
+@Profile("email")
 @RequiredArgsConstructor
 public class EmailService {
+
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
 
@@ -52,6 +55,7 @@ public class EmailService {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, false, "UTF-8");
             helper.setTo(form.getTo().toArray(String[]::new));
+
             if (cc != null && !cc.isEmpty()) {
                 helper.setCc(cc.toArray(String[]::new));
             }
@@ -66,12 +70,24 @@ public class EmailService {
             javaMailSender.send(message);
 
             return true;
-
-
-        } catch (Exception e) {
+        } catch(Exception e) {
             e.printStackTrace();
         }
 
         return false;
     }
+
+    public boolean sendEmail(RequestEmail form, String tpl) {
+        return sendEmail(form, tpl, null);
+    }
+
+    public boolean sendEmail(String to, String subject, String content) {
+        RequestEmail form = new RequestEmail();
+        form.setTo(List.of(to));
+        form.setSubject(subject);
+        form.setContent(content);
+
+        return sendEmail(form,"general");
+    }
+
 }
