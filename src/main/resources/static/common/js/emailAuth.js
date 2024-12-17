@@ -8,7 +8,7 @@ commonLib.emailAuth = {
         seconds: 180, // 3분
         intervalId: null,
         //타이머 초기화
-        reset() {
+        reset(callback) {
             this.stop();
             this.second = 180;
             if (typeof callback === "function") {
@@ -16,7 +16,7 @@ commonLib.emailAuth = {
             }
         },
         // 타이머 중지
-        stop() {
+        stop(callback) {
             if (this.intervalId)
                 clearInterval(this.intervalId);
 
@@ -25,7 +25,7 @@ commonLib.emailAuth = {
             }
         },
             //타이머 시작
-        start() {
+        start(callback) {
             if(this.seconds < 1) return;
             this.stop();
 

@@ -50,7 +50,7 @@ window.addEventListener("DOMContentLoaded", function() {
         let timerStr = "00:00";
         if(seconds > 0) {
             const min = Math.floor(seconds/60);
-            const seconds = seconds - min * 60;
+            const sec = seconds - min * 60;
             timerStr = `${('' + min).padStart(2, '0')}:${('' + sec).padStart(2, '0')}`;
         } else { // 타이머가 0이 되면 다시 이메일 변경 가능하게 처리, 인증코드 입력 불가 처리, 인증하기 버튼 감추기
             frmJoin.email.removeAttribute("readonly");
