@@ -4,6 +4,7 @@ import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import nonapi.io.github.classgraph.utils.LogNode;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.paging.ListData;
 import org.koreait.global.paging.Pagination;
@@ -12,6 +13,8 @@ import org.koreait.pokemon.entities.Pokemon;
 import org.koreait.pokemon.entities.QPokemon;
 import org.koreait.pokemon.exceptions.PokemonNotFoundException;
 import org.koreait.pokemon.repositories.PokemonRepository;
+import org.koreait.wishlist.constants.WishType;
+import org.koreait.wishlist.services.WishService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +42,7 @@ public class PokemonInfoService {
     private final HttpServletRequest request;
     private final Utils utils;
     private final JPAQueryFactory queryFactory;
+    private final WishService wishService;
 
     /**
      * 포켓몬 목록 조회
@@ -60,6 +64,11 @@ public class PokemonInfoService {
                     .concat(pokemon.flavorText)
                     .contains(skey));
         }
+
+        List<Long> seq = search.getSeq();
+        if (seq != null && !seq.isEmpty()) {
+            andBuilder.and(pokemon.seq.in(seq));
+        }
         /* 검색 처리 E */
 
         Pageable pageable = PageRequest.of(page - 1, limit, Sort.by(asc("seq")));
@@ -74,6 +83,18 @@ public class PokemonInfoService {
         Pagination pagination = new Pagination(page, (int) data.getTotalElements(), ranges, limit, request);
 
         return new ListData<>(items, pagination);
+    }
+
+    // 내가 찜한 포켓몬 목록
+    public ListData<Pokemon> getMyPokemons(PokemonSearch search) {
+        List<Long> seq = wishService.getMyWish(WishType.POKEMON);
+        if (seq == null || seq.isEmpty()) {
+            return new ListData<>();
+        }
+
+        search.setSeq(seq);
+
+        return getList(search);
     }
 
     /**
