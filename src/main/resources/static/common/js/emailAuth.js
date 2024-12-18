@@ -12,7 +12,7 @@ commonLib.emailAuth = {
             this.stop();
             this.seconds = 180;
             if (typeof callback === "function") {
-                callback(this.intervalId);
+                callback(this.seconds);
             }
         },
         // 타이머 중지
@@ -30,7 +30,7 @@ commonLib.emailAuth = {
             this.stop();
 
             this.intervalId = setInterval(function() {
-                const seconds = --commonLib.emailAuth.seconds;
+                const seconds = --commonLib.emailAuth.timer.seconds;
                 if(typeof callback === 'function') {
                     callback(seconds);
                 }
