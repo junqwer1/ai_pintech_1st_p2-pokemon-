@@ -82,6 +82,7 @@ window.addEventListener("DOMContentLoaded", function() {
         const el = document.querySelector(".auth-box .message");
         el.classList.remove("dn");
 
+
         emailAuth.verify(authCode, () => {
             // 인증 성공시
             /**
@@ -89,7 +90,7 @@ window.addEventListener("DOMContentLoaded", function() {
                 2. authCodeEl, verifyButton, sendButton, timer 제거
             */
             el.innerText = "인증되었습니다.";
-            const authBoxEl = document.querySelector("auth-box").children[0]
+            const authBoxEl = document.querySelector(".auth-box").children[0]
             authBoxEl.parentElement.removeChild(authBoxEl);
         }, (err) => {
             // 인증 실패시
