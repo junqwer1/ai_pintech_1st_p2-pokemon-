@@ -10,7 +10,7 @@ commonLib.emailAuth = {
         //타이머 초기화
         reset(callback) {
             this.stop();
-            this.second = 180;
+            this.seconds = 180;
             if (typeof callback === "function") {
                 callback(this.intervalId);
             }
