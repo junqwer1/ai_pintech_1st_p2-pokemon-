@@ -93,7 +93,7 @@ public class Pagination {
 
             // "?page=" 제거(필터)하고 다시 모아서 가공
             baseUrl += Arrays.stream(qs.split("&"))
-                    .filter(s -> !s.contains("?page=")).collect(Collectors.joining("&")) + "&";
+                    .filter(s -> !s.contains("page=")).collect(Collectors.joining("&")) + "&";
         }
 
         baseUrl += "page=";
