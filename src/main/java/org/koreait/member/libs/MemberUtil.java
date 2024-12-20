@@ -2,6 +2,7 @@ package org.koreait.member.libs;
 
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.apache.tomcat.util.json.JSONParserTokenManager;
 import org.koreait.member.MemberInfo;
 import org.koreait.member.constants.Authority;
 import org.koreait.member.entities.Member;
