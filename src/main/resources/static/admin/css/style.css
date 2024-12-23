@@ -61,21 +61,95 @@ textarea {
     border-top: 1px solid #ccc;
 }
 /* 테이블 공통 E */
+
+/* 여백 공통 S */
 .mb10 {
     margin-bottom: 10px !important;
 }
 
-.mb20{
+.mb20 {
     margin-bottom: 20px !important;
 }
 
-.me30P{
+.mb30 {
     margin-bottom: 30px !important
 }
-
-/* 여백 공통 S */
-
 /* 여백 공통 E*/
+
+/* 버튼 공통 S */
+.btn {
+    border: 2px solid #000;
+    color: #000;
+    background: #fff;
+    cursor: pointer;
+    height: 50px;
+    font-size: 1.35rem
+    width: 100%;
+    border-radius: 3px
+}
+
+.btn.black {
+    background: #000;
+    color: #fff;
+}
+
+.button-group {
+    display: flex;
+    width: 450px;
+    margin: 5px auto;
+}
+
+.button-group .btn {
+    flex-grow: 1;
+    width: 0;
+}
+
+.button-group .btn + .btn {
+    margin-left: 5px;
+}
+/* 버튼 공통 E */
+
+/* 라디오 버튼 공통 S */
+
+input[type='radio'] {
+    display: none;
+}
+
+input[type='radio']+label {
+    padding-left: 33px;
+    height: 40px;
+    line-height: 40px;
+    background:url("../images/radio.png") no-repeat left center;
+    display: inline-block;
+}
+
+input[type='radio']:checked + label {
+    background:url("../images/radio_on.png") no-repeat left center;
+}
+
+input[type='radio'] + label + label {
+    margin-left: 10px;
+}
+/* 라디오 버튼 공통 E */
+
+/* 체크박스 공통 S */
+input[type='checkbox'] {
+    display: none;
+}
+
+input[type='checkbox'] + label {
+    background:url("../images/check.png") no-repeat left center;
+    background-size: 23px 23px;
+    padding-left: 33px;
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+}
+
+input[type='checkbox']:checked + label {
+    background:url("../images/check_on.png") no-repeat left center;
+}
+/* 체크박스 공통 E */
 
 /* 헤더 영역 S */
 header {
@@ -148,14 +222,14 @@ main > section > nav .menu.on {
 
 /* 제목 S */
 h1 {
-    margin: 0 10px 25px 0;
+    margin: 0 10px 25px;
     padding-bottom: 10px;
     border-bottom: 2px solid #000;
     font-size: 1.75rem;
 }
 
 h2 {
-    margin: 0 0 10px 0;
+    margin: 0 0 10px;
     font-size: 1.25rem;
 }
 /* 제목 E */
