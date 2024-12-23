@@ -61,13 +61,6 @@ public class MemberUpdateService {
         auth.setAuthority(Authority.USER); // 회원 가입시, 기본 권한 USER
 
         save(member, List.of(auth)); // 회원 저장 처리
-
-//        로그인 회원 정보 업데이트
-        Member _member = memberRepository.findByEmail(member.getEmail()).orElse(null);
-        if (_member != null){
-            infoService.addInfo(member);
-            memberUtil.setMember(member);
-        }
     }
 
     /**
@@ -114,6 +107,13 @@ public class MemberUpdateService {
         }
 
         save(member, _authorities);
+
+        // 로그인 회원 정보 업데이트
+        Member _member = memberRepository.findByEmail(member.getEmail()).orElse(null);
+        if (_member != null) {
+            infoService.addInfo(_member);
+            memberUtil.setMember(_member);
+        }
     }
 
     /**
@@ -136,6 +136,7 @@ public class MemberUpdateService {
                 authoritiesRepository.deleteAll(items);
                 authoritiesRepository.flush();
             }
+
 
             authoritiesRepository.saveAllAndFlush(authorities);
         }
