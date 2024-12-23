@@ -116,11 +116,12 @@ input[type='radio'] {
 }
 
 input[type='radio']+label {
-    padding-left: 33px;
+    padding: 0 20px 0 33px;
     height: 40px;
     line-height: 40px;
     background:url("../images/radio.png") no-repeat left center;
     display: inline-block;
+    cursor: pointer;
 }
 
 input[type='radio']:checked + label {
@@ -140,10 +141,11 @@ input[type='checkbox'] {
 input[type='checkbox'] + label {
     background:url("../images/check.png") no-repeat left center;
     background-size: 23px 23px;
-    padding-left: 33px;
+    padding: 0 20px 0 33px;
     height: 40px;
     line-height: 40px;
     display: inline-block;
+    cursor: pointer;
 }
 
 input[type='checkbox']:checked + label {
