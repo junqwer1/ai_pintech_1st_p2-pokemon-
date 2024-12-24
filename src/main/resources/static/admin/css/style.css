@@ -253,7 +253,7 @@ h2 {
     border-radius: 10px;
 }
 
-.message-dialog {
+.message-dialog.fade {
     opacity: 0;
 }
 /* 세션 메세지 E */
