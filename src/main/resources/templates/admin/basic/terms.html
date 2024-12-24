@@ -19,14 +19,14 @@
                 <th>약관제목</th>
                 <td>
                     <input type="text" name="subject" th:field="*{subject}"/>
-                    <div class="error" th:each="err : ${#field.errors('subject')}" th:text="${err}"></div>
+                    <div class="error" th:each="err : ${#fields.errors('subject')}" th:text="${err}"></div>
                 </td>
             </tr>
             <tr>
                 <th>약관내용</th>
                 <td>
                     <input type="text" name="content" th:field="*{content}">
-                    <div class="errors" th:each="err : ${#field.errors('content')}" th:text="${err}"></div>
+                    <div class="errors" th:each="err : ${#fields.errors('content')}" th:text="${err}"></div>
                 </td>
             </tr>
         </table>
