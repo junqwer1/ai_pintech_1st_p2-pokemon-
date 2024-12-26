@@ -156,12 +156,14 @@ textarea {
     display: inline-block;
     height: 40px;
     border: 1px solid #000;
+    background: #fff;
     color: #000;
     font-size: 1rem;
     line-height: 38px;
     padding: 0 15px;
     min-width: 80px;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 .sbtn.black {
