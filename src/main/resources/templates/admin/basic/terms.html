@@ -39,7 +39,7 @@
             <thead>
                 <tr>
                     <th width="40">
-                        <input type="checkbox" class="checkall" data-target-name="code" id="checkall">
+                        <input type="checkbox" class="checkall" data-target-name="chk" id="checkall">
                         <label for="checkall" class="standalone"></label>
                     </th>
                     <th width="220">약관코드</th>
@@ -50,7 +50,7 @@
                 <tr th:if="${items != null && !#lists.isEmpty(items)}" th:each="item, status : ${items}" th:object="${item}">
                     <td>
                         <input type="hidden" th:name="${'code_' + status.index}" th:value="*{code}">
-                        <input type="checkbox" name="chk" th:value="*{status.index}" th:id="${'chk-' + status.index}">
+                        <input type="checkbox" name="chk" th:value="${status.index}" th:id="${'chk-' + status.index}">
                         <label th:for="${'chk-' + status.index}" class="standalone"></label>
                     </td>
                     <td th:text="*{code}"></td>
@@ -73,6 +73,11 @@
                     <td colspan="3" class="no-data">등록된 약관이 없습니다.</td>
                 </tr>
             </tbody>
+            <div class="table-action" data-form-name="frmList">
+                선택 약관을
+                <button type="button" class="sbtn delete">삭제하기</button>
+                <button type="button" class="sbtn modify">수정하기</button>
+            </div>
         </table>
     </form>
 </div>
