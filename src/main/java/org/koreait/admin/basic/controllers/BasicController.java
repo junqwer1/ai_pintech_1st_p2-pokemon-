@@ -1,5 +1,6 @@
 package org.koreait.admin.basic.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.koreait.admin.basic.services.TermsInfoService;
@@ -30,6 +31,7 @@ public class BasicController {
     private final CodeValueService codeValueService;
     private final TermsUpdateService termsUpdateService;
     private final TermsInfoService termsInfoService;
+    private final HttpServletRequest request;
 
     private final Utils utils;
 
@@ -97,6 +99,20 @@ public class BasicController {
         termsUpdateService.save(form);
 
         model.addAttribute("script", "parent.location.reload();");
+
+        return "common/_execute_script";
+    }
+
+    @RequestMapping(path = "/terms", method = {RequestMethod.PATCH, RequestMethod.DELETE})
+    public String updateTerms(@RequestParam(name = "chk", required = false) List<Integer> chks, Model model) {
+
+        termsUpdateService.processList(chks);
+
+        String message = request.getMethod().equalsIgnoreCase("DELETE") ? "삭제" : "수정";
+        message += "하였습니다.";
+        utils.showSessionMessage(message);
+        model.addAttribute("script", "parent.location.reload()");
+
 
         return "common/_execute_script";
     }
