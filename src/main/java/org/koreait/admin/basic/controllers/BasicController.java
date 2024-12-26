@@ -111,7 +111,7 @@ public class BasicController {
         String message = request.getMethod().equalsIgnoreCase("DELETE") ? "삭제" : "수정";
         message += "하였습니다.";
         utils.showSessionMessage(message);
-        model.addAttribute("script", "parent.location.reload()");
+        model.addAttribute("script", "parent.location.reload();");
 
 
         return "common/_execute_script";
