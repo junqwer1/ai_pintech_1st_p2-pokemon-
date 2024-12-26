@@ -21,7 +21,7 @@ select {
     height: 40px;
     padding: 0 10px;
     border-radius: 3px;
-    width: 100%
+    width: 100%;
 }
 
 select {
@@ -34,8 +34,10 @@ textarea {
     padding: 10px;
     border-radius: 3px;
     resize: none;
+    width: 100%;
 }
-/* 공통 입력 항목 E */
+
+/*  공통 입력 항목 E */
 
 /* 테이블 공통 S */
 .table-cols {
@@ -49,8 +51,6 @@ textarea {
     border-bottom: 1px solid #ccc;
     text-align: left;
 }
-
-
 .table-cols td {
     padding: 10px;
     border-bottom: 1px solid #ccc;
@@ -72,9 +72,9 @@ textarea {
 }
 
 .mb30 {
-    margin-bottom: 30px !important
+    margin-bottom: 30px !important;
 }
-/* 여백 공통 E*/
+/* 여백 공통 E */
 
 /* 버튼 공통 S */
 .btn {
@@ -83,9 +83,9 @@ textarea {
     background: #fff;
     cursor: pointer;
     height: 50px;
-    font-size: 1.35rem
+    font-size: 1.35rem;
     width: 100%;
-    border-radius: 3px
+    border-radius: 3px;
 }
 
 .btn.black {
@@ -95,8 +95,8 @@ textarea {
 
 .button-group {
     display: flex;
-    width: 450px;
-    margin: 5px auto;
+    width: 550px;
+    margin: 0 auto;
 }
 
 .button-group .btn {
@@ -141,9 +141,6 @@ input[type='radio']:checked + label {
     background:url("../images/radio_on.png") no-repeat left center;
 }
 
-input[type='radio'] + label + label {
-    margin-left: 10px;
-}
 /* 라디오 버튼 공통 E */
 
 /* 체크박스 공통 S */
@@ -153,7 +150,6 @@ input[type='checkbox'] {
 
 input[type='checkbox'] + label {
     background:url("../images/check.png") no-repeat left center;
-    background-size: 23px 23px;
     padding: 0 20px 0 33px;
     height: 40px;
     line-height: 40px;
@@ -190,7 +186,7 @@ main > aside {
     background: #ccc;
 }
 
-main >  aside > .menu {
+main > aside .menu {
     display: block;
     height: 70px;
     border-bottom: 1px solid #7a7a7a;
@@ -199,12 +195,12 @@ main >  aside > .menu {
     font-size: 1.65rem;
 }
 
-main > aside > .menu.on {
+main > aside .menu.on {
     color: #fff;
     background: #000;
 }
 
-main > aside > .menu.on * {
+main > aside .menu.on * {
     color: #fff;
 }
 
@@ -213,7 +209,7 @@ main > section {
     flex-grow: 1;
 }
 
-/* 부메뉴 */
+/* 부 메뉴 */
 main > section > nav {
     display: flex;
     height: 55px;
@@ -222,8 +218,7 @@ main > section > nav {
     box-shadow: 2px 2px 5px #7a7a7a;
     margin-bottom: 35px;
 }
-
-main > section > nav a {
+main > section > nav .menu {
     line-height: 55px;
     padding: 0 35px;
     font-size: 1.25rem;
@@ -253,7 +248,7 @@ h2 {
 .message-dialog {
     position: fixed;
     z-index: 10;
-    background: #fff;
+    background:#fff;
     box-shadow: 2px 2px 10px #8789f7;
     color: #8789f7;
     left: 255px;
@@ -265,7 +260,6 @@ h2 {
     transition: all 1s;
     border-radius: 10px;
 }
-
 .message-dialog.fade {
     opacity: 0;
 }

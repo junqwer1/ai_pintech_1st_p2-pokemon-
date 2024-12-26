@@ -90,6 +90,8 @@ public class SecurityConfig {
 
         /* 자동 로그인 설정 E */
 
+        http.headers(c -> c.frameOptions(o -> o.sameOrigin()));
+
         return http.build();
     }
 
