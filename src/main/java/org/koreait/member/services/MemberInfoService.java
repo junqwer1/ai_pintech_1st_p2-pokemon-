@@ -146,7 +146,7 @@ public class MemberInfoService implements UserDetailsService /*security*/ {
 
         /* 검색 처리 E */
 
-        List<Member> items = queryFactory.select(member)
+        List<Member> items = queryFactory.selectFrom(member)
                 .leftJoin(member.authorities)
                 .fetchJoin()
                 .where(andBuilder)
