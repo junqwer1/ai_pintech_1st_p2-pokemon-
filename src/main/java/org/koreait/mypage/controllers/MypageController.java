@@ -130,10 +130,10 @@ public class MypageController {
         return utils.tpl("mypage/wishlist");
     }
 
-    @GetMapping("/mypokemon")
+    /*@GetMapping("/mypokemon")
     public String mypokemon() {
 
-    }
+    }*/
 
     /*
     * 컨트롤러 공통 처리 영역
