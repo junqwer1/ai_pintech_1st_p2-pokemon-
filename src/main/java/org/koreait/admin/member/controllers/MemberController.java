@@ -7,8 +7,11 @@ import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.paging.ListData;
 import org.koreait.member.MemberInfo;
+import org.koreait.member.constants.Authority;
+import org.koreait.member.entities.Authorities;
 import org.koreait.member.entities.Member;
 import org.koreait.member.services.MemberInfoService;
+import org.koreait.member.services.MemberUpdateService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -24,12 +27,24 @@ public class MemberController implements SubMenus {
 
     private final Utils utils;
     private final MemberInfoService memberInfoService;
+    private final MemberUpdateService memberUpdateService;
 
     @ModelAttribute("menuCode")
     public String menuCode() {
         return "member";
     }
 
+    @ModelAttribute("Authorities")
+    public Authority[] authorities() {
+        return Authority.values();
+    }
+
+    /**
+     * 회원목록
+     * @param search
+     * @param model
+     * @return
+     */
     @GetMapping({"", "/list"})
     public String list(@ModelAttribute MemberSearch search, Model model) {
         commonProcess("list", model);
@@ -49,6 +64,8 @@ public class MemberController implements SubMenus {
      */
     @PatchMapping("/list")
     public String listPs(@RequestParam(name = "chk", required = false) List<Integer> chks, Model model) {
+
+        memberUpdateService.updateList(chks);
 
         utils.showSessionMessage("수정하였습니다");
         model.addAttribute("script", "parent.location.reload();");
