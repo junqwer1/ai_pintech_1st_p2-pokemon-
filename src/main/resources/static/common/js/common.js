@@ -86,7 +86,7 @@ commonLib.ajaxLoad = function(url, callback, method = 'GET', data, headers, isTe
 */
 commonLib.popup = function(url, width = 350, height = 350, isAjax = false){
     /* 레이어팝업 요소 동적 추가 S */
-    const layerEls = document.querySelectorAll("layer-dim, layer-popup");
+    const layerEls = document.querySelectorAll(".layer-dim, .layer-popup");
     layerEls.forEach(el => el.parentElement.removeChild(el));
 
     const layerDim = document.createElement("div");
@@ -132,10 +132,10 @@ commonLib.popup = function(url, width = 350, height = 350, isAjax = false){
             .then((text) => content.innerHTML = text)
     } else { // iframe으로 로드
         const iframe = document.createElement("iframe");
-        iframe.width = width;
-        iframe.height = height;
+        iframe.width = width - 80;
+        iframe.height = height - 80;
         iframe.frameBorder = 0;
-        iframe.src = url;
+        iframe.src = commonLib.url;
         content.append(iframe)
     }
     /* 팝업 컨텐츠 로드 E */
