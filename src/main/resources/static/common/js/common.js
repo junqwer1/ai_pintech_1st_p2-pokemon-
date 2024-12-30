@@ -9,7 +9,7 @@ commonLib.getMeta = function(mode) {
 
     const el = document.querySelector(`meta[name='${mode}']`);
 
-    return el?.content; // 옵셔널 체이닝(optional chaining?)
+    return el?.content; // 옵셔널 체이닝(optional chaining?) 널이 아닐때만 el.content를 리턴?
 };
 /*
     자바스크립트에서 만든 주소에 컨텍스트 경로 추가
@@ -22,9 +22,9 @@ commonLib.url = function(url) {
 Ajax 요청 처리
 
 @params url : 요청 주소, http[s] : 외부 URL - 컨텍스트 경로는 추가 X
-@params method : 요청방식 - GET, POST, DELETE, PETCH ...
+@params method : 요청방식 - GET, POST, DELETE, PATCH ...
 @params callback 응답 완료 후 후속 처리 콜백 함수
-@params data : 요청 데이터 (POST, PATCH, PUT...)
+@params data : 요청 데이터 (POST, PATCH, PUT...) 바디 데이터
 @params headers : 추가 요청 헤더
 @params isText : 텍스트 여부
 */
@@ -34,7 +34,8 @@ commonLib.ajaxLoad = function(url, callback, method = 'GET', data, headers, isTe
     const { getMeta } = commonLib;
     const csrfHeader = getMeta("_csrf_header");
     const csrfToken = getMeta("_csrf");
-    url = /^http[s]?:/.test(url) ? url : getMeta("rootUrl") + url.replace("/", "");
+    url = /^http[s]?:/.test(url) ? url : commonLib.url(url) ;
+    /* url = /^http[s]?:/.test(url) ? url : getMeta("rootUrl") + url.replace("/", ""); */
 
     headers = headers ?? {};
     headers[csrfHeader] = csrfToken;
@@ -45,8 +46,8 @@ commonLib.ajaxLoad = function(url, callback, method = 'GET', data, headers, isTe
         headers
     }
 
-    if (data && ['POST', 'PUT', "PATCH"].includes(method)) { // body 쪽 데이터 추가 가능
-        options.body = data instanceof FormData ? data : JSON.stringify(data);
+    if (data && ['POST', 'PUT', "PATCH"].includes(method)) { // body 쪽 데이터 추가 가능 post, put, patch 일때만 유효
+        options.body = data instanceof FormData ? data : JSON.stringify(data); // 폼데이터면 멀티파트로, 객체면 json형태에서 스트링으로 변환?
     }
 
     return new Promise((resolve, reject) => {
@@ -76,7 +77,7 @@ commonLib.ajaxLoad = function(url, callback, method = 'GET', data, headers, isTe
             .catch(err => {
                 console.log(err);
 
-                reject(err);
+                reject(err); // 응답 실패
             });
     }); // Promise
 }
