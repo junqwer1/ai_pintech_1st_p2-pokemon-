@@ -3,6 +3,7 @@ package org.koreait.pokemon.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.koreait.global.entities.BaseEntity;
+import org.koreait.mypokemon.entities.MyPokemon;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,9 @@ public class Pokemon extends BaseEntity {
 
     @Column(length = 100)
     private String genus; // 분류
+
+    @OneToMany(mappedBy = "pokemon")
+    private List<MyPokemon> myPokemons;
 
     @Transient // DB반영X
     private List<String> _types; //2차 가공

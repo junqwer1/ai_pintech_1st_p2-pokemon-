@@ -14,6 +14,7 @@ import org.koreait.member.libs.MemberUtil;
 import org.koreait.member.services.MemberInfoService;
 import org.koreait.member.services.MemberUpdateService;
 import org.koreait.mypage.validators.ProfileValidator;
+import org.koreait.mypokemon.entities.MyPokemon;
 import org.koreait.pokemon.controllers.PokemonSearch;
 import org.koreait.pokemon.entities.Pokemon;
 import org.koreait.pokemon.services.PokemonInfoService;
@@ -130,10 +131,12 @@ public class MypageController {
         return utils.tpl("mypage/wishlist");
     }
 
-    /*@GetMapping("/mypokemon")
-    public String mypokemon() {
+    @GetMapping("/mypokemon")
+    public String mypokemon(MyPokemon mode) {
 
-    }*/
+
+        return utils.tpl("mypage/mypokemon");
+    }
 
     /*
     * 컨트롤러 공통 처리 영역
@@ -153,6 +156,8 @@ public class MypageController {
         } else if (mode.equals("wishlist")){ //찜하기 목록
             addCommonScript.add("wish");
             pageTitle = utils.getMessage("나의_WISH");
+        } else if (mode.equals("mypokemon")) { // 나의 포켓몬
+
         }
 
 

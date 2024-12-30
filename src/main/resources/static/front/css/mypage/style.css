@@ -3,3 +3,19 @@
     height: 300px;
     border: 2px solid #000;
 }
+
+.bag {
+    display: grid;
+    grid-template-columns: repeat(2, 0fr);
+    justify-content: center;
+    width: 50%;
+    margin: 200px auto;
+}
+
+.poke {
+    width: 300px;
+    height: 300px;
+    border: 1px solid #000;
+    border-radius: 150px;
+    margin: 10px 10px;
+}
