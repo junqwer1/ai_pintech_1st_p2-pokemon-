@@ -5,18 +5,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.koreait.global.annotations.ApplyErrorPage;
-import org.koreait.global.exceptions.BadRequestException;
 import org.koreait.global.libs.Utils;
 import org.koreait.member.MemberInfo;
 import org.koreait.member.libs.MemberUtil;
 import org.koreait.member.services.MemberInfoService;
 import org.koreait.member.services.MemberUpdateService;
 import org.koreait.member.validators.JoinValidator;
-import org.koreait.mypage.controllers.RequestProfile;
-import org.koreait.mypage.validators.ProfileValidator;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -33,15 +28,14 @@ import java.util.List;
 @ApplyErrorPage
 @RequestMapping("/member")
 @RequiredArgsConstructor
-@SessionAttributes({"requestAgree","requestLogin", "authCodeVerified"})
+@SessionAttributes({"requestAgree", "requestLogin", "authCodeVerified"})
 public class MemberController {
-    
+
     private final Utils utils;
+    private final MemberUtil memberUtil;
     private final JoinValidator joinValidator; // 회원 가입 검증
     private final MemberUpdateService updateService; // 회원 가입 처리
-    private final MemberInfoService memberInfoService; // 회원 정보 조회
-    private final ProfileValidator profileValidator;
-
+    private final MemberInfoService infoService; // 회원 정보 조회
 
     @ModelAttribute("requestAgree")
     public RequestAgree requestAgree() {
@@ -53,7 +47,7 @@ public class MemberController {
         return new RequestLogin();
     }
 
-//    이메일 인증 여부
+    // 이메일 인증 여부
     @ModelAttribute("authCodeVerified")
     public boolean authCodeVerified() {
         return false;
@@ -69,12 +63,12 @@ public class MemberController {
     public String login(@ModelAttribute RequestLogin form, Errors errors, Model model) {
         commonProcess("login", model); // 로그인 페이지 공통 처리
 
-        if (form.getErrorCodes() != null) {// 검증 실패
+        if (form.getErrorCodes() != null) { // 검증 실패
             form.getErrorCodes().stream().map(s -> s.split("_"))
                     .forEach(s -> {
-                        if (s.length > 1){
+                        if (s.length > 1) {
                             errors.rejectValue(s[1], s[0]);
-                        } else{
+                        } else {
                             errors.reject(s[0]);
                         }
                     });
@@ -83,22 +77,6 @@ public class MemberController {
         return utils.tpl("member/login");
     }
 
-    @ResponseBody
-    @GetMapping("/test")
-    public void test() {
-        /*MemberInfo memberInfo = (MemberInfo) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
-        System.out.println(memberInfo);*/
-        System.out.println(SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal()); // 미로그인 상태 anonymousUser 문자열
-    }
-    /*public void test(@AuthenticationPrincipal MemberInfo memberInfo) {
-        System.out.println(memberInfo);
-    }*/
-    /*public void test(Principal principal) {
-        String email = principal.getName();
-        System.out.println(email);
-    }*/
 
     /**
      * 회원가입 약관 동의
@@ -169,43 +147,14 @@ public class MemberController {
     @GetMapping("/refresh")
     @PreAuthorize("isAuthenticated()")
     public void refresh(Principal principal, HttpSession session) {
-        MemberInfo memberInfo = (MemberInfo) memberInfoService.loadUserByUsername(principal.getName());
+
+        MemberInfo memberInfo = (MemberInfo) infoService.loadUserByUsername(principal.getName());
         session.setAttribute("member", memberInfo.getMember());
     }
 
     /**
-     * 회원 정보 수정
-     * @param email
-     * @param model
-     * @return
-     */
-    @GetMapping("/info/{email}")
-    public String info(@PathVariable("email") String email, Model model) {
-
-        RequestProfile form = memberInfoService.getProfile(email);
-        model.addAttribute("requestProfile", form);
-
-        return "admin/member/info";
-    }
-
-    @PatchMapping("/info")
-    public String infoPs(@Valid RequestProfile form, Errors errors, Model model) {
-
-        profileValidator.validate(form, errors);
-
-        if (errors.hasErrors()) {
-            return "admin/member/info";
-        }
-
-        updateService.process(form, form.getAuthorities());
-
-        model.addAttribute("script", "parent.location.reload();");
-        return "common/_execute_script";
-    }
-
-    /**
      * 공통 처리 부분
-     * 
+     *
      * @param mode
      * @param model
      */
@@ -223,6 +172,7 @@ public class MemberController {
             pageTitle = utils.getMessage("회원가입");
             addCommonScript.add("address");
             addCommonScript.add("emailAuth");
+
             addScript.add("member/join");
 
         } else if (mode.equals("agree")) {
@@ -242,5 +192,4 @@ public class MemberController {
         // front 스크립트
         model.addAttribute("addScript", addScript);
     }
-
 }
