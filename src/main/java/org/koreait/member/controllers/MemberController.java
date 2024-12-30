@@ -12,6 +12,8 @@ import org.koreait.member.libs.MemberUtil;
 import org.koreait.member.services.MemberInfoService;
 import org.koreait.member.services.MemberUpdateService;
 import org.koreait.member.validators.JoinValidator;
+import org.koreait.mypage.controllers.RequestProfile;
+import org.koreait.mypage.validators.ProfileValidator;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,10 +37,11 @@ import java.util.List;
 public class MemberController {
     
     private final Utils utils;
-    private final MemberUtil memberUtil;
     private final JoinValidator joinValidator; // 회원 가입 검증
     private final MemberUpdateService updateService; // 회원 가입 처리
-    private final MemberInfoService infoService; // 회원 정보 조회
+    private final MemberInfoService memberInfoService; // 회원 정보 조회
+    private final ProfileValidator profileValidator;
+
 
     @ModelAttribute("requestAgree")
     public RequestAgree requestAgree() {
@@ -166,8 +169,38 @@ public class MemberController {
     @GetMapping("/refresh")
     @PreAuthorize("isAuthenticated()")
     public void refresh(Principal principal, HttpSession session) {
-        MemberInfo memberInfo = (MemberInfo) infoService.loadUserByUsername(principal.getName());
+        MemberInfo memberInfo = (MemberInfo) memberInfoService.loadUserByUsername(principal.getName());
         session.setAttribute("member", memberInfo.getMember());
+    }
+
+    /**
+     * 회원 정보 수정
+     * @param email
+     * @param model
+     * @return
+     */
+    @GetMapping("/info/{email}")
+    public String info(@PathVariable("email") String email, Model model) {
+
+        RequestProfile form = memberInfoService.getProfile(email);
+        model.addAttribute("requestProfile", form);
+
+        return "admin/member/info";
+    }
+
+    @PatchMapping("/info")
+    public String infoPs(@Valid RequestProfile form, Errors errors, Model model) {
+
+        profileValidator.validate(form, errors);
+
+        if (errors.hasErrors()) {
+            return "admin/member/info";
+        }
+
+        updateService.process(form, form.getAuthorities());
+
+        model.addAttribute("script", "parent.location.reload();");
+        return "common/_execute_script";
     }
 
     /**

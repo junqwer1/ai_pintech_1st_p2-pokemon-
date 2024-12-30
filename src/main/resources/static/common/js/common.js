@@ -135,8 +135,9 @@ commonLib.popup = function(url, width = 350, height = 350, isAjax = false){
         iframe.width = width - 80;
         iframe.height = height - 80;
         iframe.frameBorder = 0;
-        iframe.src = commonLib.url;
-        content.append(iframe)
+        iframe.src = commonLib.url(url);
+        console.log(iframe);
+        content.append(iframe);
     }
     /* 팝업 컨텐츠 로드 E */
 }
@@ -145,7 +146,7 @@ commonLib.popup = function(url, width = 350, height = 350, isAjax = false){
     레이어팝업 제거
 */
 commonLib.popupClose = function() {
-    const layerEls = document.querySelectorAll(".layer-dim", ".layer-popup");
+    const layerEls = document.querySelectorAll(".layer-dim, .layer-popup");
     layerEls.forEach(el => el.parentElement.removeChild(el));
 }
 
