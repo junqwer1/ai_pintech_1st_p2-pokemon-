@@ -85,7 +85,7 @@ public class Pagination {
 
         /* QueryString 값 처리 S */
 
-        String qs = request.getQueryString();
+        String qs = request == null ? "" : request.getQueryString();
 
         baseUrl = "?";
 
