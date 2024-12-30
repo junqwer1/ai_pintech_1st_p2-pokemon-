@@ -92,6 +92,8 @@ public class MemberInfoService implements UserDetailsService /*security*/ {
             profile.setOptionalTerms(Arrays.stream(optionalTerms.split("||")).toList());
         }
 
+        profile.setMode("admin");
+
         return profile;
     }
 
@@ -142,11 +144,7 @@ public class MemberInfoService implements UserDetailsService /*security*/ {
 //        권한 검색 S
         List<Authority> authorities = search.getAuthority();
         if (authorities != null && !authorities.isEmpty()) {
-
-//            List<Authorities> _authorities = authorities.stream()
-//                            .map(a -> )
-
-//            andBuilder.and(member.authorities.)
+            andBuilder.and(member.authorities.any().authority.in(authorities));
         }
 //        권한 검색 E
 

@@ -19,14 +19,15 @@ public class Menus {
 
         // 회원관리
         submenus.put("member", List.of(
-                new MenuDetail("list", "회원목록", "/admin/member/list")
+                new MenuDetail("list", "회원목록", "/admin/member/list"),
+                new MenuDetail("message", "쪽지 관리", "/admin/member/message")
         ));
 
         // 게시판관리
         submenus.put("board", List.of(
                 new MenuDetail("list", "게시판목록", "/admin/board/list"),
-                new MenuDetail("add", "게시판등록", ".admin/board/add"),
-                new MenuDetail("posts", "게시글관리", "admin/board/posts")
+                new MenuDetail("add", "게시판등록", "/admin/board/add"),
+                new MenuDetail("posts", "게시글관리", "/admin/board/posts")
         ));
     }
 
