@@ -70,24 +70,24 @@
             </td>
         </tr>
 
-        <th>
-            <tr th:text="#{비밀번호_확인}"></tr>
+        <tr>
+            <th th:text="#{비밀번호_확인}"></th>
             <td>
                 <input type="password" name="confirmPassword" th:field="*{confirmPassword}"/>
                 <div class="error" th:each="err : ${#fields.errors('confirmPassword')}" th:text="${err}"></div>
             </td>
-        </th>
+        </tr>
 
-        <th>
-            <tr th:text="#{닉네임}"></tr>
+        <tr>
+            <th th:text="#{닉네임}"></th>
             <td>
                 <input type="text" name="nickName" th:field="*{nickName}"/>
                 <div class="error" th:each="err : ${#fields.errors('nickName')}" th:text="${err}"></div>
             </td>
-        </th>
+        </tr>
 
-        <th>
-            <tr th:text="#{성별}"></tr>
+        <tr>
+            <th th:text="#{성별}"></th>
             <td>
                 <input type="radio" name="gender" value="FEMALE" th:field="*{gender}" id="gender-female">
                 <label for="gender-female" th:text="#{여성}"></label>
@@ -97,18 +97,18 @@
 
                 <div class="error" th:each="err : ${#fields.errors('gender')}" th:text="${err}"></div>
             </td>
-        </th>
+        </tr>
 
-        <th>
-            <tr th:text="#{생년월일}"></tr>
+        <tr>
+            <th th:text="#{생년월일}"></th>
             <td>
                 <input type="date" name="birthDt" th:field="*{birthDt}"/>
                 <div class="error" th:each="err : ${#fields.errors('birthDt')}" th:text="${err}"></div>
             </td>
-        </th>
+        </tr>
 
-        <th>
-            <tr th:text="#{주소}"></tr>
+        <tr>
+            <th th:text="#{주소}"></th>
             <td>
                 <div class="row">
                     <button type='button' class='search-address' th:text="#{주소찾기}"></button>
@@ -127,10 +127,10 @@
                     <div class="error" th:each="err : ${#fields.errors('addressSub')}" th:text="${err}"></div>
                 </div>
             </td>
-        </th>
+        </tr>
 
-        <th>
-            <tr th:text="#{약관 동의}"></tr>
+        <tr>
+            <th th:text="#{약관 동의}"></th>
             <td>
                 <span class="checkbox">
                     <input type="checkbox" name="optionalTerms" value="advertisement" th:field="*{optionalTerms}" id="optionalTerms0" class="terms">
@@ -138,7 +138,7 @@
 <!--                    여기 확인-->
                 </span>
             </td>
-        </th>
+        </tr>
         </table>
         <div class="button-group">
             <button type="reset" class="btn">다시입력</button>

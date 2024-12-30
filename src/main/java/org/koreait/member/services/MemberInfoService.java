@@ -79,7 +79,6 @@ public class MemberInfoService implements UserDetailsService /*security*/ {
 
     public RequestProfile getProfile(String email) {
         Member member = get(email);
-
         RequestProfile profile = modelMapper.map(member, RequestProfile.class);
 
         List<Authority> authorities = member.getAuthorities()
