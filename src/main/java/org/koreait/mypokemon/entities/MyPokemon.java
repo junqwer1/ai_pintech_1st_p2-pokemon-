@@ -10,8 +10,11 @@ import java.util.List;
 @Data
 @Entity
 public class MyPokemon extends BaseEntity {
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     private Pokemon pokemon;
 
-
+    @Id
+    private */
+    @Id
+    private Long seq;
 }
