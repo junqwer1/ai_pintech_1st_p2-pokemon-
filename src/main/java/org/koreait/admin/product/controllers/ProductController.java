@@ -89,7 +89,7 @@ public class ProductController implements SubMenus {
     }
 
     /**
-     * 분류 등록
+     * 분류, 수정 양식
      * @return
      */
     @GetMapping({"/category/add", "/category/edit/{cate}"})
@@ -100,12 +100,37 @@ public class ProductController implements SubMenus {
     }
 
     /**
+     * 분류 등록, 수정 처리
+     * @param model
+     * @return
+     */
+    @PostMapping("/category/save")
+    public String categorySave(Model model) {
+        commonProcess("category_save", model);
+
+        return "redirect:/admin/product/category";
+    }
+
+    /**
+     * 배송 정책 관리
+     *
+     * @param model
+     * @return
+     */
+    @GetMapping("/delivery")
+    public String delivery(Model model) {
+        commonProcess("delivery", model);
+
+        return "admin/product/delivery/list";
+    }
+
+    /**
      * 공통 처리 부분
      *
      * @param mode
      * @param model
      */
     private void commonProcess(String mode, Model model) {
-
+        model.addAttribute("subMenuCode", mode);
     }
 }
