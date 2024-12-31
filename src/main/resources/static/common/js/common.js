@@ -154,6 +154,7 @@ commonLib.popupClose = function() {
     위지윅 에디터 로드
 */
 commonLib.loadEditor = function(id, height = 350) {
+
     if (typeof ClassicEditor === 'undefined' || !id) {
         return;
     }
@@ -163,12 +164,25 @@ commonLib.loadEditor = function(id, height = 350) {
             try{
                 const editor = await ClassicEditor.create(document.getElementById(id));
                 resolve(editor);
+                editor.editing.view.change((writer) => {
+                    writer.setStyle(
+                           "height",
+                           `${height}px`,
+                           editor.editing.view.document.getRoot()
+                        );
+                });
+//                editor.ui.view.editable.element.style.height = `${height}px`;
+                /*const editorAreas = document.getElementsByClassName("ck-editor__editable");
+                for (const el of editorAreas) {
+                    el.style.height = `${height}px`;
+                }*/
+
             } catch (err) {
                 console.log(err);
 
                 reject(err);
             }
-        });
+        })();
     });
 };
 

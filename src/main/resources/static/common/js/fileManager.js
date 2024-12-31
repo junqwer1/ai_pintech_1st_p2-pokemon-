@@ -44,7 +44,7 @@ commonLib.fileManager = {
             const { ajaxLoad } = commonLib;
             ajaxLoad("/api/file/upload", function(items) {
                 if (typeof callbackFileUpload === 'function'){
-                callbackFileUpload(items);
+                    callbackFileUpload(items);
                 }
             }, 'POST', formData);
             window.fileEl = null
