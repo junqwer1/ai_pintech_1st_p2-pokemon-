@@ -32,8 +32,8 @@ public class Menus {
 
         // 상품관리
         submenus.put("product", List.of(
-            new MenuDetail("list", "상품목록", "/admin/product/list"),
-            new MenuDetail("add", "상품등록", "/admin/product/add"),
+                new MenuDetail("list", "상품목록", "/admin/product/list"),
+                new MenuDetail("add", "상품등록", "/admin/product/add"),
                 new MenuDetail("category", "분류관리", "/admin/product/category"),
                 new MenuDetail("delivery", "배송정책관리", "/admin/product/delivery")
         ));
