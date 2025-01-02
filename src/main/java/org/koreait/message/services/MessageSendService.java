@@ -8,6 +8,7 @@ import org.koreait.member.repositories.MemberRepository;
 import org.koreait.message.constants.MessageStatus;
 import org.koreait.message.controllers.RequestMessage;
 import org.koreait.message.entities.Message;
+import org.koreait.member.exceptions.MemberNotFoundException;
 import org.koreait.message.repositories.MessageRepository;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -24,7 +25,8 @@ public class MessageSendService {
     public void process(RequestMessage form) {
 
         String email = form.getEmail();
-        Member receiver =memberUtil.isAdmin() && form.isNotice() ? memberRepository.findByEmail(email).orElse(null) : null;
+        Member receiver =memberUtil.isAdmin() && form.isNotice() ? memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new) : null;
+
         Message message = Message.builder()
                 .gid(form.getGid())
                 .notice(form.isNotice())

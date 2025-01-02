@@ -64,7 +64,7 @@ public class MessageController {
             form.setEditorImages(fileInfoService.getList(gid, "editor", FileStatus.ALL));
             form.setAttachFiles(fileInfoService.getList(gid, "attach", FileStatus.ALL));
 
-            return utils.tpl("message/from");
+            return utils.tpl("message/form");
         }
 
         sendService.process(form);
