@@ -15,6 +15,8 @@ function callbackFileUpload(files) {
         return;
     }
 
+
+
     const imageUrls = [];
 
     const targetEditor = document.getElementById("editor-files");
