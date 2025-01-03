@@ -25,7 +25,7 @@ public class MessageSendService {
     public void process(RequestMessage form) {
 
         String email = form.getEmail();
-        Member receiver =memberUtil.isAdmin() && form.isNotice() ? memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new) : null;
+        Member receiver = !form.isNotice() ? memberRepository.findByEmail(email).orElseThrow(MemberNotFoundException::new) : null;
 
         Message message = Message.builder()
                 .gid(form.getGid())

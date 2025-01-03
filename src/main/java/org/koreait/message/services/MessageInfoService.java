@@ -6,6 +6,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.koreait.file.services.FileInfoService;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.paging.CommonSearch;
 import org.koreait.global.paging.ListData;
@@ -28,11 +29,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MessageInfoService extends CommonSearch {
 
+    private final FileInfoService fileInfoService;
     private final MessageRepository messageRepository;
     private final JPAQueryFactory queryFactory;
     private final HttpServletRequest request;
-    private final Utils utils;
     private final MemberUtil memberUtil;
+    private final Utils utils;
 
     /**
      * 쪽지 하나 조회
@@ -121,6 +123,8 @@ public class MessageInfoService extends CommonSearch {
      * @param item
      */
     private void addInfo(Message item) {
-
+        String gid = item.getGid();
+        item.setEditorImages(fileInfoService.getList(gid, "editor"));
+        item.setAttachFiles(fileInfoService.getList(gid, "attach"));
     }
 }
