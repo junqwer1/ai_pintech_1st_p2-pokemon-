@@ -42,7 +42,7 @@
         <span class="date" th:text="*{#temporals.format(createdAt, 'yy.MM.dd HH:mm')}"></span>
       </div>
     </li>
-    <li th:if="${items != null && !items.isEmpty()}" class="no-data" th:text="#{조회된_쪽지가_없습니다.}"></li>
+    <li th:if="${items != null && items.isEmpty()}" class="no-data" th:text="#{조회된_쪽지가_없습니다.}"></li>
   </ul>
 
   <th:block th:replace="~{common/_pagination::pagination}"/>
