@@ -31,6 +31,7 @@ public class MessageSendService {
                 .gid(form.getGid())
                 .notice(form.isNotice())
                 .subject(form.getSubject())
+                .content(form.getContent())
                 .sender(memberUtil.getMember())
                 .receiver(receiver)
                 .status(MessageStatus.UNREAD)
