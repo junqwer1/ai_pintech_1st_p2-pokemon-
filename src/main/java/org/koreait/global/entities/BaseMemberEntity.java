@@ -15,7 +15,7 @@ public abstract class BaseMemberEntity extends BaseEntity{
 
     @CreatedBy //로그인한 사용자의 이메일 정보
     @Column(length = 65, updatable = false)
-    private String createBy;
+    private String createdBy;
 
     @LastModifiedBy
     @Column(length = 65, insertable = false)

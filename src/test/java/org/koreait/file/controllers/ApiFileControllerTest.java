@@ -76,7 +76,7 @@ public class ApiFileControllerTest {
 //        Thread.sleep(5000);
         List<FileInfo> items = infoService.getList("testgid",null, null);
         for (FileInfo item : items) {
-            System.out.println(item.getCreateBy());
+            System.out.println(item.getCreatedBy());
         }
     }
 

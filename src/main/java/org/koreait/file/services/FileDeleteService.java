@@ -27,7 +27,7 @@ public class FileDeleteService {
         String filePath = item.getFilePath();
 //        System.out.println(filePath);
 //        0. 파일 소유자만 삭제 가능하게 통제 - 다만 관리자는 가능
-        String createdBy = item.getCreateBy();
+        String createdBy = item.getCreatedBy();
 //        관리자 아니고 && 비로그인이 아닌 로그인회원이 작성한 File 이고
 //&& (비로그인 상태이거나 || 해당 File의 작성자(createdBy)가 아닐때)
         if (!memberUtil.isAdmin() && StringUtils.hasText(createdBy)
