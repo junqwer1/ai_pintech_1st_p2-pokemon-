@@ -11,6 +11,7 @@ import org.koreait.global.paging.ListData;
 import org.koreait.message.entities.Message;
 import org.koreait.message.services.MessageInfoService;
 import org.koreait.message.services.MessageSendService;
+import org.koreait.message.services.MessageStatusService;
 import org.koreait.message.validators.MessageValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +34,7 @@ public class MessageController {
     private final FileInfoService fileInfoService;
     private final MessageSendService sendService;
     private final MessageInfoService infoService;
+    private final MessageStatusService statusService;
 
     @ModelAttribute("addCss")
     public List<String> addCss() {
@@ -94,11 +96,13 @@ public class MessageController {
     }
 
     @GetMapping("/view/{seq}")
-    public String info(@PathVariable("seq") Long seq, Model model) {
+    public String view(@PathVariable("seq") Long seq, Model model) {
         commonProcess("view", model);
 
         Message item = infoService.get(seq);
         model.addAttribute("item", item);
+
+        statusService.change(seq); // 열람 상태로 변경
 
         return utils.tpl("message/view");
     }

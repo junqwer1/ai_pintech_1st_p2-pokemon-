@@ -60,7 +60,7 @@ public class MessageInfoService extends CommonSearch {
 
         addInfo(item); // 추가 정보 처리
 
-        return null;
+        return item;
     }
 
     /**
@@ -83,6 +83,7 @@ public class MessageInfoService extends CommonSearch {
         mode = StringUtils.hasText(mode) ? mode : "receive";
 //        send - 보낸 쪽지 목록, receive - 받은 쪽지 목록
         andBuilder.and(mode.equals("send") ? message.sender.eq(member) : message.receiver.eq(member));
+        andBuilder.and(mode.equals("send") ? message.deletedBySender.eq(false) : message.deletedByReceiver.eq(false));
 
 //        보낸 사람 조건 검색
         List<String> sender = search.getSender();

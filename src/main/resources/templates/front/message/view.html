@@ -6,12 +6,13 @@
     <div class="subject" th:text="*{subject}"></div>
     <div class="info">
         <div class="sender">
-            <th:block th:text="#{보낸사람}"></th:block>
+            <th:block th:text="#{보낸사람}"></th:block>:
             <th:block th:text="*{#strings.concat(sender.name, '(', sender.email + ')')}"></th:block>
         </div>
-        <div class="date" th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm:ss'}"></div>
+        <div class="date" th:text="*{#temporals.format(createdAt, 'yyyy.MM.dd HH:mm:ss')}"></div>
     </div>
-<!--    info-->
+    <!--// info -->
+
     <div class="content" th:utext="*{content}"></div>
     <ul th:if="*{attachFiles != null && !attachFiles.isEmpty()}">
         <li th:each="file, status : *{attachFiles}" th:object="${file}">
