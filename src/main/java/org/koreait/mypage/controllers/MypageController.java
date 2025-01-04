@@ -131,9 +131,10 @@ public class MypageController {
         return utils.tpl("mypage/wishlist");
     }
 
+    /* 마이포켓몬 */
     @GetMapping("/mypokemon")
-    public String mypokemon(MyPokemon mode) {
-
+    public String mypokemon(CommonSearch search, Model model) {
+        commonProcess("mypokemon", model);
 
         return utils.tpl("mypage/mypokemon");
     }
