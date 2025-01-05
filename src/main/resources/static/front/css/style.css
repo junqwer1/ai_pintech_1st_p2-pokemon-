@@ -272,6 +272,14 @@ footer .mid_right_ul > li > a{
 footer .mid_right_ul > li > a > img{
     width: 50px;
 }
+
+footer .mid_left > .building {
+    color: #fff;
+}
+
+footer .mid_left > .mid_left_ul > li {
+    color: #fff;
+}
 /* 사이트 하단 MID E */
 
 /* 사이트 하단 BOTTOM S */
@@ -283,6 +291,20 @@ footer .btm_left{
 footer .btm_left_up{
     display: flex;
     flex-direction: row;
+    color: #fff;
+    gap: 10px;
+}
+
+footer .btm_left_up > .gogak > span {
+    color: #fff;
+}
+
+footer .btm_left_up > .info > ul > li > span {
+    color: #fff;
+}
+
+footer .btm_left_down > span {
+    color: #fff;
 }
 /* 사이트 하단 BOTTOM E */
 /* 사이트 하단 푸터 E */

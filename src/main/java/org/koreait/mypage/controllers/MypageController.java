@@ -133,10 +133,18 @@ public class MypageController {
 
     /* 마이포켓몬 */
     @GetMapping("/mypokemon")
-    public String mypokemon(CommonSearch search, Model model) {
+    public String myPokemon(Model model) {
         commonProcess("mypokemon", model);
 
         return utils.tpl("mypage/mypokemon");
+    }
+
+    /* 마이포켓몬 뷰 */
+    @GetMapping("/mypokemon/{seq}")
+    public String myPokemonView(@PathVariable("seq") Long seq, Model model) {
+
+
+        return utils.tpl("mypage/mypokemon")
     }
 
     /*
