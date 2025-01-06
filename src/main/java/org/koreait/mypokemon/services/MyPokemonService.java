@@ -28,15 +28,13 @@ public class MyPokemonService {
         mode = StringUtils.hasText(mode) ? mode : "add";
         Member member = memberUtil.getMember();
         member = memberRepository.findByEmail(member.getEmail()).orElse(null);
-        Pokemon pokemon = new Pokemon();
         try {
             if (mode.equals("remove")) { // 마이포켓몬 삭제
-                MyPokemonId myPokemonId = new MyPokemonId(seq, pokemon, member);
+                MyPokemonId myPokemonId = new MyPokemonId(seq, member);
                 myPokemonRepository.deleteById(myPokemonId);
             } else { // 마이포켓몬 추가
                 MyPokemon myPokemon = new MyPokemon();
                 myPokemon.setSeq(seq);
-                myPokemon.setPokemon(pokemon);
                 myPokemon.setMember(member);
             }
         } catch (Exception e) {

@@ -1,5 +1,6 @@
 package org.koreait.message.controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ public class MessageController {
     private final MessageInfoService infoService;
     private final MessageStatusService statusService;
     private final MessageDeleteService deleteService;
+    private final ObjectMapper om;
 
     @ModelAttribute("addCss")
     public List<String> addCss() {
@@ -63,7 +65,7 @@ public class MessageController {
      * @return
      */
     @PostMapping
-    public String process(@Valid RequestMessage form, Errors errors, Model model) {
+    public String process(@Valid RequestMessage form, Errors errors, Model model, HttpServletRequest request) {
         commonProcess("send", model);
 
         messageValidator.validate(form, errors);
@@ -77,9 +79,13 @@ public class MessageController {
             return utils.tpl("message/form");
         }
 
-        sendService.process(form);
+        Message message = sendService.process(form);
+        long totalUnRead = infoService.totalUnRead();
 
-        return "redirect:/message/list";
+        StringBuffer sb = new StringBuffer();
+        sb.append(String.format("location.replace('%s')", request.getContextPath() + "/message/list"));
+
+        return "common/_execute_script";
     }
 
     /**
