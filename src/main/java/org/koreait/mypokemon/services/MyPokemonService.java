@@ -19,6 +19,7 @@ public class MyPokemonService {
     private final MemberUtil memberUtil;
     private final MemberRepository memberRepository;
     private final MyPokemonRepository myPokemonRepository;
+    private final MyPokemonRepository repository;
 
     public void process(String mode, Long seq) {
         if (!memberUtil.isLogin()) {
@@ -36,6 +37,7 @@ public class MyPokemonService {
                 MyPokemon myPokemon = new MyPokemon();
                 myPokemon.setSeq(seq);
                 myPokemon.setMember(member);
+                repository.save(myPokemon);
             }
         } catch (Exception e) {
             e.printStackTrace();
