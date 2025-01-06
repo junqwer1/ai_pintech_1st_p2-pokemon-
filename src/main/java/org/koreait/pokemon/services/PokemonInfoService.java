@@ -97,6 +97,18 @@ public class PokemonInfoService {
         return getList(search);
     }
 
+    /*// 내가 선택한 포켓몬
+    public Pokemon getMyPokemons(PokemonSearch search) {
+        Long seq = wishService.getMyWish(WishType.POKEMON);
+        if (seq == null || seq.isEmpty()) {
+            return new ListData<>();
+        }
+
+        search.setSeq(seq);
+
+        return getList(search);
+    }*/
+
     /**
      * 포켓몬 단일 조회
      * */
