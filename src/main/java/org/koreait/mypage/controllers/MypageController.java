@@ -144,7 +144,7 @@ public class MypageController {
     public String myPokemonView(@PathVariable("seq") Long seq, Model model) {
 
 
-        return utils.tpl("mypage/mypokemon")
+        return utils.tpl("mypage/mypokemon");
     }
 
     /*
