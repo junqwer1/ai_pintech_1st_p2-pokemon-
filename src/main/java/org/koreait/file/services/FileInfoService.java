@@ -86,6 +86,7 @@ public class FileInfoService {
             item.setThumbUrl(String.format("%s/api/file/thumb?seq=%d", request.getContextPath(), item.getSeq()));
 
         }
+
     }
 
     public String getFilePath(FileInfo item) {

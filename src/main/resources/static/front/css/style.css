@@ -331,11 +331,8 @@ footer .btm_left_down > span {
 }
 
 .pagination a.on {
-    background: #000
-    color: #FFF
+    background: #000;
+    color: #FFF;
 }
 
-.page {
-    color: #000
-}
 /* 페이지네이션 E*/

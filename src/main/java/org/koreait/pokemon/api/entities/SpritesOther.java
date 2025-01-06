@@ -9,6 +9,9 @@ import java.util.Map;
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SpritesOther {
-    @JsonAlias("official-artwork")
+    @JsonAlias({"official-artwork"})
     private Map<String, String> officialArtwork;
+
+    @JsonAlias({"showdown"})
+    private Map<String, String> showDown;
 }

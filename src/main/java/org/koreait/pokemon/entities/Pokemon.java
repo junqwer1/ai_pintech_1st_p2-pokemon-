@@ -24,6 +24,7 @@ public class Pokemon extends BaseEntity {
     private int height;
     private int baseExperience;
     private String frontImage;
+    private String frontGif;
 
     @Lob
     private String flavorText; // 설명
@@ -32,9 +33,6 @@ public class Pokemon extends BaseEntity {
 
     @Column(length = 100)
     private String genus; // 분류
-
-    /*@OneToMany(mappedBy = "pokemon")
-    private List<MyPokemon> myPokemon;*/
 
     @Transient // DB반영X
     private List<String> _types; //2차 가공

@@ -21,7 +21,7 @@ public class MyPokemonService {
     private final MyPokemonRepository myPokemonRepository;
 
     public void process(String mode, Long seq) {
-       /* if (!memberUtil.isLogin()) {
+        if (!memberUtil.isLogin()) {
             return;
         }
 
@@ -29,7 +29,7 @@ public class MyPokemonService {
         Member member = memberUtil.getMember();
         member = memberRepository.findByEmail(member.getEmail()).orElse(null);
         try {
-            if (mode.equals("remove")) { // 마이포켓몬 삭제
+            if (mode.equals("remove")) { // 마이포켓몬 해제
                 MyPokemonId myPokemonId = new MyPokemonId(seq, member);
                 myPokemonRepository.deleteById(myPokemonId);
             } else { // 마이포켓몬 추가
@@ -39,9 +39,9 @@ public class MyPokemonService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
-
-
+        }
     }
+
+//    public void viewPokemon(Long seq,)
 
 }

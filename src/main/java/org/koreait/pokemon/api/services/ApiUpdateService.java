@@ -49,6 +49,7 @@ public class ApiUpdateService {
             pokemon.setWeight(data1.getWeight());
             pokemon.setBaseExperience(data1.getBaseExperience());
             pokemon.setFrontImage(data1.getSprites().getOther().getOfficialArtwork().get("front_default"));
+            pokemon.setFrontGif(data1.getSprites().getOther().getShowDown().get("front_default"));
 
             // 타입 처리 S
             String types = data1.getTypes().stream().map(d -> d.getType().getName())
