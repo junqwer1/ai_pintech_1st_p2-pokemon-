@@ -15,7 +15,7 @@ public class RequestProduct {
     @NotBlank
     private String name; // 상품명
     private String summary; // 상품 요약 설명
-    private String description; // 상품 상세 설명
+    private String description; // 상품 상세 설명 // 에디터 연동
 
     private int consumerPrice; // 소비자가
     private int salePrice; // 판매가
