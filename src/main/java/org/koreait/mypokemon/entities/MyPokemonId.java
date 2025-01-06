@@ -11,6 +11,5 @@ import org.koreait.pokemon.entities.Pokemon;
 @AllArgsConstructor
 public class MyPokemonId {
     private Long seq;
-    private Pokemon pokemon;
     private Member member;
 }

@@ -33,8 +33,8 @@ public class Pokemon extends BaseEntity {
     @Column(length = 100)
     private String genus; // 분류
 
-    @OneToMany(mappedBy = "pokemon")
-    private List<MyPokemon> myPokemon;
+    /*@OneToMany(mappedBy = "pokemon")
+    private List<MyPokemon> myPokemon;*/
 
     @Transient // DB반영X
     private List<String> _types; //2차 가공
