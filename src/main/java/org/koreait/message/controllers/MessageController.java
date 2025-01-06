@@ -1,5 +1,6 @@
 package org.koreait.message.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.koreait.file.constants.FileStatus;
@@ -9,6 +10,7 @@ import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.paging.ListData;
 import org.koreait.message.entities.Message;
+import org.koreait.message.services.MessageDeleteService;
 import org.koreait.message.services.MessageInfoService;
 import org.koreait.message.services.MessageSendService;
 import org.koreait.message.services.MessageStatusService;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Controller
@@ -35,6 +38,7 @@ public class MessageController {
     private final MessageSendService sendService;
     private final MessageInfoService infoService;
     private final MessageStatusService statusService;
+    private final MessageDeleteService deleteService;
 
     @ModelAttribute("addCss")
     public List<String> addCss() {
@@ -96,7 +100,7 @@ public class MessageController {
     }
 
     @GetMapping("/view/{seq}")
-    public String view(@PathVariable("seq") Long seq, Model model) {
+    public String view(@PathVariable("seq") Long seq, Model model, HttpServletRequest request) {
         commonProcess("view", model);
 
         Message item = infoService.get(seq);
@@ -104,13 +108,16 @@ public class MessageController {
 
         statusService.change(seq); // 열람 상태로 변경
 
+        String referer = Objects.requireNonNullElse(request.getHeader("referer"), "");
+        model.addAttribute("mode", referer.contains("mode=send") ? "send" : "receiver");
+
         return utils.tpl("message/view");
     }
 
     @GetMapping("/delete/{seq}")
-    public String delete(@PathVariable("seq") Long seq) {
+    public String delete(@PathVariable("seq") Long seq, @RequestParam(name = "mode", defaultValue = "receive") String mode) {
 
-
+        deleteService.process(seq, mode);
 
         return "redirect:/message/list";
     }

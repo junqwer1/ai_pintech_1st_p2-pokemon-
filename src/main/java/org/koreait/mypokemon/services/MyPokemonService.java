@@ -21,7 +21,7 @@ public class MyPokemonService {
     private final MyPokemonRepository myPokemonRepository;
 
     public void process(String mode, Long seq) {
-        if (!memberUtil.isLogin()) {
+       /* if (!memberUtil.isLogin()) {
             return;
         }
 
@@ -41,7 +41,7 @@ public class MyPokemonService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
 
     }
