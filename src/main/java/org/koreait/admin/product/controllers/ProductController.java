@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.koreait.admin.global.menu.SubMenus;
 import org.koreait.file.constants.FileStatus;
-import org.koreait.file.entities.FileInfo;
 import org.koreait.file.services.FileInfoService;
 import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.libs.Utils;
