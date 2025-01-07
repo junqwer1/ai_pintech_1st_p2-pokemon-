@@ -203,6 +203,25 @@ header .move-to-store::after{
     transform: skew(-45deg);
 
 }
+
+header .link-mypage {
+    position: relative;
+}
+
+header .link-mypage .badge {
+    position: absolute;
+    display: block;
+    min-width: 20px;
+    height: 20px;
+    border-radius: 15px;
+    background: #f00;
+    color: #fff;
+    top: -4px;
+    right: -1px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 0.8rem;
+}
 /* 사이트 상단 헤더 E */
 
 

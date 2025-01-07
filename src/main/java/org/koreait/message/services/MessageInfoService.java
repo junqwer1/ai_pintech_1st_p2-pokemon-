@@ -161,12 +161,18 @@ public class MessageInfoService extends CommonSearch {
      *
      * @return
      */
-    public long totalUnRead() {
+    public long totalUnRead(String email) {
         BooleanBuilder andBuilder = new BooleanBuilder();
         QMessage message = QMessage.message;
-        andBuilder.and(message.receiver.eq(memberUtil.getMember()))
+        andBuilder.and(message.receiver.email.eq(email))
                 .and(message.status.eq(MessageStatus.UNREAD));
 
         return messageRepository.count(andBuilder);
+    }
+
+    public long totalUnRead() {
+        Member member = memberUtil.getMember();
+
+        return totalUnRead(member.getEmail());
     }
 }
