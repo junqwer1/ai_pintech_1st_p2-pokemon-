@@ -27,7 +27,7 @@ public class Board extends BaseMemberEntity {
     private boolean useEditor;
     private boolean useEditorImage;
     private boolean useAttachFile;
-    private boolean userComment; // 댓글 사용 여부
+    private boolean useComment; // 댓글 사용 여부
 
     private String skin;
 
