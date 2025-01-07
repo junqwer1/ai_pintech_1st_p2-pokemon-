@@ -165,7 +165,7 @@ header .icon.search {
 
 header > .right {
     display: flex;
-    width: 520px;
+    width: 680px;
     justify-content: flex-end;
 }
 
@@ -173,7 +173,6 @@ header > .right > ul {
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 header > .right li {

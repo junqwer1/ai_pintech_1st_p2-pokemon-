@@ -1,8 +1,8 @@
 
 
 window.addEventListener("DOMContentLoaded", function() {
-    const wishButtons = document.getElementsByClassName("wish-btn")
-    for (const el of wishButtons) {
+    const mypokemonButtons = document.getElementsByClassName("mypokemon-btn")
+    for (const el of mypokemonButtons) {
         el.addEventListener("click", function() {
             /**
                 1. 로그인 상태 체크 - 클래스에 guest가 포함되어 있으면 미로그인 상태
@@ -18,17 +18,17 @@ window.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
-            let apiUrl = commonLib.url("/api/wish/");
+            let apiUrl = commonLib.url("/api/mypokemon/");
             const classList = this.classList;
-            if (classList.contains("on")) { // 찜하기 제거
+            if (classList.contains("on")) { // 추가하기 제거
                 apiUrl += "remove";
-            } else { // 찜하기
+            } else { // 추가하기
                 apiUrl += "add";
             }
 
-            const { seq, type } = this.dataset;
+            const { seq } = this.dataset;
 
-            apiUrl += `?seq=${seq}&type=${type}`;
+            apiUrl += `?seq=${seq}`;
 
             const { ajaxLoad } = commonLib;
 
@@ -40,9 +40,9 @@ window.addEventListener("DOMContentLoaded", function() {
                     await ajaxLoad(apiUrl);
 
                     if (classList.contains("on")){ // 제거 처리
-                        icon.className = "xi-heart-o";
+                        icon.className = "xi-star-o";
                     } else { // 추가 처리
-                        icon.className = "xi-heart";
+                        icon.className = "xi-star";
                     }
 
                     classList.toggle("on");

@@ -128,15 +128,19 @@ public class MypageController {
 
     /* 마이포켓몬 */
     @GetMapping("/mypokemon")
-    public String myPokemon(Model model) {
+    public String myPokemon(CommonSearch search, Model model) {
         commonProcess("mypokemon", model);
+
+        PokemonSearch pSearch = modelMapper.map(search, PokemonSearch.class);
+        ListData<Pokemon> data = pokemonInfoService.getMyPokemons(pSearch);
+        model.addAttribute("items", data.getItems());
 
         return utils.tpl("mypage/mypokemon");
     }
 
     /* 마이포켓몬 뷰 */
-    @GetMapping("/mypokemon/{seq}")
-    public String myPokemonView(@PathVariable("seq") Long seq, Model model) {
+    @GetMapping("/mypokemon/{number}")
+    public String myPokemonView(@PathVariable("number") int number, Model model) {
 
 
         return utils.tpl("mypage/mypokemon");
@@ -161,7 +165,9 @@ public class MypageController {
             addCommonScript.add("wish");
             pageTitle = utils.getMessage("나의_WISH");
         } else if (mode.equals("mypokemon")) { // 나의 포켓몬
-
+            addCommonScript.add("common");
+            addCommonScript.add("mypokemon");
+            pageTitle = utils.getMessage("나의_포켓몬");
         }
 
 

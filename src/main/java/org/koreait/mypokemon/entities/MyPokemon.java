@@ -26,4 +26,7 @@ public class MyPokemon extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
 
+    @Transient
+    private int number;
+
 }

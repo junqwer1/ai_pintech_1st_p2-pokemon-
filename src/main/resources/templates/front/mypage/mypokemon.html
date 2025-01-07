@@ -4,23 +4,7 @@
         layout:decorate="~{front/layouts/mypage}">
     <section layout:fragment="content">
         <div class="bag">
-            <div class="first poke">
-
-            </div>
-            <div class="second poke">
-
-            </div>
-            <div class="third poke">
-
-            </div>
-            <div class="fourth poke">
-
-            </div>
-            <div class="fifth poke">
-
-            </div>
-            <div class="sixth poke">
-
+            <div th:each="index : ${#numbers.sequence(1, 6)}" class="poke" th:id="'poke' + ${index}">
             </div>
         </div>
     </section>
