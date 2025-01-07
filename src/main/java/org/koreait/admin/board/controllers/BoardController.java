@@ -116,6 +116,6 @@ public class BoardController implements SubMenus {
 
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("addCommonScript", addCommonScript);
-        model.addAttribute("subMenuCode", mode)
+        model.addAttribute("subMenuCode", mode);
     }
 }
