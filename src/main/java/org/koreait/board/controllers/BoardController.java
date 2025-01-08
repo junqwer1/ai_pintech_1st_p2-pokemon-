@@ -1,13 +1,17 @@
 package org.koreait.board.controllers;
 
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.koreait.board.entities.Board;
 import org.koreait.board.services.configs.BoardConfigInfoService;
 import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.libs.Utils;
+import org.koreait.member.libs.MemberUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
@@ -22,6 +26,7 @@ import java.util.List;
 public class BoardController {
 
     private final Utils utils;
+    private final MemberUtil memberUtil;
     private final BoardConfigInfoService configInfoService;
 
     /**
@@ -70,8 +75,12 @@ public class BoardController {
      * @return
      */
     @GetMapping("/write/{bid}")
-    public String write(@PathVariable("bid") String bid, Model model) {
+    public String write(@PathVariable("bid") String bid, @ModelAttribute RequestBoard form, Model model) {
         commonProcess(bid, "add", model);
+
+        if (memberUtil.isLogin()) {
+            form.setPoster(memberUtil.getMember().getName());
+        }
 
         return utils.tpl("board/write");
     }
@@ -96,13 +105,20 @@ public class BoardController {
      * @return
      */
     @PostMapping("/save")
-    public String save(@SessionAttribute("commonValue") CommonValue commonValue) {
+    public String save(@Valid RequestBoard form, Errors errors, @SessionAttribute("commonValue") CommonValue commonValue, Model model) {
+        String mode = form.getMode();
+        mode = StringUtils.hasText(mode) ? mode : "add";
+        commonProcess(form.getBid(), mode, model);
+
+        if (errors.hasErrors()) {
+
+            return utils.tpl("board/" + mode);
+        }
 
         Board board = commonValue.getBoard();
 
 //        글작성, 수정 성공시 글보기 또는 글목록으로 이동
         String redirectUrl = String.format("board/%s", board.getLocationAfterWriting().equals("view") ? "view/.." : "list/" + board.getBid());
-
         return "redirect:" + redirectUrl;
     }
 
