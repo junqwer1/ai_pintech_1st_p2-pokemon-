@@ -1,7 +1,6 @@
 package org.koreait.pokemon.advices;
 
 import lombok.RequiredArgsConstructor;
-import org.koreait.mypokemon.services.MyPokemonService;
 import org.koreait.wishlist.constants.WishType;
 import org.koreait.wishlist.services.WishService;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,15 +12,9 @@ import java.util.List;
 @ControllerAdvice("org.koreait.pokemon")
 public class PokemonControllerAdvice {
     private final WishService wishService;
-    private final MyPokemonService myPokemonService;
 
     @ModelAttribute("myPokemons")
     public List<Long> myPokemons() {
         return wishService.getMyWish(WishType.POKEMON);
-    }
-
-    @ModelAttribute("myPokes")
-    public List<Long> myPokes() {
-        return myPokemonService.getMyPokemon();
     }
 }

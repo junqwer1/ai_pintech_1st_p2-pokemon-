@@ -8,7 +8,7 @@
         <div class="left">
             <th:block th:utext="${@wishService.showWish(item.seq, 'POKEMON', myPokemons)}"></th:block>
             <th:block th:utext="*{@utils.showImage(frontImage, 390, 390, 'image')}"></th:block>
-            <img th:src="${frontGif}">
+            <img th:src="*{frontGif}">
         </div>
         <div class="right">
             <div class="item-no" th:text="*{#strings.concat('No.', #numbers.formatInteger(seq, 4))}"></div>

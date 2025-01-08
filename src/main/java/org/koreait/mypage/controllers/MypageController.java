@@ -128,20 +128,18 @@ public class MypageController {
 
     /* 마이포켓몬 */
     @GetMapping("/mypokemon")
-    public String myPokemon(CommonSearch search, Model model) {
+    public String myPokemon(Model model, PokemonSearch pSearch) {
         commonProcess("mypokemon", model);
-
-        PokemonSearch pSearch = modelMapper.map(search, PokemonSearch.class);
-        ListData<Pokemon> data = pokemonInfoService.getMyPokemons(pSearch);
-        model.addAttribute("items", data.getItems());
+        int limit = 6;
+        pSearch.setLimit(limit);
 
         return utils.tpl("mypage/mypokemon");
     }
 
     /* 마이포켓몬 뷰 */
-    @GetMapping("/mypokemon/{number}")
-    public String myPokemonView(@PathVariable("number") int number, Model model) {
-
+    @GetMapping("/mypokemon/{seq}")
+    public String myPokemonView(@PathVariable("seq") Long seq, Model model) {
+        Pokemon item = pokemonInfoService.get(seq);
 
         return utils.tpl("mypage/mypokemon");
     }

@@ -2,7 +2,6 @@ package org.koreait.wishlist.controllers;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.koreait.mypokemon.services.MyPokemonService;
 import org.koreait.wishlist.constants.WishType;
 import org.koreait.wishlist.services.WishService;
 import org.springframework.http.HttpStatus;
