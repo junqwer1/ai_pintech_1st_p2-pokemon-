@@ -5,6 +5,9 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.koreait.board.entities.Board;
 import org.koreait.board.services.configs.BoardConfigInfoService;
+import org.koreait.board.validators.BoardValidator;
+import org.koreait.file.constants.FileStatus;
+import org.koreait.file.services.FileInfoService;
 import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.libs.Utils;
 import org.koreait.member.libs.MemberUtil;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @ApplyErrorPage
@@ -28,6 +32,8 @@ public class BoardController {
     private final Utils utils;
     private final MemberUtil memberUtil;
     private final BoardConfigInfoService configInfoService;
+    private final FileInfoService fileInfoService;
+    private final BoardValidator boardValidator;
 
     /**
      * 사용자별 공통 데이터
@@ -76,7 +82,10 @@ public class BoardController {
      */
     @GetMapping("/write/{bid}")
     public String write(@PathVariable("bid") String bid, @ModelAttribute RequestBoard form, Model model) {
-        commonProcess(bid, "add", model);
+        commonProcess(bid, "write", model);
+
+        form.setBid(bid);
+        form.setGid(UUID.randomUUID().toString());
 
         if (memberUtil.isLogin()) {
             form.setPoster(memberUtil.getMember().getName());
@@ -107,10 +116,15 @@ public class BoardController {
     @PostMapping("/save")
     public String save(@Valid RequestBoard form, Errors errors, @SessionAttribute("commonValue") CommonValue commonValue, Model model) {
         String mode = form.getMode();
-        mode = StringUtils.hasText(mode) ? mode : "add";
+        mode = StringUtils.hasText(mode) ? mode : "write";
         commonProcess(form.getBid(), mode, model);
 
+        boardValidator.validate(form, errors);
+
         if (errors.hasErrors()) {
+            String gid = form.getGid();
+            form.setEditorImages(fileInfoService.getList(gid, "editor", FileStatus.ALL));
+            form.setAttachFiles(fileInfoService.getList(gid, "attach", FileStatus.ALL));
 
             return utils.tpl("board/" + mode);
         }
@@ -153,7 +167,7 @@ public class BoardController {
         addScript.add(String.format("board/%s/common", board.getSkin()));
         addCss.add(String.format("board/%s/style", board.getSkin()));
 
-        if (mode.equals("add") || mode.equals("edit")) { // 글작성, 글수정
+        if (mode.equals("write") || mode.equals("edit")) { // 글작성, 글수정
             if (board.isUseEditor()) { // 에디터를 사용한 경우
                 addCommonScript.add("ckeditor5/ckeditor");
             } else { // 에디터를 사용하지 않는 경우는 이밎 첨부 불가
