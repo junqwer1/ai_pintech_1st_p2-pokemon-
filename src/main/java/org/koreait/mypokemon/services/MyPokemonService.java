@@ -11,6 +11,7 @@ import org.koreait.mypokemon.entities.MyPokemonId;
 import org.koreait.mypokemon.entities.QMyPokemon;
 import org.koreait.mypokemon.repositories.MyPokemonRepository;
 import org.koreait.pokemon.entities.Pokemon;
+import org.koreait.pokemon.services.PokemonInfoService;
 import org.koreait.wishlist.constants.WishType;
 import org.koreait.wishlist.entities.QWish;
 import org.springframework.context.annotation.Lazy;
@@ -31,6 +32,7 @@ public class MyPokemonService {
     private final MyPokemonRepository repository;
     private final JPAQueryFactory queryFactory;
     private final SpringTemplateEngine templateEngine;
+    private final PokemonInfoService pokemonInfoService;
 
     public void process(String mode, Long seq) {
         if (!memberUtil.isLogin()) {
@@ -86,6 +88,8 @@ public class MyPokemonService {
         return templateEngine.process("common/_mypokemon", context);
     }
 
-//    public void viewPokemon(Long seq,)
+    public void viewPokemon(Long seq) {
+
+    }
 
 }

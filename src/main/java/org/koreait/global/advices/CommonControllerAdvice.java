@@ -3,11 +3,13 @@ package org.koreait.global.advices;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.koreait.global.annotations.ApplyErrorPage;
+import org.koreait.global.entities.SiteConfig;
 import org.koreait.global.exceptions.CommonException;
 import org.koreait.global.exceptions.scripts.AlertBackException;
 import org.koreait.global.exceptions.scripts.AlertException;
 import org.koreait.global.exceptions.scripts.AlertRedirectException;
 import org.koreait.global.libs.Utils;
+import org.koreait.global.services.CodeValueService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,11 +18,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @ControllerAdvice(annotations = ApplyErrorPage.class) /*컨트롤러가 실행되기 전에 처리할 공통적인 것들 뷰형식*/
 @RequiredArgsConstructor
 public class CommonControllerAdvice {
     private final Utils utils;
+    private final CodeValueService codeValueService;
+
 
     @ExceptionHandler(Exception.class)
     public ModelAndView errorHandler(Exception e, HttpServletRequest request) {
@@ -64,6 +69,10 @@ public class CommonControllerAdvice {
         data.put("status", status.value());
         data.put("_status", status);
         data.put("message", message);
+
+        SiteConfig siteConfig = Objects.requireNonNullElseGet(codeValueService.get("siteConfig", SiteConfig.class), SiteConfig::new);
+        data.put("siteConfig", siteConfig);
+
         ModelAndView mv = new ModelAndView();
         mv.setStatus(status); // 에러코드
         mv.addAllObjects(data); // 값

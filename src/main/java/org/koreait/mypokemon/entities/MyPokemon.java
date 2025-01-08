@@ -18,10 +18,6 @@ public class MyPokemon extends BaseEntity {
     @Id
     private Long seq; //선택할 포켓몬 도감 번호
 
-    /*@Id
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Pokemon pokemon;*/
-
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     private Member member;
