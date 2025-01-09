@@ -5,8 +5,6 @@ import lombok.Data;
 import org.koreait.file.entities.FileInfo;
 import org.koreait.global.entities.BaseEntity;
 import org.koreait.member.entities.Member;
-
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 
