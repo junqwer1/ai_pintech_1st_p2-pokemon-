@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.koreait.board.controllers.BoardSearch;
+import org.koreait.board.controllers.RequestBoard;
 import org.koreait.board.entities.Board;
 import org.koreait.board.entities.BoardData;
 import org.koreait.board.entities.QBoardData;
@@ -20,6 +21,7 @@ import org.koreait.global.paging.ListData;
 import org.koreait.global.paging.Pagination;
 import org.koreait.member.entities.Member;
 import org.koreait.member.libs.MemberUtil;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.annotation.MergedAnnotations;
 import org.springframework.data.domain.Sort;
@@ -40,6 +42,7 @@ public class BoardInfoService {
     private final JPAQueryFactory queryFactory;
     private final HttpServletRequest request;
     private final MemberUtil memberUtil;
+    private final ModelMapper modelMapper;
     private final Utils utils;
 
     /**
@@ -54,6 +57,24 @@ public class BoardInfoService {
         addInfo(item, true); // 추가 정보 처리
 
         return item;
+    }
+
+    public RequestBoard getForm(Long seq) {
+
+        return getForm(get(seq));
+    }
+
+    /**
+     * 수정 처리시 커맨드 객체 RequestBoard로 변환
+     *
+     * @param item
+     * @return
+     */
+    public RequestBoard getForm(BoardData item) {
+        RequestBoard form = modelMapper.map(item, RequestBoard.class);
+        form.setMode("edit");
+
+        return form;
     }
 
     /**
