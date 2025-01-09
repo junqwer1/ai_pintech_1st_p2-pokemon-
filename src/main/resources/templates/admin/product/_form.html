@@ -55,9 +55,9 @@
                 <td>
                     <button type="button" class="file-upload sbtn" th:data-gid="*{gid}" data-location="main" data-image-only="true">이미지 업로드</button>
                     <div class="uploaded-files" id="main-images">
-                        <div th:if="*{mainImages}" class="image-item" th:each="item : *{mainImages}" th:object="${item}" th:id="*{'file-' + seq}">
+                        <div th:if="*{mainImages != null}" th:each="item : *{mainImages}" th:object="${item}" class="image-item" th:id="*{'file-' + seq}">
                             <i class="remove xi-close" th:data-seq="*{'file-' + seq}"></i>
-                            <div class="inner show-image" style="background:url('[thumbUrl]') no-repeat center center; background-size: cover;" data-seq="[seq]"></div>
+                            <th:block th:utext="*{@utils.showBackground(seq, 200, 100, 'inner show-image')}"></th:block>
                         </div>
                     </div>
                 </td>
@@ -66,7 +66,13 @@
                 <th>목록이미지</th>
                 <td>
                     <button type="button" class="file-upload sbtn" th:data-gid="*{gid}" data-location="list" data-image-only="true">이미지 업로드</button>
-                    <div class="uploaded-files" id="list-images"></div>
+                    <div class="uploaded-files" id="list-images">
+                        <div th:if="*{listImages != null}" class="image-item" th:each="item : *{listImages}" th:object="${item}" th:id="*{'file-' + seq}">
+                            <i class="remove xi-close" th:data-seq="*{'file-' + seq}"></i>
+                            <th:block th:utext="*{@utils.showBackground(seq, 200, 100, 'inner show-image')}"></th:block>
+                            <!--<div class="inner show-image" style="background:url('[thumbUrl]') no-repeat center center; background-size: cover;" data-seq="[seq]"></div>-->
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
