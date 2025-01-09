@@ -42,7 +42,7 @@ public class BoardData extends BaseEntity implements Serializable {
     private String subject; // 글 제목
 
     @Lob
-    private String content;
+    private String content; // 내용
 
     private long viewCount; // 조회수
 
