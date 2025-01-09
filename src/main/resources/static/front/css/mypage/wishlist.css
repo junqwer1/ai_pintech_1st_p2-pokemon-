@@ -1,11 +1,11 @@
-.pokemon-wish > .items {
+.mypokemon-wish > .items {
     display: flex;
     flex-wrap: wrap;
     width: 700px;
     margin: 0 auto;
 }
 
-.pokemon-wish > .items > .item {
+.mypokemon-wish > .items > .item {
     width: calc(700px / 2 - 10px);
     height: calc(700px / 2 - 10px);
     border: 1px solid #000;
@@ -16,17 +16,17 @@
     position: relative;
 }
 
-.pokemon-wish .item img {
+.mypokemon-wish .item img {
     height: calc(100% - 40px);
     display: block;
     margin: 0 auto;
 }
 
-.pokemon-wish > .items > .item:nth-of-type(2n) {
+.mypokemon-wish > .items > .item:nth-of-type(2n) {
     margin-left: 20px;
 }
 
-.pokemon-wish .item-wrap {
+.mypokemon-wish .item-wrap {
     position: absolute;
     width: 100%;
     bottom: 10px;

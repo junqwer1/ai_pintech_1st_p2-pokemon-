@@ -47,7 +47,7 @@ public class WishService {
                 repository.deleteById(wishId);
             } else { // 찜 추가
                 /* 포켓몬 찜 추가면 갯수를 6개로 제한*/
-                if (type == WishType.POKEMON) {
+                if (type == WishType.MYPOKEMON) {
                     QWish wish = QWish.wish;
                     BooleanBuilder builder = new BooleanBuilder();
                     builder.and(wish.member.eq(member))
@@ -107,4 +107,24 @@ public class WishService {
 
         return templateEngine.process("common/_wish", context);
     }
+
+    public String viewMy(Long seq, String type) {
+        return viewMy(seq, type, null);
+    }
+
+    public String viewMy(Long seq, String type, List<Long> myWishes) {
+        WishType _type = WishType.valueOf(type);
+        myWishes = myWishes == null || myWishes.isEmpty() ? getMyWish(_type) : myWishes;
+
+        Context context = new Context();
+        context.setVariable("seq", seq);
+        context.setVariable("type", _type);
+        context.setVariable("myWishes", myWishes);
+        context.setVariable("isMine", myWishes.contains(seq));
+        context.setVariable("isLogin", memberUtil.isLogin());
+
+
+        return templateEngine.process("common/_mypokemon", context);
+    }
+
 }

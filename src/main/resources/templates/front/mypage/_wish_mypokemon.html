@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment="mypokemon">
+        <div class="mypokemon-wish">
+            <th:block th:replace="~{front/pokemon/_items::items}"></th:block>
+        </div>
+    </th:block>
+</html>

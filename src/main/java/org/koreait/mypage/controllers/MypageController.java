@@ -116,34 +116,38 @@ public class MypageController {
         mode = Objects.requireNonNullElse(mode, WishType.POKEMON);
         if (mode == WishType.BOARD) { // 게시글 찜하기 목록
 
-        } else { // 포켓몬 찜하기 목록
+        } else if(mode == WishType.MYPOKEMON) { //포켓몬 6마리 제한
+            PokemonSearch pSearch = modelMapper.map(search, PokemonSearch.class);
+            ListData<Pokemon> data = pokemonInfoService.getPokemons(pSearch);
+            model.addAttribute("items", data.getItems());
+        } else if(mode == WishType.POKEMON) { // 포켓몬 찜하기 목록
             PokemonSearch pSearch = modelMapper.map(search, PokemonSearch.class);
             ListData<Pokemon> data = pokemonInfoService.getMyPokemons(pSearch);
             model.addAttribute("items", data.getItems());
 
-//            model.addAttribute("pagination", data.getPagination());
+            model.addAttribute("pagination", data.getPagination());
         }
 
         return utils.tpl("mypage/wishlist");
     }
 
     /* 마이포켓몬 */
-    @GetMapping("/mypokemon")
+    /*@GetMapping("/mypokemon")
     public String myPokemon(Model model, PokemonSearch pSearch) {
         commonProcess("mypokemon", model);
         int limit = 5;
         pSearch.setLimit(limit);
 
         return utils.tpl("mypage/mypokemon");
-    }
+    }*/
 
     /* 마이포켓몬 뷰 */
-    @GetMapping("/mypokemon/{seq}")
+    /*@GetMapping("/mypokemon/{seq}")
     public String myPokemonView(@PathVariable("seq") Long seq, Model model) {
         Pokemon item = pokemonInfoService.get(seq);
 
         return utils.tpl("mypage/mypokemon");
-    }
+    }*/
 
     /*
     * 컨트롤러 공통 처리 영역
@@ -165,10 +169,6 @@ public class MypageController {
             addCommonScript.add("wish");
             addCss.add("mypage/wishlist");
             pageTitle = utils.getMessage("나의_WISH");
-        } else if (mode.equals("mypokemon")) { // 나의 포켓몬
-            addCommonScript.add("common");
-            addCommonScript.add("mypokemon");
-            pageTitle = utils.getMessage("나의_포켓몬");
         }
 
 

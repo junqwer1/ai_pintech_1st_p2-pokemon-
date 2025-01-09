@@ -1,7 +1,9 @@
 
 
 window.addEventListener("DOMContentLoaded", function() {
-    const wishButtons = document.getElementsByClassName("wish-btn")
+    const wishButtons = document.getElementsByClassName("wish-btn");
+    const pokemon = document.getElementsByClassName("pokemon");
+    const mypokemon = document.getElementsByClassName("mypokemon");
     for (const el of wishButtons) {
         el.addEventListener("click", function() {
             /**
