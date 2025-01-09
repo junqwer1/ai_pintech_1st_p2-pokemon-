@@ -33,7 +33,10 @@ public class RequestBoard {
     private boolean notice; // 공지글 여부
 
     private String externalLink;
-    private String youtubuUrl;
+    private String youtubeUrl;
+
+    private String category; // 게시글 분류
+
 
     private List<FileInfo> editorImages;
     private List<FileInfo> attachFiles;
