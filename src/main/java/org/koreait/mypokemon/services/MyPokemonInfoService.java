@@ -43,6 +43,9 @@ public class MyPokemonInfoService {
         }
     }
 
-    public void
+    /*public void paty(Long seq) {
+        MyPokemon myPokemon = pokemonInfoService.getMyPokemons();
+    }*/
+
 
 }
