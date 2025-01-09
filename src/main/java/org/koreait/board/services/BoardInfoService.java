@@ -13,11 +13,16 @@ import org.koreait.board.entities.QBoardData;
 import org.koreait.board.exceptions.BoardDataNotFoundException;
 import org.koreait.board.repositories.BoardDataRepository;
 import org.koreait.board.services.configs.BoardConfigInfoService;
+import org.koreait.file.services.FileInfoService;
 import org.koreait.global.entities.BaseEntity;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.paging.ListData;
 import org.koreait.global.paging.Pagination;
+import org.koreait.member.entities.Member;
+import org.koreait.member.libs.MemberUtil;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.MergedAnnotations;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -31,9 +36,11 @@ public class BoardInfoService {
 
     private final BoardConfigInfoService configInfoService;
     private final BoardDataRepository boardDataRepository;
+    private final FileInfoService fileInfoService;
     private final JPAQueryFactory queryFactory;
-    private final Utils utils;
     private final HttpServletRequest request;
+    private final MemberUtil memberUtil;
+    private final Utils utils;
 
     /**
      * 게시글 한개 조회
@@ -44,7 +51,7 @@ public class BoardInfoService {
 
         BoardData item = boardDataRepository.findById(seq).orElseThrow(BoardDataNotFoundException::new);
 
-        addInfo(item); // 추가 정보 처리
+        addInfo(item, true); // 추가 정보 처리
 
         return item;
     }
@@ -189,12 +196,50 @@ public class BoardInfoService {
         return getLatest(bid, 5);
     }
 
+    public ListData<BoardData> getMyList(BoardSearch search) {
+        if (!memberUtil.isLogin()) {
+            return new ListData<>(List.of(), null);
+        }
+
+        Member member = memberUtil.getMember();
+        String email = member.getEmail();
+        search.setEmail(List.of(email));
+
+        return  getList(search);
+    }
+
     /**
      * 추가 정보 처리
      *
      * @param item
      */
-    private void addInfo(BoardData item) {
+    private void addInfo(BoardData item, boolean isView) {
+//        게시판 파일 정보 S
+        String gid = item.getGid();
+        item.setEditorImages(fileInfoService.getList(gid, "editor"));
+        item.setAttachFiles(fileInfoService.getList(gid, "attach"));
+//        게시판 파일 정보 E
 
+//        이전, 다음 게시글
+        if (isView) { // 보기 페이지 데이터를 조회하는 경우만 이전, 다음 게시글을 조회
+            QBoardData boardData = QBoardData.boardData;
+            Long seq = item.getSeq();
+
+            BoardData prev = queryFactory.selectFrom(boardData)
+                    .where(boardData.seq.lt(seq))
+                    .orderBy(boardData.seq.desc())
+                    .fetchFirst();
+            BoardData next = queryFactory.selectFrom(boardData)
+                            .where(boardData.seq.gt(seq))
+                                    .orderBy(boardData.seq.asc())
+                                            .fetchFirst();
+            item.setPrev(prev);
+            item.setNext(next);
+        }
+
+    }
+
+    private void addInfo(BoardData item) {
+        addInfo(item, false);
     }
 }
