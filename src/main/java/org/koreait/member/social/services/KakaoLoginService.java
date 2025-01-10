@@ -3,12 +3,15 @@ package org.koreait.member.social.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.querydsl.core.BooleanBuilder;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.services.CodeValueService;
 import org.koreait.member.MemberInfo;
 import org.koreait.member.entities.Member;
+import org.koreait.member.entities.QMember;
+import org.koreait.member.libs.MemberUtil;
 import org.koreait.member.repositories.MemberRepository;
 import org.koreait.member.services.MemberInfoService;
 import org.koreait.member.social.constants.SocialChannel;
@@ -36,6 +39,7 @@ public class KakaoLoginService implements SocialLoginService {
     private final RestTemplate restTemplate;
     private final MemberRepository memberRepository;
     private final MemberInfoService memberInfoService;
+    private final MemberUtil memberUtil;
     private final CodeValueService codeValueService;
     private final ObjectMapper om;
     private final Utils utils;
@@ -101,8 +105,6 @@ public class KakaoLoginService implements SocialLoginService {
 
         MemberInfo memberInfo = (MemberInfo)memberInfoService.loadUserByUsername(member.getEmail());
 
-        System.out.println("memberInfo:" + memberInfo);
-
         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(memberInfo, null, memberInfo.getAuthorities());
 
         SecurityContextHolder.getContext().setAuthentication(authentication); // 로그인 처리
@@ -127,5 +129,42 @@ public class KakaoLoginService implements SocialLoginService {
 
         return String.format("https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&state=%s", restApiKey, redirectUri, redirectUrl);
 
+    }
+
+//    소셜 로그인 연결
+    @Override
+    public void connect(String token) {
+        if (!memberUtil.isLogin()) return;
+
+        Member member = memberUtil.getMember();
+        member.setSocialChannel(SocialChannel.KAKAO);
+        member.setSocialToken(token);
+
+        memberRepository.saveAndFlush(member);
+        session.setAttribute("member", member);
+    }
+
+//    소셜 로그인 해제
+    @Override
+    public void disconnect() {
+        if (!memberUtil.isLogin()) return;
+
+        Member member = memberUtil.getMember();
+        member.setSocialChannel(SocialChannel.NONE);
+        member.setSocialToken(null);
+
+        memberRepository.saveAndFlush(member);
+
+        memberInfoService.addInfo(member);
+        session.setAttribute("member", member);
+    }
+
+    public boolean exists(String token) {
+        BooleanBuilder builder = new BooleanBuilder();
+        QMember member = QMember.member;
+        builder.and(member.socialChannel.eq(SocialChannel.KAKAO))
+                .and(member.socialToken.eq(token));
+
+        return memberRepository.exists(builder);
     }
 }

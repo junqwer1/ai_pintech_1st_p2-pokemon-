@@ -15,6 +15,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>, QuerydslP
 
     Member findBySocialChannelAndSocialToken(SocialChannel channel, String token);
 
+//    @EntityGraph(attributePaths = "authorities")
+
     default boolean exists(String email) {
         QMember member = QMember.member;
         return exists(member.email.eq(email));

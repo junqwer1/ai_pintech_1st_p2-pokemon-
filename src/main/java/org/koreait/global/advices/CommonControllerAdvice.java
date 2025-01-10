@@ -77,6 +77,8 @@ public class CommonControllerAdvice {
         mv.setStatus(status); // 에러코드
         mv.addAllObjects(data); // 값
         mv.setViewName(tpl); // 템플릿이름
+
+        e.printStackTrace();
         return mv;
     }
 }
