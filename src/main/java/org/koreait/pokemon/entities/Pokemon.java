@@ -3,7 +3,6 @@ package org.koreait.pokemon.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.koreait.global.entities.BaseEntity;
-import org.koreait.mypokemon.entities.MyPokemon;
 
 import java.util.List;
 import java.util.Map;
