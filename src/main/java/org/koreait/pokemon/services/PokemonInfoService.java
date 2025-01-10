@@ -98,15 +98,16 @@ public class PokemonInfoService {
     }
 
     // 내 포켓몬 목록
-    public ListData<Pokemon> getPokemons(PokemonSearch search) {
+    public List<Pokemon> getPokemons() {
         List<Long> seq = wishService.getMyWish(WishType.MYPOKEMON);
         if (seq == null || seq.isEmpty()) {
-            return new ListData<>();
+            return List.of();
         }
-
+        PokemonSearch search = new PokemonSearch();
         search.setSeq(seq);
 
-        return getList(search);
+        ListData<Pokemon> data = getList(search);
+        return data.getItems();
     }
 
     /**

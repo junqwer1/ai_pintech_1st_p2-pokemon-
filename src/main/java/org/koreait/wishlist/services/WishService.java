@@ -48,10 +48,12 @@ public class WishService {
             } else { // 찜 추가
                 /* 포켓몬 찜 추가면 갯수를 6개로 제한*/
                 if (type == WishType.MYPOKEMON) {
-                    QWish wish = QWish.wish;
+                    QWish wish = QWish.wish; // 조건을 생성하기 위해서
                     BooleanBuilder builder = new BooleanBuilder();
                     builder.and(wish.member.eq(member))
                             .and(wish.type.eq(type));
+
+
 
                     long total = repository.count(builder);
                     if (total >= 6L) {
@@ -95,15 +97,8 @@ public class WishService {
     }
 
     public String showWish(Long seq, String type, List<Long> myWishes) {
-        WishType _type = WishType.valueOf(type);
-        myWishes = myWishes == null || myWishes.isEmpty() ? getMyWish(_type) : myWishes;
 
-        Context context = new Context();
-        context.setVariable("seq", seq);
-        context.setVariable("type", _type);
-        context.setVariable("myWishes", myWishes);
-        context.setVariable("isMine", myWishes.contains(seq));
-        context.setVariable("isLogin", memberUtil.isLogin());
+        Context context = commonContext(seq, type, myWishes);
 
         return templateEngine.process("common/_wish", context);
     }
@@ -113,6 +108,14 @@ public class WishService {
     }
 
     public String viewMy(Long seq, String type, List<Long> myWishes) {
+
+        Context context = commonContext(seq, type, myWishes);
+
+        return templateEngine.process("common/_mypokemon", context);
+    }
+
+    public Context commonContext(Long seq, String type, List<Long> myWishes) {
+
         WishType _type = WishType.valueOf(type);
         myWishes = myWishes == null || myWishes.isEmpty() ? getMyWish(_type) : myWishes;
 
@@ -123,8 +126,7 @@ public class WishService {
         context.setVariable("isMine", myWishes.contains(seq));
         context.setVariable("isLogin", memberUtil.isLogin());
 
-
-        return templateEngine.process("common/_mypokemon", context);
+        return context;
     }
 
 }

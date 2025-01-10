@@ -13,14 +13,13 @@ import org.koreait.member.entities.Member;
 import org.koreait.member.libs.MemberUtil;
 import org.koreait.member.services.MemberInfoService;
 import org.koreait.member.services.MemberUpdateService;
+import org.koreait.member.social.services.KakaoLoginService;
 import org.koreait.mypage.validators.ProfileValidator;
-import org.koreait.mypokemon.entities.MyPokemon;
 import org.koreait.pokemon.controllers.PokemonSearch;
 import org.koreait.pokemon.entities.Pokemon;
 import org.koreait.pokemon.services.PokemonInfoService;
 import org.koreait.wishlist.constants.WishType;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -46,6 +45,7 @@ public class MypageController {
     private final ProfileValidator profileValidator;
     private final MemberInfoService infoService;
     private final PokemonInfoService pokemonInfoService;
+    private final KakaoLoginService kakaoLoginService;
 
 
     @ModelAttribute("profile")
@@ -70,6 +70,9 @@ public class MypageController {
         if (StringUtils.hasText(optionalTerms)) {
             form.setOptionalTerms(Arrays.stream(optionalTerms.split("\\|\\|")).toList());
         }
+
+        form.setKakaoLoginConnectUrl(kakaoLoginService.getLoginUrl("connect"));
+        form.setKakaoLoginDisconnectUrl(kakaoLoginService.getLoginUrl("disconnect"));
 
         model.addAttribute("requestProfile", form);
 
@@ -118,8 +121,8 @@ public class MypageController {
 
         } else if(mode == WishType.MYPOKEMON) { //포켓몬 6마리 제한
             PokemonSearch pSearch = modelMapper.map(search, PokemonSearch.class);
-            ListData<Pokemon> data = pokemonInfoService.getPokemons(pSearch);
-            model.addAttribute("items", data.getItems());
+            List<Pokemon> item = pokemonInfoService.getPokemons();
+            model.addAttribute("items", item);
         } else if(mode == WishType.POKEMON) { // 포켓몬 찜하기 목록
             PokemonSearch pSearch = modelMapper.map(search, PokemonSearch.class);
             ListData<Pokemon> data = pokemonInfoService.getMyPokemons(pSearch);
@@ -127,27 +130,10 @@ public class MypageController {
 
             model.addAttribute("pagination", data.getPagination());
         }
+        model.addAttribute("mode", mode);
 
         return utils.tpl("mypage/wishlist");
     }
-
-    /* 마이포켓몬 */
-    /*@GetMapping("/mypokemon")
-    public String myPokemon(Model model, PokemonSearch pSearch) {
-        commonProcess("mypokemon", model);
-        int limit = 5;
-        pSearch.setLimit(limit);
-
-        return utils.tpl("mypage/mypokemon");
-    }*/
-
-    /* 마이포켓몬 뷰 */
-    /*@GetMapping("/mypokemon/{seq}")
-    public String myPokemonView(@PathVariable("seq") Long seq, Model model) {
-        Pokemon item = pokemonInfoService.get(seq);
-
-        return utils.tpl("mypage/mypokemon");
-    }*/
 
     /*
     * 컨트롤러 공통 처리 영역
