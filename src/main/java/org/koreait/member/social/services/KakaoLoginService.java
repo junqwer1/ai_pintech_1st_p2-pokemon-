@@ -53,7 +53,6 @@ public class KakaoLoginService implements SocialLoginService {
             return null;
         }
 
-
         /*AccessToken 발급 S*/
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -128,7 +127,6 @@ public class KakaoLoginService implements SocialLoginService {
         redirectUrl = Objects.requireNonNullElse(redirectUrl, "");
 
         return String.format("https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code&state=%s", restApiKey, redirectUri, redirectUrl);
-
     }
 
 //    소셜 로그인 연결
@@ -141,6 +139,8 @@ public class KakaoLoginService implements SocialLoginService {
         member.setSocialToken(token);
 
         memberRepository.saveAndFlush(member);
+
+        memberInfoService.addInfo(member);
         session.setAttribute("member", member);
     }
 

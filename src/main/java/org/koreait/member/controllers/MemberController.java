@@ -79,10 +79,10 @@ public class MemberController {
     public String login(@ModelAttribute RequestLogin form, Errors errors, Model model, HttpSession session) {
         commonProcess("login", model); // 로그인 페이지 공통 처리
 
-        session.setAttribute("socialChannel", SocialChannel.NONE);
-        session.setAttribute("socialToken", null);
+//        session.setAttribute("socialChannel", SocialChannel.NONE);
+//        session.setAttribute("socialToken", null);
 
-        form.setKakaoLoginUrl(kakaoLoginService.getLoginUrl(form.getRedirectUrl()));
+//        form.setKakaoLoginUrl(kakaoLoginService.getLoginUrl(form.getRedirectUrl()));
 
         if (form.getErrorCodes() != null) { // 검증 실패
             form.getErrorCodes().stream().map(s -> s.split("_"))

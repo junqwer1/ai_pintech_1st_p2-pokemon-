@@ -25,7 +25,6 @@ public class SocialController {
     private final HttpSession session;
     private final Utils utils;
 
-
     @GetMapping("/callback/kakao")
     public String callback(@RequestParam(name = "code", required = false) String code, @RequestParam(name = "state", required = false) String redirectUrl) {
 
@@ -56,6 +55,7 @@ public class SocialController {
 
         boolean result = kakaoLoginService.login(token);
         if (result) { // 로그인 성공
+            redirectUrl = StringUtils.hasText(redirectUrl) ? redirectUrl : "/";
             return "redirect:/";
         }
 
