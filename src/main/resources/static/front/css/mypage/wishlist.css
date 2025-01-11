@@ -1,6 +1,6 @@
 .mypokemon-wish > .items {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     width: 700px;
     margin: 0 auto;
 }
@@ -17,7 +17,7 @@
 }
 
 .mypokemon-wish .item img {
-    height: calc(100% - 40px);
+    height: calc(100% - 110px);
     display: block;
     margin: 0 auto;
 }
@@ -30,5 +30,5 @@
     position: absolute;
     width: 100%;
     bottom: 10px;
-    text-align;
+    text-align: center;
 }

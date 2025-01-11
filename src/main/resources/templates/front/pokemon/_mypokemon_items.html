@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="mypokemon">
+  <ul class="items">
+    <li th:if="${#lists.isEmpty(items)}" class="no-data">
+      <h3 th:text="#{검색결과가_없습니다.}"></h3>
+      <div th:text="#{다른_키워드로_검색해주세요.}"></div>
+    </li>
+    <li th:unless="${#lists.isEmpty(items)}" class="item" th:each="item : ${items}" th:object="${item}">
+      <th:block th:utext="${@wishService.showWish(item.seq, 'POKEMON', myPokemons)}"></th:block>
+      <th:block th:utext="${@wishService.viewMy(item.seq, 'MYPOKEMON', mySixPokemons)}"></th:block>
+      <a th:href="@{/pokemon/view/{seq}(seq=*{seq})}">
+<!--        <button class="show-popup" th:data-url="@{/pokemon/view/{seq}(seq=*{seq})}">-->
+        <img th:src="*{frontGif}">
+        <div class="item-wrap">
+          <div class="item-no" th:text="*{#strings.concat('No.', #numbers.formatInteger(seq, 4))}"></div>
+
+          <div class="item-nm" th:text="*{name}"></div>
+
+          <div class="item-types">
+            <div class="type" th:each="type : *{_types}" th:text="${#messages.msg(type)}"></div>
+          </div>
+        </div>
+      </a>
+    </li> <!--item-->
+  </ul>
+</th:block>
+</html>

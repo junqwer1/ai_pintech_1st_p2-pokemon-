@@ -21,7 +21,6 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import java.util.List;
-import java.util.Objects;
 
 @Lazy
 @Service
@@ -52,6 +51,7 @@ public class WishService {
                     BooleanBuilder builder = new BooleanBuilder();
                     builder.and(wish.member.eq(member))
                             .and(wish.type.eq(type));
+
 
 
 
