@@ -25,10 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.ObjectError;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.springframework.data.domain.Sort.Order.asc;
 import static org.springframework.data.domain.Sort.Order.desc;
@@ -97,7 +94,7 @@ public class PokemonInfoService {
         return getList(search);
     }
 
-    // 내 포켓몬 목록
+    // 내 6마리 포켓몬 목록
     public List<Pokemon> getPokemons() {
         List<Long> seq = wishService.getMyWish(WishType.MYPOKEMON);
         if (seq == null || seq.isEmpty()) {
@@ -107,7 +104,19 @@ public class PokemonInfoService {
         search.setSeq(seq);
 
         ListData<Pokemon> data = getList(search);
-        return data.getItems();
+
+        List<Pokemon> items = data.getItems();
+
+        List<Pokemon> items2 = seq.stream().map(s -> {
+            for (Pokemon item : items) {
+                if (item.getSeq().equals(s)) return item;
+            }
+
+            return null;
+        }).filter(item -> item != null).toList();
+
+
+        return items2;
     }
 
     /**

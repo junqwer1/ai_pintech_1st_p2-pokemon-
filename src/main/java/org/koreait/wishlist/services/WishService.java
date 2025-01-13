@@ -87,6 +87,7 @@ public class WishService {
         List<Long> items = queryFactory.select(wish.seq)
                 .from(wish)
                 .where(builder)
+                .orderBy(wish.createdAt.asc())
                 .fetch();
 
         return items;

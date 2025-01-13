@@ -2,13 +2,14 @@ package org.koreait.wishlist.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.koreait.global.entities.BaseEntity;
 import org.koreait.member.entities.Member;
 import org.koreait.wishlist.constants.WishType;
 
 @Data
 @Entity
 @IdClass(WishId.class)
-public class Wish {
+public class Wish extends BaseEntity {
     @Id
     private Long seq;
 
