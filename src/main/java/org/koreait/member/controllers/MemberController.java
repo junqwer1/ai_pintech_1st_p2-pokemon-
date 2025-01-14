@@ -41,7 +41,7 @@ public class MemberController {
     private final MemberUpdateService updateService; // 회원 가입 처리
     private final MemberInfoService infoService; // 회원 정보 조회
     private final CodeValueService codeValueService;
-    private final KakaoLoginService kakaoLoginService;
+//    private final KakaoLoginService kakaoLoginService;
 
     @ModelAttribute("requestAgree")
     public RequestAgree requestAgree() {
@@ -84,7 +84,7 @@ public class MemberController {
         model.addAttribute("socialChannel", SocialChannel.NONE);
         model.addAttribute("socialToken", null);
 
-        form.setKakaoLoginUrl(kakaoLoginService.getLoginUrl(form.getRedirectUrl()));
+//        form.setKakaoLoginUrl(kakaoLoginService.getLoginUrl(form.getRedirectUrl()));
 
         if (form.getErrorCodes() != null) { // 검증 실패
             form.getErrorCodes().stream().map(s -> s.split("_"))
