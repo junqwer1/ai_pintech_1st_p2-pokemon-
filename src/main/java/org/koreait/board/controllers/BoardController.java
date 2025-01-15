@@ -96,6 +96,10 @@ public class BoardController {
 
         Board board = data.getBoard();
         if (board.isListUnderView()) { // 보기페이지 하단에 게시글 목록 출력
+
+            BoardSearch search = new BoardSearch();
+            search.setPage(boardInfoService.getPage(board.getBid(), seq, board.getRowsPerPage()));
+
             ListData<BoardData> listData = boardInfoService.getList(board.getBid(), new BoardSearch());
             model.addAttribute("items", listData.getItems());
             model.addAttribute("pagination", listData.getPagination());
@@ -105,6 +109,9 @@ public class BoardController {
         if (board.isUseComment() && memberUtil.isLogin()) {
             form.setCommenter(memberUtil.getMember().getName());
         }
+
+        form.setMode("write");
+        form.setTarget("ifrmProcess");
 
         return utils.tpl("board/view");
     }
@@ -193,6 +200,17 @@ public class BoardController {
         boardDeleteService.delete(seq);
 
         return "redirect:/board/list/" + board.getBid();
+    }
+
+    @PostMapping("/comment")
+    public String comment(@Valid RequestComment form, Errors errors, Model model) {
+        String mode = form.getMode();
+        mode = StringUtils.hasText(mode) ? mode : "write";
+
+        if (errors.hasErrors()) {
+
+        }
+
     }
 
     /**
