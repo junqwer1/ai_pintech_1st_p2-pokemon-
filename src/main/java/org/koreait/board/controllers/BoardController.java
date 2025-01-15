@@ -8,8 +8,9 @@ import lombok.RequiredArgsConstructor;
 import org.koreait.board.entities.Board;
 import org.koreait.board.entities.BoardData;
 import org.koreait.board.entities.CommentData;
-import org.koreait.board.exceptions.GuestPasswordException;
+import org.koreait.board.exceptions.GuestPasswordCheckException;
 import org.koreait.board.services.*;
+import org.koreait.board.services.comment.CommentDeleteService;
 import org.koreait.board.services.comment.CommentInfoService;
 import org.koreait.board.services.comment.CommentUpdateService;
 import org.koreait.board.services.configs.BoardConfigInfoService;
@@ -19,7 +20,6 @@ import org.koreait.file.constants.FileStatus;
 import org.koreait.file.services.FileInfoService;
 import org.koreait.global.annotations.ApplyErrorPage;
 import org.koreait.global.entities.SiteConfig;
-import org.koreait.global.exceptions.BadRequestException;
 import org.koreait.global.exceptions.scripts.AlertException;
 import org.koreait.global.libs.Utils;
 import org.koreait.global.paging.ListData;
@@ -30,7 +30,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
@@ -60,6 +59,7 @@ public class BoardController {
     private final CommentValidator commentValidator;
     private final CommentUpdateService commentUpdateService;
     private final CommentInfoService commentInfoService;
+    private final CommentDeleteService commentDeleteService;
     private final HttpServletRequest request;
 
     /**
@@ -111,7 +111,7 @@ public class BoardController {
             BoardSearch search = new BoardSearch();
             search.setPage(boardInfoService.getPage(board.getBid(), seq, board.getRowsPerPage()));
 
-            ListData<BoardData> listData = boardInfoService.getList(board.getBid(), new BoardSearch());
+            ListData<BoardData> listData = boardInfoService.getList(board.getBid(), search);
             model.addAttribute("items", listData.getItems());
             model.addAttribute("pagination", listData.getPagination());
         }
@@ -213,6 +213,8 @@ public class BoardController {
         commonProcess(seq, "delete", model);
         Board board = commonValue.getBoard();
 
+        boardValidator.checkDelete(seq); // 게시글에 댓글이 있으면 삭제 불가
+
         boardDeleteService.delete(seq);
 
         return "redirect:/board/list/" + board.getBid();
@@ -229,11 +231,14 @@ public class BoardController {
     public String comment(@Valid RequestComment form, Errors errors, Model model) {
         String mode = form.getMode();
         mode = StringUtils.hasText(mode) ? mode : "write";
+        if (mode.equals("edit")) {
+            commonProcess(form.getSeq(), "comment", model);
+        }
 
         commentValidator.validate(form, errors);
 
         if (errors.hasErrors()) {
-            if (mode.equals("edit")) { // 댓글 등록시에는 alert 메세지로 검증 실패를 알린다
+            if (!mode.equals("edit")) { // 댓글 등록시에는 alert 메세지로 검증 실패를 알린다
                 FieldError err = errors.getFieldErrors().get(0);
                 String code = err.getCode();
                 String field = err.getField();
@@ -278,14 +283,32 @@ public class BoardController {
     }
 
     /**
+     * 댓글 삭제
+     *
+     * @param seq
+     * @param model
+     * @return
+     */
+    @GetMapping("/comment/delete/{seq}")
+    public String commentDelete(@PathVariable("seq") Long seq, Model model) {
+        commonProcess(seq, "comment", model);
+
+        BoardData item = commentDeleteService.delete(seq);
+
+        return "redirect:/board/view/" + item.getSeq();
+    }
+
+    /**
      * 비회원 비밀번호 처리
      *
      * @return
      */
-    @ExceptionHandler(GuestPasswordException.class)
+    @ExceptionHandler(GuestPasswordCheckException.class)
     public String guestPassword(Model model) {
+
         SiteConfig config = Objects.requireNonNullElseGet(codeValueService.get("siteConfig", SiteConfig.class), SiteConfig::new);
         model.addAttribute("siteConfig", config);
+
         return utils.tpl("board/password");
     }
 
@@ -319,7 +342,12 @@ public class BoardController {
         /* 비회원 댓글 비밀번호 검증 S */
         Long cSeq = (Long) session.getAttribute("cSeq");
         if (cSeq != null && cSeq > 0L) {
+            if (!commentValidator.checkGuestPassword(password, cSeq)) {
+                throw new AlertException(utils.getMessage("Mismatch.password"));
+            }
 
+//            비회원 댓글 비밀번호 검증 성공 comment_댓글번호
+            session.setAttribute("comment_" + cSeq, true);
         }
         /* 비회원 댓글 비밀번호 검증 E */
 
@@ -332,7 +360,7 @@ public class BoardController {
     private void commonProcess(String bid, String mode, Model model) {
 
 //        권한 체크
-        if (!List.of("edit", "delete").contains(mode)) {
+        if (!List.of("edit", "delete", "comment").contains(mode)) {
             boardAuthService.check(mode, bid);
         }
 
@@ -353,7 +381,7 @@ public class BoardController {
         if (mode.equals("write") || mode.equals("edit")) { // 글작성, 글수정
             if (board.isUseEditor()) { // 에디터를 사용한 경우
                 addCommonScript.add("ckeditor5/ckeditor");
-            } else { // 에디터를 사용하지 않는 경우는 이밎 첨부 불가
+            } else { // 에디터를 사용하지 않는 경우는 이미지 첨부 불가
                 board.setUseEditorImage(false);
             }
 

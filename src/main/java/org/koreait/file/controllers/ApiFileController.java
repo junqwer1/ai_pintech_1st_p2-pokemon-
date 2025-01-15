@@ -45,6 +45,8 @@ public class ApiFileController {
 
     private final ThumbnailService thumbnailService;
 
+    private final FileImageService imageService;
+
     /*
      * 파일 업로드
      * */
@@ -152,5 +154,11 @@ public class ApiFileController {
         } catch (IOException e) {
 
         }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @GetMapping("/select/{seq}")
+    public void select(@PathVariable("seq") Long seq) {
+        imageService.select(seq);
     }
 }

@@ -6,10 +6,9 @@ import org.koreait.board.entities.Board;
 import org.koreait.board.entities.BoardData;
 import org.koreait.board.entities.CommentData;
 import org.koreait.board.exceptions.BoardNotFoundException;
-import org.koreait.board.exceptions.GuestPasswordException;
+import org.koreait.board.exceptions.GuestPasswordCheckException;
 import org.koreait.board.services.comment.CommentInfoService;
 import org.koreait.board.services.configs.BoardConfigInfoService;
-import org.koreait.global.exceptions.UnAuthorizedException;
 import org.koreait.global.exceptions.scripts.AlertBackException;
 import org.koreait.global.libs.Utils;
 import org.koreait.member.constants.Authority;
@@ -41,6 +40,7 @@ public class BoardAuthService {
      * @param seq
      */
     public void check(String mode, String bid, Long seq) {
+
         if (!StringUtils.hasText(mode) || !StringUtils.hasText(bid) || (List.of("edit", "delete", "comment").contains(mode) && (seq == null || seq < 1L))) {
             throw new AlertBackException(utils.getMessage("BadRequest"), HttpStatus.BAD_REQUEST);
         }
@@ -92,7 +92,7 @@ public class BoardAuthService {
                  */
                 if (session.getAttribute("board_" + seq) == null) {
                     session.setAttribute("seq", seq);
-                    throw new GuestPasswordException();
+                    throw new GuestPasswordCheckException();
                 }
             } else if (!memberUtil.isLogin() || !poster.getEmail().equals(member.getEmail())) { // 회원 게시글 - 직접 작성한 회원만 수정 가능 통제 - 미로그인한 상태 또는 로그인 상태이지만 작성자의 이메일과 일치하지 않는 경우
                 isVerified = false;
@@ -102,7 +102,7 @@ public class BoardAuthService {
             if (commenter == null) { // 비회원으로 작성한 댓글
                 if (session.getAttribute("comment_" + seq) == null) { // 댓글 비회원 인증 X
                     session.setAttribute("cSeq", seq);
-                    throw new GuestPasswordException();
+                    throw new GuestPasswordCheckException();
                 }
             } else if (!memberUtil.isLogin() || !commenter.getEmail().equals(member.getEmail())){ // 회원이 작성한 댓글
                 isVerified = false;
@@ -123,7 +123,14 @@ public class BoardAuthService {
     }
 
     public void check(String mode, Long seq) {
-        BoardData item = infoService.get(seq);
+        BoardData item = null;
+        if (mode.equals("comment")) {
+            CommentData comment = commentInfoService.get(seq);
+            item = comment.getData();
+        } else {
+            item = infoService.get(seq);
+        }
+
         Board board = item.getBoard();
         check(mode, board.getBid(), seq);
     }
