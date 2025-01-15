@@ -7,8 +7,11 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.koreait.board.entities.Board;
 import org.koreait.board.entities.BoardData;
+import org.koreait.board.entities.CommentData;
 import org.koreait.board.exceptions.GuestPasswordException;
 import org.koreait.board.services.*;
+import org.koreait.board.services.comment.CommentInfoService;
+import org.koreait.board.services.comment.CommentUpdateService;
 import org.koreait.board.services.configs.BoardConfigInfoService;
 import org.koreait.board.validators.BoardValidator;
 import org.koreait.board.validators.CommentValidator;
@@ -55,6 +58,8 @@ public class BoardController {
     private final BoardAuthService boardAuthService;
     private final CodeValueService codeValueService;
     private final CommentValidator commentValidator;
+    private final CommentUpdateService commentUpdateService;
+    private final CommentInfoService commentInfoService;
     private final HttpServletRequest request;
 
     /**
@@ -112,13 +117,18 @@ public class BoardController {
         }
 
 //        댓글을 사용하는 경우
-        if (board.isUseComment() && memberUtil.isLogin()) {
-            form.setCommenter(memberUtil.getMember().getName());
+        if (board.isUseComment()) {
+            if (memberUtil.isLogin()) {
+                form.setCommenter(memberUtil.getMember().getName());
+            }
+
+            form.setMode("write");
+            form.setTarget("ifrmProcess");
+            form.setBoardDataSeq(seq);
+
+            List<CommentData> comments = commentInfoService.getList(seq); // 댓글 목록
+            model.addAttribute("comments", comments);
         }
-
-        form.setMode("write");
-        form.setTarget("ifrmProcess");
-
         return utils.tpl("board/view");
     }
 
@@ -233,16 +243,38 @@ public class BoardController {
             return utils.tpl("board/comment"); // 수정
         }
 
-        String redirectUrl = String.format("/board/view/%d#comment-%d", form.getBoardDateSeq(), 0L); // 임시
+//        댓글 등록/ 수정 서비스
+        CommentData item = commentUpdateService.save(form);
+
+        String redirectUrl = String.format("/board/view/%d#comment-%d", form.getBoardDataSeq(), item.getSeq());
         if (mode.equals("edit")) {
             return "redirect:" + redirectUrl;
         } else {
 
             redirectUrl = request.getContextPath() + redirectUrl;
 
-            model.addAttribute("script", "parent.location.replace('" + redirectUrl + "');")
+            String script = String.format("parent.location.reload(); window.addEventListener('DOMContentLoaded', function() { parent.location.replace('%s'); });", redirectUrl);
+            model.addAttribute("script", script);
             return "common/_execute_script";
         }
+    }
+
+    /**
+     * 댓글 수정
+     *
+     * @param seq
+     * @param model
+     * @return
+     */
+    @GetMapping("/comment/edit/{seq}")
+    public String commentEdit(@PathVariable("seq") Long seq, Model model) {
+        commonProcess(seq, "comment", model);
+
+        RequestComment form = commentInfoService.getForm(seq);
+
+        model.addAttribute("requestComment", form);
+
+        return utils.tpl("board/comment");
     }
 
     /**
@@ -271,14 +303,25 @@ public class BoardController {
             throw new AlertException(utils.getMessage("NotBlank.password"));
         }
 
+        /* 비회원 게시글 비밀번호 검증 S */
         Long seq = (Long) session.getAttribute("seq");
 
-        if (!boardValidator.checkGuestPassword(password, seq)) {
-            throw new AlertException(utils.getMessage("Mismatch.password"));
-        }
+        if (seq != null && seq > 0L) {
+            if (!boardValidator.checkGuestPassword(password, seq)) {
+                throw new AlertException(utils.getMessage("Mismatch.password"));
+            }
 
 //        비회원 비밀번호 검증 성공시 세션에 board_게시글번호
-        session.setAttribute("board_" + seq, true);
+            session.setAttribute("board_" + seq, true);
+        }
+        /* 비회원 게시글 비밀번호 검증 E */
+
+        /* 비회원 댓글 비밀번호 검증 S */
+        Long cSeq = (Long) session.getAttribute("cSeq");
+        if (cSeq != null && cSeq > 0L) {
+
+        }
+        /* 비회원 댓글 비밀번호 검증 E */
 
 //        비회원 비밀번호 인증 완료된 경우 새로 고침
         model.addAttribute("script", "parent.location.reload();");
@@ -335,12 +378,21 @@ public class BoardController {
         model.addAttribute("addCommonScript", addCommonScript);
         model.addAttribute("addScript", addScript);
         model.addAttribute("addCss", addCss);
+        model.addAttribute("mode", mode);
     }
 
 //    게시글 보기, 게시글 수정
     private void commonProcess(Long seq, String mode, Model model) {
 
-        BoardData item = boardInfoService.get(seq);
+        BoardData item = null;
+        CommentData comment = null;
+        if (mode.equals("comment")) { // 댓글 수정, 삭제
+            comment = commentInfoService.get(seq);
+            item = comment.getData();
+        } else {
+            item = boardInfoService.get(seq);
+        }
+
         Board board = item.getBoard();
 
         //  게시판 권한 체크
@@ -354,11 +406,11 @@ public class BoardController {
         CommonValue commonValue = commonValue();
         commonValue.setBoard(board);
         commonValue.setData(item);
+        commonValue.setComment(comment);
 
         model.addAttribute("commonValue", commonValue);
         model.addAttribute("pageTitle", pageTitle);
         model.addAttribute("boardData", item);
-        model.addAttribute("mode", mode);
 
     }
 
@@ -366,5 +418,6 @@ public class BoardController {
     static class CommonValue implements Serializable {
         private Board board;
         private BoardData data;
+        private CommentData comment;
     }
 }

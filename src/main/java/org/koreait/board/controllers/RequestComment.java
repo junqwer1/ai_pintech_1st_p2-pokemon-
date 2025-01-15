@@ -11,7 +11,7 @@ public class RequestComment {
     private Long seq;
 
     @NotNull
-    private Long boardDateSeq;
+    private Long boardDataSeq;
 
     @NotBlank
     private String commenter;
