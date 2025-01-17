@@ -119,6 +119,10 @@ public class Utils {
     }
 
     public String showImage(Long seq, int width, int height, String className) {
+        if (seq == null) {
+            String url = getUrl("/common/images/no_image.png");
+            showImage(seq, null, width, height, "image", className);
+        }
         return showImage(seq, null, width, height, "image", className);
     }
 
