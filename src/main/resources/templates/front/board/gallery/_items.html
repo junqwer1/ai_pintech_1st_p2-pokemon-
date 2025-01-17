@@ -4,7 +4,7 @@
     <ul>
         <li th:if="${items == null || items.isEmpty()}" class="no-data" th:text="#{조회된_게시글이_없습니다.}"></li>
         <li th:unless="${items == null || items.isEmpty()}" th:each="item: ${items}" th:object="${item}">
-            <th:block th:utext="*{@utils.showBackground(selectedImage.seq, 290, 183, 'inner show-image')}"></th:block>
+            <th:block th:utext="*{@utils.showBackground(selectedImage == null ? null : selectedImage.seq, 290, 183, 'inner show-image')}"></th:block>
 
             <a th:href="@{/board/view/{seq}(seq=*{seq})}">
                 <span class="badge" th:if="${boardData != null && boardData.seq == item.seq}" th:text="#{열람중}"></span>

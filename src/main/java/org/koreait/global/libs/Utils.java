@@ -123,6 +123,10 @@ public class Utils {
     }
 
     public String showBackground(Long seq, int width, int height, String className) {
+        if (seq == null) {
+            String url = getUrl("/common/images/no_image.png");
+            showImage(null, url, width, height, "background", className);
+        }
         return showImage(seq, null, width, height, "background", className);
     }
 
@@ -152,7 +156,9 @@ public class Utils {
             } else if (StringUtils.hasText(url)) {
                 imageUrl = String.format("%s/api/file/thumb?url=%s&width=%d&height=%d", request.getContextPath(), url, width, height); // 이미지 경로
             }
-            if (!StringUtils.hasText(imageUrl)) return "";
+            if (!StringUtils.hasText(imageUrl)) {
+                imageUrl = String.format("%s/common/images/no_image.png", request.getContextPath());
+            }
 
             mode = Objects.requireNonNullElse(mode, "image");
             className = Objects.requireNonNullElse(className, "imageUrl");
