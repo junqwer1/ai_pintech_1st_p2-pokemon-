@@ -48,6 +48,7 @@ public class MessageController {
      * 쪽지 작성 양식
      * @return
      */
+
     @GetMapping
     public String form(@ModelAttribute RequestMessage form, Model model) {
         commonProcess("send", model);
